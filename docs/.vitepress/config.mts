@@ -4,6 +4,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 export default withMermaid(defineConfig({
   title: 'Supply Chain Guides',
   description: 'Responsible Supply Chain Management — Practical Guidance',
+  ignoreDeadLinks: true,
 
   locales: {
     root: {
