@@ -1,0 +1,200 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>登录 — 供应链尽职调查指南</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.10);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: #1e3a5f;
+      padding: 32px 36px 28px;
+      color: #fff;
+    }
+    .card-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card-header p {
+      font-size: 13px;
+      opacity: .75;
+    }
+
+    .card-body { padding: 32px 36px; }
+
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    input[type="email"],
+    input[type="password"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 15px;
+      color: #111;
+      outline: none;
+      transition: border-color .15s;
+    }
+    input:focus { border-color: #147f9e; }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #1e3a5f;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn:hover  { background: #162d4a; }
+    .btn:active { background: #0e1e30; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .message {
+      margin-top: 16px;
+      padding: 10px 14px;
+      border-radius: 7px;
+      font-size: 14px;
+      display: none;
+    }
+    .message.error   { background: #fee2e2; color: #b91c1c; }
+    .message.warning { background: #fef3c7; color: #92400e; }
+    .message.success { background: #d1fae5; color: #065f46; }
+
+    .card-footer {
+      padding: 16px 36px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+      border-top: 1px solid #f0f0f0;
+    }
+    .card-footer a {
+      color: #147f9e;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .card-footer a:hover { text-decoration: underline; }
+
+    .home-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+      text-decoration: none;
+    }
+    .home-link:hover { color: #147f9e; }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="card">
+      <div class="card-header">
+        <h1>供应链尽职调查指南</h1>
+        <p>登录以访问模板库、案例研究及成本指南</p>
+      </div>
+      <div class="card-body">
+        <form id="loginForm">
+          <div class="form-group">
+            <label for="email">邮箱地址</label>
+            <input type="email" id="email" name="email"
+                   placeholder="your@email.com" required autocomplete="email" />
+          </div>
+          <div class="form-group">
+            <label for="password">密码</label>
+            <input type="password" id="password" name="password"
+                   placeholder="••••••••" required autocomplete="current-password" />
+          </div>
+          <button type="submit" class="btn" id="submitBtn">登 录</button>
+          <div class="message" id="message"></div>
+        </form>
+      </div>
+      <div class="card-footer">
+        还没有账户？<a href="/register.html">立即注册</a>
+      </div>
+    </div>
+    <a href="/zh/" class="home-link">← 返回公开指南</a>
+  </div>
+
+  <script>
+    const form      = document.getElementById('loginForm');
+    const msgEl     = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+
+    // Get redirect target from ?next= param
+    const next = new URLSearchParams(window.location.search).get('next') || '/zh/';
+
+    function showMsg(text, type) {
+      msgEl.textContent = text;
+      msgEl.className   = `message ${type}`;
+      msgEl.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+      submitBtn.disabled = true;
+      submitBtn.textContent = '登录中…';
+      msgEl.style.display = 'none';
+
+      try {
+        const res = await fetch('/api/login', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({
+            email:    document.getElementById('email').value,
+            password: document.getElementById('password').value,
+          }),
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+          window.location.href = next;
+        } else if (res.status === 403) {
+          showMsg(data.error || '账户尚未审批，请等待管理员通知。', 'warning');
+          submitBtn.disabled = false;
+          submitBtn.textContent = '登 录';
+        } else {
+          showMsg(data.error || '登录失败，请重试。', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = '登 录';
+        }
+      } catch {
+        showMsg('网络错误，请检查连接后重试。', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '登 录';
+      }
+    });
+  </script>
+</body>
+</html>

@@ -1,0 +1,36 @@
+---
+layout: home
+hero:
+  name: 供应链指南
+  text: 负责任供应链管理
+  tagline: 面向合规、采购与ESG专业人员的实操参考手册
+  actions:
+    - theme: brand
+      text: 供应链尽职调查实操指南
+      link: /zh/ddg
+    - theme: alt
+      text: Switch to English
+      link: /en/
+features:
+  - title: 供应链尽职调查实操指南（深度版）
+    details: 系统实施OECD五步尽职调查框架，涵盖所有供应链风险类别的综合操作指南。
+    link: /zh/ddg
+  - title: 企业社会责任审核
+    details: 社会审核方法论、主流标准（RBA、SMETA、SA8000）比较，及劳工、职业健康与安全合规实操。
+    link: /zh/csr-guide
+  - title: 环境合规审核
+    details: 环境审核方法论、监管框架与纠正行动计划，适合各层级合规人员。
+    link: /zh/env-guide
+  - title: 供应链安全合规审核
+    details: CTPAT、AEO及制造业与物流供应商实体安全审核框架。
+    link: /zh/security-guide
+  - title: 知识产权保护与防伪打假
+    details: 商标、专利与商业秘密保护实操指南，含供应商知识产权风险分级与审核工具。
+    link: /zh/ip-guide
+  - title: 商业道德、反贿赂与供应商财务韧性
+    details: 反贿赂合规（FCPA/UKBA）、制裁筛查，以及含Altman Z值的供应商财务健康评估。
+    link: /zh/ethics-guide
+  - title: 名词解释与缩略词索引
+    details: 涵盖所有指南的关键术语与缩略词综合参考。
+    link: /zh/glossary
+---

@@ -1,0 +1,1 @@
+import{_ as e,o as r,c as a,a2 as o}from"./chunks/framework.B72_uj9U.js";const p=JSON.parse('{"title":"供应链尽职调查实操指南","description":"","frontmatter":{},"headers":[],"relativePath":"zh/ddg.md","filePath":"zh/ddg.md"}'),i={name:"zh/ddg.md"};function d(n,t,s,l,h,c){return r(),a("div",null,[...t[0]||(t[0]=[o("",343)])])}const g=e(i,[["render",d]]);export{p as __pageData,g as default};

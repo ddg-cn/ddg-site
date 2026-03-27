@@ -1,0 +1,247 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>注册 — 供应链尽职调查指南</title>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    body {
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC",
+                   "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+      background: #f5f7fa;
+      min-height: 100vh;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .card {
+      background: #fff;
+      border-radius: 12px;
+      box-shadow: 0 4px 24px rgba(0,0,0,.10);
+      width: 100%;
+      max-width: 420px;
+      overflow: hidden;
+    }
+
+    .card-header {
+      background: #147f9e;
+      padding: 32px 36px 28px;
+      color: #fff;
+    }
+    .card-header h1 {
+      font-size: 22px;
+      font-weight: 700;
+      margin-bottom: 6px;
+    }
+    .card-header p {
+      font-size: 13px;
+      opacity: .8;
+      line-height: 1.5;
+    }
+
+    .card-body { padding: 32px 36px; }
+
+    .form-group { margin-bottom: 20px; }
+    label {
+      display: block;
+      font-size: 13px;
+      font-weight: 600;
+      color: #374151;
+      margin-bottom: 6px;
+    }
+    input[type="email"],
+    input[type="password"],
+    input[type="text"] {
+      width: 100%;
+      padding: 10px 14px;
+      border: 1.5px solid #d1d5db;
+      border-radius: 7px;
+      font-size: 15px;
+      color: #111;
+      outline: none;
+      transition: border-color .15s;
+    }
+    input:focus { border-color: #147f9e; }
+
+    .hint {
+      font-size: 12px;
+      color: #9ca3af;
+      margin-top: 5px;
+    }
+
+    .btn {
+      width: 100%;
+      padding: 12px;
+      background: #147f9e;
+      color: #fff;
+      border: none;
+      border-radius: 7px;
+      font-size: 15px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background .15s;
+    }
+    .btn:hover  { background: #0f6a85; }
+    .btn:active { background: #0a5267; }
+    .btn:disabled { opacity: .6; cursor: not-allowed; }
+
+    .message {
+      margin-top: 16px;
+      padding: 12px 14px;
+      border-radius: 7px;
+      font-size: 14px;
+      line-height: 1.5;
+      display: none;
+    }
+    .message.error   { background: #fee2e2; color: #b91c1c; }
+    .message.success { background: #d1fae5; color: #065f46; }
+
+    .success-state { display: none; text-align: center; padding: 8px 0 4px; }
+    .success-state .icon { font-size: 48px; margin-bottom: 12px; }
+    .success-state h2 { font-size: 18px; color: #1e3a5f; margin-bottom: 8px; }
+    .success-state p  { font-size: 14px; color: #6b7280; line-height: 1.6; }
+
+    .card-footer {
+      padding: 16px 36px 24px;
+      text-align: center;
+      font-size: 13px;
+      color: #6b7280;
+      border-top: 1px solid #f0f0f0;
+    }
+    .card-footer a {
+      color: #1e3a5f;
+      text-decoration: none;
+      font-weight: 600;
+    }
+    .card-footer a:hover { text-decoration: underline; }
+
+    .home-link {
+      display: block;
+      text-align: center;
+      margin-top: 20px;
+      font-size: 13px;
+      color: #9ca3af;
+      text-decoration: none;
+    }
+    .home-link:hover { color: #147f9e; }
+
+    .notice {
+      background: #eff6ff;
+      border-left: 3px solid #3b82f6;
+      padding: 10px 14px;
+      border-radius: 0 6px 6px 0;
+      font-size: 13px;
+      color: #1e40af;
+      margin-bottom: 24px;
+      line-height: 1.5;
+    }
+  </style>
+</head>
+<body>
+  <div>
+    <div class="card">
+      <div class="card-header">
+        <h1>申请访问权限</h1>
+        <p>注册后，管理员将审核您的申请并通过邮件通知您。</p>
+      </div>
+      <div class="card-body">
+        <!-- Registration form -->
+        <div id="formState">
+          <div class="notice">
+            本平台内容仅限专业用途。提交后请等待审批，通常在 1–2 个工作日内处理。
+          </div>
+          <form id="registerForm">
+            <div class="form-group">
+              <label for="email">邮箱地址</label>
+              <input type="email" id="email" name="email"
+                     placeholder="your@email.com" required autocomplete="email" />
+            </div>
+            <div class="form-group">
+              <label for="password">设置密码</label>
+              <input type="password" id="password" name="password"
+                     placeholder="至少8个字符" required autocomplete="new-password" />
+              <p class="hint">至少 8 个字符，建议使用字母+数字组合</p>
+            </div>
+            <div class="form-group">
+              <label for="password2">确认密码</label>
+              <input type="password" id="password2" name="password2"
+                     placeholder="再次输入密码" required autocomplete="new-password" />
+            </div>
+            <button type="submit" class="btn" id="submitBtn">提交注册申请</button>
+            <div class="message" id="message"></div>
+          </form>
+        </div>
+
+        <!-- Success state -->
+        <div class="success-state" id="successState">
+          <div class="icon">✅</div>
+          <h2>申请已提交</h2>
+          <p>我们已收到您的注册申请。<br />管理员审批通过后，您将收到邮件通知，届时即可使用您的账户登录。</p>
+        </div>
+      </div>
+      <div class="card-footer">
+        已有账户？<a href="/login.html">立即登录</a>
+      </div>
+    </div>
+    <a href="/zh/" class="home-link">← 返回公开指南</a>
+  </div>
+
+  <script>
+    const form      = document.getElementById('registerForm');
+    const msgEl     = document.getElementById('message');
+    const submitBtn = document.getElementById('submitBtn');
+
+    function showMsg(text, type) {
+      msgEl.textContent = text;
+      msgEl.className   = `message ${type}`;
+      msgEl.style.display = 'block';
+    }
+
+    form.addEventListener('submit', async (e) => {
+      e.preventDefault();
+
+      const email     = document.getElementById('email').value;
+      const password  = document.getElementById('password').value;
+      const password2 = document.getElementById('password2').value;
+
+      if (password !== password2) {
+        showMsg('两次输入的密码不一致', 'error');
+        return;
+      }
+      if (password.length < 8) {
+        showMsg('密码至少需要8个字符', 'error');
+        return;
+      }
+
+      submitBtn.disabled = true;
+      submitBtn.textContent = '提交中…';
+      msgEl.style.display = 'none';
+
+      try {
+        const res  = await fetch('/api/register', {
+          method:  'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body:    JSON.stringify({ email, password }),
+        });
+        const data = await res.json();
+
+        if (res.ok) {
+          document.getElementById('formState').style.display    = 'none';
+          document.getElementById('successState').style.display = 'block';
+        } else {
+          showMsg(data.error || '注册失败，请重试。', 'error');
+          submitBtn.disabled = false;
+          submitBtn.textContent = '提交注册申请';
+        }
+      } catch {
+        showMsg('网络错误，请检查连接后重试。', 'error');
+        submitBtn.disabled = false;
+        submitBtn.textContent = '提交注册申请';
+      }
+    });
+  </script>
+</body>
+</html>
