@@ -3,7 +3,7 @@ import { withMermaid } from 'vitepress-plugin-mermaid'
 
 export default withMermaid(defineConfig({
   title: 'Supply Chain Guides',
-  description: 'Responsible Supply Chain Management — Practical Guidance',
+  description: 'Responsible Supply Chain Management — Practical Guidance on Supply Chain Due Diligence',
   ignoreDeadLinks: true,
 
   locales: {
@@ -41,7 +41,7 @@ export default withMermaid(defineConfig({
           { text: '首页', link: '/zh/' },
           { text: '指南', items: [
             { text: '供应链尽职调查实操指南', link: '/zh/ddg' },
-            { text: 'CSR 劳工与社会责任', link: '/zh/csr-guide' },
+            { text: '劳工与社会责任', link: '/zh/csr-guide' },
             { text: '环境合规', link: '/zh/env-guide' },
             { text: '供应链安全', link: '/zh/security-guide' },
             { text: '知识产权保护', link: '/zh/ip-guide' },
@@ -55,7 +55,6 @@ export default withMermaid(defineConfig({
             text: '总览',
             collapsed: false,
             items: [
-              { text: '📋 全站内容目录', link: '/zh/toc' },
               { text: '关于我们 / 联系我们', link: '/zh/about' },
               { text: '服务条款', link: '/zh/terms' },
             ],
@@ -74,7 +73,7 @@ export default withMermaid(defineConfig({
 
           // ─── 六大支柱指南 ─────────────────────────────────────
           {
-            text: '劳工与社会责任（CSR）',
+            text: '劳工与社会责任',
             collapsed: true,
             items: [
               { text: '审核指南', link: '/zh/csr-guide' },
