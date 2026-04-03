@@ -45,7 +45,7 @@
 ### 🇮🇳 印度
 
 - 印度是马德里体系成员，但本地审查效率低，反对期较长
-- **地理标志（GI）保护**较强：大吉岭茶（Darjeeling Tea）、巴斯马蒂香米（Basmati Rice）等均有GI保护，进口同类商品须注意不侵犯GI权利
+- **地理标志（GI）保护**较强：例如，大吉岭茶（Darjeeling Tea）、巴斯马蒂香米（Basmati Rice）等均有GI保护，进口同类商品须注意不侵犯GI权利
 - 判例法体系（普通法）：法院可在审判前颁发临时禁令，须提交**初步证明（Prima Facie Case）**
 
 ### 🇺🇸 美国（USPTO + Amazon Brand Registry）
