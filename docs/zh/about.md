@@ -29,12 +29,12 @@ scdd (supply chain due diligence), 是供应链尽责管理或供应链尽职调
 
 ### 微信
 
-[微信号：XXXXXXXX]
+[微信号：JBWLKJ]
 
 <div style="margin: 1.5rem 0;">
 
-*（微信二维码即将上线）*
-
+![微信二维码](/images/wechat-qr.jfif)
+*扫码添加微信*
 </div>
 
 ### 其他

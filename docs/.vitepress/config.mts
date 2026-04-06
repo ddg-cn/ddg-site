@@ -20,12 +20,12 @@ export default withMermaid(defineConfig({
           {
             text: 'Guides',
             items: [
-              { text: 'Due Diligence Handbook', link: '/en/ddg' },
               { text: 'CSR Auditing', link: '/en/csr-guide' },
               { text: 'Environmental Compliance Auditing', link: '/en/env-guide' },
               { text: 'Supply Chain Security Compliance', link: '/en/security-guide' },
               { text: 'IP Protection & Anti-Counterfeiting', link: '/en/ip-guide' },
               { text: 'Business Ethics & Financial Resilience', link: '/en/ethics-guide' },
+              { text: 'Due Diligence Handbook', link: '/en/ddg' },
               { text: 'Glossary', link: '/en/glossary' },
             ],
           },
@@ -40,12 +40,12 @@ export default withMermaid(defineConfig({
         nav: [
           { text: '首页', link: '/zh/' },
           { text: '指南', items: [
-            { text: '供应链尽职调查实操指南', link: '/zh/ddg' },
             { text: '劳工与社会责任', link: '/zh/csr-guide' },
             { text: '环境合规', link: '/zh/env-guide' },
             { text: '供应链安全', link: '/zh/security-guide' },
             { text: '知识产权保护', link: '/zh/ip-guide' },
             { text: '商业道德与财务韧性', link: '/zh/ethics-guide' },
+            { text: '尽职调查', link: '/zh/dd-guide' },
           ]},
           { text: '关于/联系', link: '/zh/about' },
         ],
@@ -53,21 +53,11 @@ export default withMermaid(defineConfig({
           // ─── 总览 ──────────────────────────────────────────────
           {
             text: '总览',
-            collapsed: false,
+            collapsed: true,
             items: [
+              { text: '六大支柱', link: '/zh/ddg' },
               { text: '关于我们 / 联系我们', link: '/zh/about' },
               { text: '服务条款', link: '/zh/terms' },
-            ],
-          },
-
-          // ─── 供应链尽责管理 ───────────────────────────────────
-          {
-            text: '供应链尽责管理',
-            collapsed: false,
-            items: [
-              { text: '实操指南', link: '/zh/ddg' },
-              { text: '🌎 国际法规框架', link: '/zh/international/ddg' },
-              { text: '💰 尽职调查成本', link: '/zh/cost-guide' },
             ],
           },
 
@@ -110,6 +100,17 @@ export default withMermaid(defineConfig({
             items: [
               { text: '审核指南', link: '/zh/ethics-guide' },
               { text: '🌎 国际实践参考', link: '/zh/international/ethics' },
+            ],
+          },
+
+          // ─── 供应链尽职调查 ───────────────────────────────────
+          {
+            text: '供应链尽职调查',
+            collapsed: true,
+            items: [
+              { text: '实操指南', link: '/zh/dd-guide' },
+              { text: '🌎 国际法规框架', link: '/zh/international/ddg' },
+              { text: '💰 尽职调查成本', link: '/zh/cost-guide' },
             ],
           },
 
