@@ -1,36 +1,36 @@
 ---
 layout: home
 hero:
-  name: Supply Chain Guides
-  text: Responsible Supply Chain Management
-  tagline: Practical guidance for compliance, procurement, and ESG professionals
+  name: Supply Chain DD
+  text: Responsible Sourcing
+  tagline: An operational manual for Compliance, Procurement, and ESG professionals.
   actions:
     - theme: brand
-      text: Due Diligence Handbook
+      text: SCDD Practical Guide
       link: /en/ddg
     - theme: alt
-      text: 切换中文
+      text: 中文版
       link: /zh/
 features:
-  - title: Due Diligence Handbook
-    details: Comprehensive operational guide implementing the OECD five-step due diligence framework across all supply chain risk categories.
-    link: /en/ddg
-  - title: CSR Auditing
-    details: Social audit methodology, comparison of major standards (RBA, SMETA, SA8000), and practical guidance on labour, health & safety compliance.
+  - title: 🛡️ Labor & Social Responsibility
+    details: Social audit guidelines, comparison of mainstream standards (RBA, SMETA, SA8000), and practical compliance for Labor, Health, and Safety.
     link: /en/csr-guide
-  - title: Environmental Compliance Auditing
-    details: Environmental audit methodology, regulatory frameworks, and corrective action planning for all levels of compliance professionals.
+  - title: 🌱 Environmental Compliance
+    details: Environmental audit directives, regulatory frameworks, and Corrective Action Plans (CAP), suitable for compliance personnel at all levels.
     link: /en/env-guide
-  - title: Supply Chain Security Compliance
-    details: CTPAT, AEO, and physical security audit frameworks for manufacturing and logistics suppliers.
+  - title: 🔒 Supply Chain Security
+    details: C-TPAT, AEO, and physical security audit frameworks for manufacturing and logistics providers.
     link: /en/security-guide
-  - title: IP Protection & Anti-Counterfeiting
-    details: Practical guidance on trademark, patent, and trade secret protection with supplier IP risk tiering and audit tools.
+  - title: 💡 Intellectual Property Protection
+    details: Practical guides for protecting trademarks, patents, and trade secrets, including supplier IP risk-grading and audit tools.
     link: /en/ip-guide
-  - title: Business Ethics & Financial Resilience
-    details: Anti-bribery compliance (FCPA/UKBA), sanctions screening, and supplier financial health assessment including Altman Z-Score.
+  - title: ⚖️ Ethics & Financial Resilience
+    details: Anti-bribery compliance (FCPA/UKBA), sanctions screening, and supplier financial health assessments (including Altman Z-score).
     link: /en/ethics-guide
-  - title: Glossary
-    details: Consolidated reference of key terms and abbreviations across all guides.
+  - title: 🔍 Due Diligence Audit (In-Depth)
+    details: Systematic implementation of the OECD Five-Step Due Diligence Framework.
+    link: /en/dd-guide
+  - title: 📖 Glossary & Acronyms Index
+    details: A comprehensive reference covering key terminology and acronyms used throughout this guide series.
     link: /en/glossary
 ---

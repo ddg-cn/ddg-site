@@ -18,14 +18,14 @@ export default withMermaid(defineConfig({
         ],
         sidebar: [
           {
-            text: 'Guides',
             items: [
+              { text: 'Overview', link: '/en/ddg' },
               { text: 'CSR Auditing', link: '/en/csr-guide' },
               { text: 'Environmental Compliance Auditing', link: '/en/env-guide' },
               { text: 'Supply Chain Security Compliance', link: '/en/security-guide' },
               { text: 'IP Protection & Anti-Counterfeiting', link: '/en/ip-guide' },
               { text: 'Business Ethics & Financial Resilience', link: '/en/ethics-guide' },
-              { text: 'Due Diligence Handbook', link: '/en/ddg' },
+              { text: 'Due Diligence Handbook', link: '/en/dd-guide' },
               { text: 'Glossary', link: '/en/glossary' },
             ],
           },
