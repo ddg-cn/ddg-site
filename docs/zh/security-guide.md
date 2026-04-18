@@ -107,9 +107,9 @@
 
 ### 2.1.1　C-TPAT（美国海关-贸易伙伴反恐计划）
 
-!\[C-TPAT官方标识](/images/security/ctpat-logo.png) !\[CBP关税与边境保护局徽章](/images/security/cbp-seal.png)
+![CBP关税与边境保护局徽章](/images/security/cbp-seal.jpeg) ![C-TPAT官方标识](/images/security/ctpat.png)
 
-*图：C-TPAT项目由美国海关与边境保护局（CBP）主导。左：C-TPAT标识；右：CBP官方徽章*
+*图：C-TPAT项目由美国海关与边境保护局（CBP）主导。上：CBP官方徽章；下：C-TPAT标识*
 
 C-TPAT（Customs-Trade Partnership Against Terrorism）由美国CBP（海关与边境保护局）于2001年"9·11"事件后启动，是全球最具影响力的供应链安全自愿合规计划。
 
@@ -135,13 +135,13 @@ C-TPAT（Customs-Trade Partnership Against Terrorism）由美国CBP（海关与�
 
 ### 2.1.2　AEO（授权经济经营者）
 
-!\[中国AEO（高级认证企业）证书样本](/images/security/china-aeo-class-a-certificate.jpeg)
+![中国AEO（高级认证企业）证书样本](/images/security/china-aeo-class-a-certificate.jpeg)
 
 *图：中国海关AEO高级认证企业证书样本（A类管理企业）*
 
 AEO（Authorized Economic Operator）是世界海关组织（WCO）SAFE框架下的国际供应链安全认证体系。获得AEO认证的企业在通关时享受简化程序、优先通关等便利。
 
-!\[世界海关组织（WCO）标识](/images/security/un-emblem.jpeg) !\[国际海事组织（IMO）标识](/images/security/imo-logo.jpeg)
+![世界海关组织（WCO）标识](/images/security/wco-logo.png) 
 
 *图：供应链安全国际框架主要机构标识*
 
@@ -162,7 +162,7 @@ ISO 28000是供应链安全管理体系的国际标准，于2022年更新，采�
 
 ### 2.1.4　TAPA（运输资产保护协会）标准
 
-!\[TAPA（运输资产保护协会）标识](/images/security/tapa-logo.png)
+![TAPA（运输资产保护协会）标识](/images/security/tapa-logo.png)
 
 *图：TAPA（Transported Asset Protection Association）标识*
 
@@ -327,15 +327,15 @@ NIST SP 800-161r1（2022年）是美国联邦政府的ICT供应链风险管理�
 
 # 第四章　厂区实体安全
 
-!\[现代仓储物流设施](/images/security/warehouse-facility-photo.png)
-
-*图：现代化仓储物流设施——围界、照明、分区管理是物理安全审核的基础要素*
-
 物理安全是供应链安全审核最基础的层级，也是大多数买家发起安全审核的起点。无论信息系统多么先进，一个围墙破损、大门无人值守、CCTV覆盖有盲区的工厂，其货物完整性从根本上就无法保障。本章从实地审核视角，系统梳理厂区实体安全的各个要素及审核要点。
 
 ## 4.1　围界管理
 
 围界（围墙、围栏、天然屏障）是厂区安全的第一道防线。审核评估的重点不是围墙是否存在或高度是否达到某一数字，而是围界管理是否有效阻止非授权进入。
+
+![现代仓储物流设施](/images/security/warehouse-facility-photo.png)
+
+*图：现代化仓储物流设施——围界、照明、分区管理是物理安全审核的基础要素*
 
 ### 4.1.1　围界类型与适用评估标准
 
@@ -395,11 +395,11 @@ NIST SP 800-161r1（2022年）是美国联邦政府的ICT供应链风险管理�
 
 ## 4.4　监控系统
 
-!\[工厂CCTV摄像头（带红外夜视功能）](/images/security/cctv-camera-photo.png)
+视频监控（CCTV/IP摄像）是现代物理安全体系的核心技术手段，也是审核文件核实的重要工具（可调取历史录像交叉验证）。
+
+![工厂CCTV摄像头（带红外夜视功能）](/images/security/cctv-camera-photo.png)
 
 *图：具备红外夜视功能的工业级IP摄像头（CCTV），适用于仓储区、装卸区全天候监控*
-
-视频监控（CCTV/IP摄像）是现代物理安全体系的核心技术手段，也是审核文件核实的重要工具（可调取历史录像交叉验证）。
 
 ### 4.4.1　摄像覆盖要求
 
@@ -481,17 +481,16 @@ NIST SP 800-161r1（2022年）是美国联邦政府的ICT供应链风险管理�
 
 ## 5.2　封条管理
 
-!\[金属封条（bolt seal）实物](/images/security/metal-seal-photo.jpeg) !\[钢缆封条两种规格](/images/security/cable-seals-two-types.jpeg)
-
-*图：常见封条类型——左：金属高安全封条（bolt seal）；右：钢缆封条*
-
-!\[封条尺寸规格示意图](/images/security/container-seal-spec-diagram.jpeg)
-
-*图：封条尺寸规格参照（需符合ISO 17712高安全H级要求）*
-
-!\[塑料一次性封条](/images/security/plastic-security-seal.jpeg) !\[撕拉式封条](/images/security/pull-tight-seal.jpeg)
-
-*图：塑料封条类型——左：塑料安全封条；右：撕拉式封条（pull-tight seal）*
+*图：常见高安全封条类型——
+螺栓型封条（bolt seal）
+![螺栓型封条（bolt seal）实物](/images/security/bolt-seal.jpeg) 
+线型封条
+![钢缆封条两种规格](/images/security/cable-security-seal.jpeg)
+![钢缆封条两种规格](/images/security/cable-seal-c1-specs.jpeg)
+挂锁型封条
+![挂锁型封条](/images/security/padlock-access-control.jpeg) 
+缠绕型封条
+![缠绕型封条](/images/security/twist-lock-seal.jpeg)
 
 封条（Seal）是集装箱安全的最后一道物理防线，证明集装箱在运输途中未被开启。封条管理不严是C-TPAT审核中最常见的高风险发现项。
 
@@ -535,7 +534,7 @@ NIST SP 800-161r1（2022年）是美国联邦政府的ICT供应链风险管理�
 
 ## 5.5　运输供应商管理
 
-!\[集装箱卡车（厢式货车）](/images/security/cargo-truck-sinotruk.jpeg) !\[封闭式厢式半挂车](/images/security/closed-box-trailer.jpeg)
+![集装箱卡车（厢式货车）](/images/security/cargo-truck-sinotruk.jpeg) ![封闭式厢式半挂车](/images/security/closed-box-trailer.jpeg)
 
 *图：典型供应链运输车辆——安全审核须覆盖货运车辆本身的防篡改设施*
 
@@ -546,10 +545,6 @@ C-TPAT要求成员对其使用的运输商（货代、船公司、拖车公司�
 * 运输合同中须纳入安全条款，要求运输商遵守C-TPAT/AEO最低安全标准
 * 对长期合作运输商建议每年重新评估；新增运输商须完成评估后方可使用
 * 运输商评估记录须保存至少两年备查
-
-!\[FAST快速安全通道计划标识](/images/security/fast-program-logo.png) !\[加拿大边境服务局（CBSA）标识](/images/security/canada-cbsa-logo.jpeg) !\[澳大利亚海关标识](/images/security/australia-customs-logo.png)
-
-*图：北美及亚太区域可信贸易商计划标识*
 
 # 第六章　人员安全
 
@@ -606,6 +601,7 @@ C-TPAT要求成员对其使用的运输商（货代、船公司、拖车公司�
 * 举报记录须保密处理；调查结果须及时反馈举报人（在保密前提下）
 * 每年统计并回顾举报情况，作为安全管理改进的输入
 
+
 # 第七章　程序与业务合作伙伴安全
 
 ## 7.1　供应链文件真实性
@@ -645,11 +641,12 @@ C-TPAT要求：凡是在供应链上使用的合作伙伴（制造商、运输�
 * 对现有合作伙伴建议每年重新评估；高风险合作伙伴须更频繁审查
 * 发现合作伙伴严重安全违规须有终止合作的明确程序
 
+
 # 第三部分　第二支柱：信息与网络安全
 
 # 第八章　信息安全管理体系（ISMS）
 
-信息安全管理体系（ISMS, Information Security Management System）是组织系统化管理信息安全风险的框架，其作用类似于ISO 14001之于环境管理——提供一套"计划-执行-检查-改进"的闭环管理机制。ISO/IEC 27001:2022是全球最广泛认可的ISMS标准，获得认证意味着组织已建立并持续维护一套可审核的信息安全管理机制。
+信息安全管理体系（ISMS, Information Security Management System）是组织系统化管理信息安全风险的框架，其作用类似于ISO 14001之于环境管理——提供一套"策划-执行-检查-改进"的闭环管理机制。ISO/IEC 27001:2022是全球最广泛认可的ISMS标准，获得认证意味着组织已建立并持续维护一套可审核的信息安全管理机制。
 
 ## 8.1　ISO 27001:2022 架构与核心控制
 
@@ -810,7 +807,8 @@ OT（Operational Technology）安全是传统IT安全最容易忽视的盲区，
 * **数据分类与云端存储**：明确哪些级别的数据可以存储在云端；机密/绝密数据是否满足数据本地化要求（中国PIPL/DSL）
 * **云访问安全代理（CASB）**：监控员工对云服务的使用，防止数据通过Shadow IT（未经审批的云工具）泄露
 * **共享责任模型**：云服务商负责基础设施安全（Security OF the cloud）；企业负责数据和应用安全（Security IN the cloud）——理解边界，不将数据安全责任全部委托给云服务商
-* **供应商访问日志**：要求SaaS供应商提供访问日志，可审计谁访问了企业数据
+* **供应商访问日志**：要求SaaS供应商提供访问日志，可审查谁访问了企业数据
+
 
 # 第十章　软件供应链安全
 
@@ -904,6 +902,7 @@ SBOM（Software Bill of Materials，软件物料清单）是应对软件供应�
 
 *TISAX共享模式的参考价值：汽车行业的TISAX评估结果在VDA平台共享，一次评估服务多个OEM买家，大幅降低重复审核负担。建议其他行业参考这一模式，建立行业级安全评估结果共享平台，减少供应商的重复应对成本。*
 
+
 # 第四部分　第三支柱：数据合规与隐私保护
 
 # 第十一章　中国数据合规实务
@@ -963,9 +962,7 @@ PIPL于2021年11月1日起实施，是中国版的GDPR，确立了处理个人�
 |安全管理机构|岗位设置（信息安全管理员、审计员）；授权和审批；沟通与合作；审核和检查|
 |人员安全管理|人员录用（背景调查）；人员离岗；安全意识教育培训；外部人员访问管理|
 
-# 
-
-第十二章　跨境数据合规：GDPR、NIS2与全球数据本地化
+# 第十二章　跨境数据合规：GDPR、NIS2与全球数据本地化
 
 ## 12.1　GDPR对中国供应商的适用性
 
@@ -1088,9 +1085,7 @@ GDPR（欧盟通用数据保护条例）的管辖范围不限于欧盟境内的�
 |低（Low）|轻微不符合项或改善建议|90—180天内或下次审核前|围墙有轻微破损（已不影响安全）；照明灯有1处不亮；密码策略符合但未书面化|
 |观察项（OB）|良好实践建议；不构成不符合项|无强制期限|建议引入电子封条；建议推进ISO 27001认证；建议部署EDR|
 
-# 
-
-第十四章　综合检查表与工具
+# 第十四章　综合检查表与工具
 
 ## 14.1　物理安全检查表（C-TPAT/AEO/ISO 28000对照）
 
@@ -1191,6 +1186,7 @@ GDPR（欧盟通用数据保护条例）的管辖范围不限于欧盟境内的�
 |**合计**||**100**|||
 
 *评分说明：90—100分=优秀；75—89分=良好；60—74分=基本合格（需改进）；＜60分=不合格（需重审）*
+*可在评分基础上，另外确定红旗项目*
 
 # 第十五章　新兴技术与未来趋势
 
@@ -1408,7 +1404,7 @@ AI驱动的安全工具（如SIEM中的UEBA——用户和实体行为分析）�
 **生成安全 SAQ：**
 
 ```
-你是一名供应链安全与反恐合规专家。请为一家\[行业]制造商生成安全自评问卷，
+你是一名供应链安全与反恐合规专家。请为一家\\\[行业]制造商生成安全自评问卷，
 涵盖：人员安全（背景核查、门禁）、货物安全（集装箱封条/ISO 17712 H级）、
 实体安全（CCTV、围界、照明）、网络安全（CMMC/NIS2要求）、C-TPAT/AEO合规。
 每题附：适用标准（C-TPAT MSC v5.0/ISO 28000）、所需证明文件、评分标准。
@@ -1417,7 +1413,7 @@ AI驱动的安全工具（如SIEM中的UEBA——用户和实体行为分析）�
 **生成供应链安全政策：**
 
 ```
-请为一家向美国和欧盟出口的\[行业]制造商起草供应链安全政策，
+请为一家向美国和欧盟出口的\\\[行业]制造商起草供应链安全政策，
 参照C-TPAT最低安全标准v5.0和EU AEO-S要求，
 涵盖：风险评估流程、人员安全、货物安全、IT系统访问控制、事件响应。
 ```

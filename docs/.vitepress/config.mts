@@ -109,6 +109,7 @@ export default withMermaid(defineConfig({
             collapsed: true,
             items: [
               { text: '实操指南', link: '/zh/dd-guide' },
+              { text: '欧盟电池法实操指南', link: '/zh/eubr-dd-guide' },
               { text: '🌎 国际法规框架', link: '/zh/international/ddg' },
               { text: '💰 尽职调查成本', link: '/zh/cost-guide' },
             ],
@@ -132,7 +133,7 @@ export default withMermaid(defineConfig({
     socialLinks: [],
     footer: {
       message: '本站内容仅供参考，不构成法律意见。法规要求随时可能变化，使用前请以官方来源为准，并咨询具备资质的合规或法律专业人员。 <a href="/zh/terms">服务条款</a> · <a href="/zh/about">联系我们</a>',
-      copyright: 'Supply Chain Due Diligence Guides — For informational purposes only. Not legal advice.',
+      copyright: 'Supply Chain Due Diligence Guides — For informational purposes only. Not legal advice. <a href="/en/terms">Terms and Conditions</a> · <a href="/en/about">About Us</a>',
     },
   },
 

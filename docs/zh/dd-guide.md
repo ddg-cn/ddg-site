@@ -220,7 +220,7 @@ R=负责执行，A=最终问责，C=需咨询，I=知情即可：
 
 # 第三章　情报系统建设：如何有意义地使用公开数据
 
-目前可用于供应链尽职调查的公开数据库超过30个。问题不是信息太少，而是如何从海量公开信息中提炼出对你的具体供应链最相关的风险信号，并在有限工作时间内做出优先级判断。本章提供的不是工具清单（清单见第九章），而是使用逻辑。
+目前可用于供应链尽职调查的公开数据库超过30个。问题不是信息太少，而是如何从海量公开信息中提炼出对你的具体供应链最相关的风险信号，并在有限工作时间内做出优先级判断。本章提供的不是工具清单（清单见第十章），而是使用逻辑。
 
 ## 3.1　数据权重层级：哪类信息触发行动
 
@@ -637,11 +637,157 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 与本系列的关系：本套指南的六个专项领域（社会、环境、安全、IP、道德、尽职调查）合计覆盖了CSDDD要求评估的全部实质性风险类别。使用本套指南建立合规体系的企业，将能够向欧盟买家证明其已建立符合CSDDD精神的尽责管理体系。
 
-# 第八章　AI时代的尽职调查自动化：从人工驱动到智能体系
+# 第八章　行业专项尽职调查框架
+
+## 8.1　行业专项尽职调查的必要性
+
+前述各章节所介绍的OECD五步法尽职调查框架是一套适用于所有行业的通用方法论。然而，各行业在供应链风险暴露方式、监管要求和主流认证工具方面存在显著差异——电子行业的冲突矿产合规与食品行业的森林砍伐合规，遵循完全不同的行业规则和认证体系。本章系统梳理了全球主要行业的专项DD框架，帮助尽职调查人员将通用方法论与行业专属工具有效结合。
+
+本章涉及三个核心概念，贯穿所有行业认证体系：
+
+* 监管链（Chain of Custody，CoC）：证明受认证材料从认证源头到最终产品全程可追溯的体系。CoC认证通过范围证书（SC）和交易证书（TC）实现，是所有行业认证计划的技术基础。
+* 交易证书（Transaction Certificate，TC）：针对特定批次/货物由认证机构出具的证明文件，证实该批次来自经认证供应商，用于核实具体交易中的认证合规性。
+* 范围证书（Scope Certificate，SC）：证明某一生产设施（工厂、农场、加工厂）已获得特定标准认证，在特定认证范围内有效从事相关业务。TC的有效性以供应商持有有效SC为前提。
+  *实操提示：采购TC证书时，须首先核验供应商的SC是否仍在有效期内。SC过期后，该期间内签发的所有TC均失去法律效力。建议在每个采购季开始前、而非在发货时才核验SC状态。*
+
+无论适用哪种CoC认证计划，以下步骤代表最低尽责管理实践标准：
+
+* 下达采购订单前：核验供应商当前持有的、适用标准的有效SC（检查有效期、认证范围、产品类别是否匹配）；SC过期须停止采购，直至供应商完成证书续展
+* 发货时：向供应商索取针对本批货物的TC。TC须注明：（a）标准名称；（b）供应商SC编号；（c）产品类别和数量；（d）认证机构名称和印章。对照TC核验货物与证书描述是否一致
+* 文件保留：将所有SC和TC保存至少5年；在记录管理系统中将TC与采购订单和发票关联存档，以便接受客户或监管机构审查
+* 年度核验：每个采购季开始前主动检查供应商SC的续期状态；提前60天提醒供应商进行证书续期，避免因SC失效造成合规断链
+* 供应商通知：在供应商合同和采购条款中明确规定：适用的CoC标准、声明类型（物理隔离/质量平衡/Mass Balance）、TC义务，以及证书失效时的通知义务
+* 纠正措施：发现TC缺口（如某批次缺少TC）时，启动整改行动计划（CAP）；评估是否需要向客户、认证机构或监管机构披露；避免在缺口未解决时继续声明认证状态
+
+### 8.1.1　监管链项目对比速查表
+
+|行业|主要CoC认证计划|机制类型|验证层级|
+|-|-|-|-|
+|电子/科技|CMRT（RMI）；RMAP；RBA VAP|报告模板+冶炼厂审计|冶炼厂/精炼厂|
+|汽车/新能源|CMRT+CRT；IRMA；EU Battery Passport|报告+矿山审计+数字护照|矿山+冶炼厂|
+|服装/纺织|GOTS；GRS；OCS；BCI；Fairtrade|TC+SC双证认证|全链路（农场→品牌商）|
+|食品/农业|RSPO；RTRS；雨林联盟；Fairtrade|TC+SC双证认证+EUDR声明|农场→加工→贸易商|
+|林业/纸张|FSC CoC；PEFC CoC|TC+SC双证认证|森林→加工→终端产品|
+|珠宝/贵金属|RJC CoC；Fairmined；RMAP Gold|会员审计+精炼厂认证|矿山→精炼厂→品牌商|
+|海鲜|MSC CoC；ASC CoC；BAP|TC+SC双证认证|渔场→加工→零售|
+|建筑/钢铝|ResponsibleSteel；ASI CoC|站点认证+CoC证书|矿山→生产→建筑商|
+
+## 
+
+* 关于社会责任和环境等其他方面的尽责管理，请参阅本系列的其他指南。* 
+
+## 8.2　电子与科技行业
+
+【风险特征】电子行业是冲突矿产监管的核心驱动行业。锡、钽、钨、金（3TG）是电子产品的基础原材料，其中大量来自冲突和高风险地区（CAHRA），尤其集中于刚果民主共和国及其邻国。随着新能源电池需求激增，钴的来源合规性已成为与3TG并重的核心议题。
+
+* 核心认证机构：RBA（负责任商业联盟，前EICC）——电子及ICT行业最主要的供应链合规联盟，成员含苹果、三星、戴尔等主流品牌商
+* 核心工具：CMRT（冲突矿产报告模板，RMI运营）——3TG供应链信息收集的通用工具；CRT（钴报告模板）——钴供应链的对应工具，结构与CMRT平行
+* RMAP（责任矿产保证流程）：对冶炼厂/精炼厂进行第三方审计，是冲突矿产合规的核心验证节点。品牌商须确保其3TG/钴的冶炼厂/精炼厂通过RMAP认证
+* 监管要求：Dodd-Frank法第1502条（美国上市公司）；EU冲突矿产法规2021/821（EU进口商）；UFLPA（棉花/强迫劳动）
+
+## 8.3　汽车与新能源电池行业
+
+【风险特征】新能源转型大幅增加了对钴、锂、镍、锰和天然石墨的需求，使汽车行业成为矿产溯源合规最复杂的行业之一。与传统汽车供应链相比，电池材料供应链层级更深（矿山→精炼→前驱体→正负极材料→电芯→电池包），溯源难度极高。
+
+* RBA/Drive Sustainability：Drive Sustainability由BMW、福特、大众等主流车企组成，联合使用SAQ作为供应商自评工具。而RBA的VAP则是供应商审核工具，许多电子、车企均已采用该工具管理供应商
+* EU电池法规（2023/1542）：要求电池护照（Battery Passport）、碳足迹声明、再生内容比例披露；对钴、锂、镍、天然石墨的供应商尽职调查设有强制要求
+* IRMA（负责任采矿保证倡议）：矿山级别的环境和社会标准，被越来越多的主流汽车OEM（宝马、大众、特斯拉等）引用作为矿山评估标准
+* 电池溯源前沿挑战：电芯级追溯是行业公认的技术难题。电池护照将要求追溯至电芯级别，意味着从矿山到整车的全链路数字追踪
+
+## 8.4　服装、纺织与鞋类行业
+
+【风险特征】服装行业面临原材料溯源风险（棉花来源、合成纤维再生含量、皮革来源）和工厂层面劳工风险的双重叠加，是全球供应链合规体系最复杂的行业之一。
+
+### 8.4.1　监管链认证体系
+
+|认证标准|运营机构|认证范围|核心特点|
+|-|-|-|-|
+|GOTS （全球有机纺织品标准）|GOTS国际工作组|有机纤维含量≥70%（标签级）或≥95%（有机级）|覆盖社会标准+化学品要求，是有机纺织品最严格的综合标准；TC+SC双证体系|
+|OCS （有机含量标准）|纺织品交易所|仅验证有机材料含量，不含社会/化学品标准|比GOTS门槛低；适合中间产品的有机含量声明|
+|GRS （全球再生标准）|纺织品交易所|再生输入材料含量（聚酯、尼龙、棉等）|循环经济核心工具；覆盖社会/化学品要求；须全链条持证|
+|RCS （再生含量声明）|纺织品交易所|仅验证再生含量，轻量版GRS|无社会/化学品要求；仅作含量声明；转化成本低|
+|Fairtrade纺织品|Fairtrade International|Fairtrade棉花及其他纤维|最低价格保障+Fairtrade溢价；农场层面影响最直接|
+|BCI（更好棉花）|BCI（更好棉花倡议）|棉花农场可持续种植（质量提升）|质量平衡体系（非实物隔离）；农场培训为主；不适用于需要实物追溯的声明|
+
+## 
+
+### 8.4.2　交易证书链的运作方式
+
+以GOTS有机棉为例，TC证书链的完整路径为：
+
+* 农场（有机棉）→ 轧棉厂（TC-1）→ 纺纱厂（TC-2）→ 织造/针织厂（TC-3）→ 染整厂（TC-4）→ 成衣厂（TC-5）→ 品牌商收货
+* 链条要求：每一个环节的企业须持有当前有效的SC；在向下游发货前向认证机构申请TC；TC须注明标准、SC编号、产品类别、数量
+  常见DD失误：接受TC而未核验供应商的当前SC有效期；SC已过期但TC仍在使用（TC因此失效）；TC中产品类别与实际货物不符。
+
+### 8.4.3　化学品管理：ZDHC与OEKO-TEX
+
+* ZDHC（零排放有害化学品）：行业计划，目标是消除纺织/鞋类供应链中的有害化学品。企业需使用ZDHC MRSL（制造限制物质清单）合规的化学品，并通过废水检测证明合规
+* OEKO-TEX STANDARD 100：产品层面的化学品安全认证。对成品纺织品进行有害物质检测（按婴儿/皮肤接触/非皮肤接触/装饰品分级）；与ZDHC互补（工艺合规vs产品合规）
+
+### 8.4.4　关键法规
+
+* EU生态设计法规（ESPR）/数字产品护照：将对纺织品设定耐久性、可修复性、再生含量等要求；数字产品护照（DPP）将成为在EU销售纺织品的必备文件（2026年起分批实施）
+* EU强迫劳动法规（2024/3015）：禁止使用强迫劳动生产的产品在EU上市；采购链各环节均须评估强迫劳动风险；高风险时须核查至原材料层级
+* UFLPA（美国）：来自特定地区的棉花适用强迫劳动推定（可反驳）；美国海关已建立针对棉纺织品的专项检查机制
+* 欧洲供应链法律：EU CSDDD、德国LkSG、法国尽职调查法——均明确将服装供应链纳入适用范围
+
+## 8.5　食品、农业与饮料行业
+
+【风险特征】森林砍伐、童工、土地权利侵害和水资源争夺是主导风险。EU森林砍伐法规（EUDR）从2025年起将牛肉、可可、咖啡、棕榈油、大豆、木材、橡胶及其衍生产品的进口商纳入强制合规要求，重塑了行业DD框架。
+
+|认证/工具|适用原材料|机制类型|关键合规要求|
+|-|-|-|-|
+|RSPO（可持续棕榈油圆桌会议）|棕榈油及棕榈核油|CoC认证；从农场到终端产品全链追溯|采购商须持RSPO会员资格；SC/TC双证核验；RSPO-P（物理分离）和RSPO-MB（质量平衡）为主流|
+|RTRS / ProTerra（大豆）|大豆（主要来自南美）|CoC认证；农场→压榨→贸易→食品生产商|与EU EUDR兼容；RTRS主要在巴西/阿根廷有成熟认证基础|
+|雨林联盟（咖啡/可可/茶）|咖啡、可可、茶、香蕉、鲜花|农场认证+供应链追溯|与UTZ于2018年合并；认证标准重视环境保护+农民生计；TC体系正在从批次认证向数字化升级|
+|Fairtrade International|咖啡、可可、糖、香蕉、棉花、黄金|最低价格保障+Fairtrade溢价|溢价专款用于社区发展；对小农组织（合作社）特别友好|
+|EUDR合规|牛肉、可可、咖啡、棕榈油、大豆、木材、橡胶|政府监管+行业自律|运营商须收集农业地块GPS坐标；提交尽职调查声明；不可逆森林砍伐风险须降至最低|
+
+## 
+
+## 8.6　林业、纸张与包装行业
+
+【风险特征】非法采伐、森林砍伐和生物多样性丧失是主导风险。木材是最早建立监管链认证体系的受监管商品。
+
+* FSC CoC：森林管理委员会的监管链认证，是全球最权威的林产品认证体系。认证覆盖森林管理（FSC FM）和监管链（FSC CoC）两个层级，TC+SC双证机制与纺织品行业类似
+* PEFC CoC：森林认证体系认可计划，以相互认可方式背书各国本地森林认证体系（如中国的CFCC）；在欧洲特别活跃，与FSC并列为主流认证
+* 监管框架：EU木材法规（EUTR，自2013年起）禁止将非法采伐木材投放EU市场；2025年起由EU森林砍伐法规（EUDR）进一步强化要求——木材相关产品须提交地理定位数据和DD声明
+* 实操DD要求：每年核验供应商FSC/PEFC CoC证书状态和有效期；检查产品类别与SC是否匹配；对来自高风险地区（东南亚、刚果盆地、亚马逊）的木材进行额外核查
+
+## 8.7　珠宝、钻石与贵金属行业
+
+* RJC CoC（负责任珠宝理事会）：两级认证体系——（1）实践守则（COP）认证：对企业道德、人权、劳工、环境责任进行综合审计；（2）CoC认证：验证黄金、铂族金属（PGMs）、钻石从认证成员流向成员的全链路追溯。2024年版COP/COC已于2025年1月生效，新增ESG披露要求。珠宝行业超2,000个成员
+* 金伯利进程（KPCS）：钻石毛坯的政府间证书体系，是国际贸易中钻石合规的最低门槛。注意：KPCS仅限于毛坯钻石，不覆盖切割/打磨环节；其对「冲突钻石」的定义被批评者认为过窄（仅覆盖反政府武装，不覆盖政府军侵权）
+* Fairmined / Fairtrade Gold：ASM（手工小规模采矿）黄金/白银/铂族金属的矿山到精炼厂CoC认证。认证标准最严格，但认证供应量有限；适合承诺溢价采购ASM黄金的品牌
+* RMAP黄金：RMI对黄金精炼厂的审计计划，与3TG的RMAP类似，侧重于精炼厂层面对冲突黄金和ASM黄金风险的管控
+
+## 8.8　海鲜与水产养殖行业
+
+* MSC（海洋管理理事会）CoC：野生捕捞海鲜认证。渔场须通过MSC渔场标准认证；其后每个加工/贸易环节须持CoC证书；最终产品才可贴MSC蓝色标签
+* ASC（水产养殖管理理事会）CoC：养殖海鲜认证。养殖场须通过ASC农场标准认证；同样通过TC+SC双证体系追溯至零售端
+* BAP（最佳水产养殖实践）：四星认证，覆盖养殖场、孵化场、饲料厂和加工厂。美国市场认可度高；认证层级越多（四星），溯源链完整性越高
+* EU IUU法规：所有进入欧盟的海洋渔业产品须附带捕捞证书（Catch Certificate，CC），证明捕捞作业合法合规；旗国政府签发CC是合规前提
+* 劳工风险：渔船强迫劳动是有据可查的高风险领域，尤其集中于泰国、印度尼西亚等东南亚深海渔业。ILO《渔业工作公约》（C188）为监控框架，但在高风险旗国的执行力度有限
+
+## 8.9　建筑与建材行业
+
+* ResponsibleSteel：钢铁行业矿山到市场的CoC认证。站点级认证覆盖环境、人权、劳工和公司治理；可作为建筑行业钢铁供应链的正面风险降低依据
+* ASI（铝业管理倡议）：铝行业的绩效标准和CoC标准。ASI CoC证书追踪铝锭从采矿→冶炼→加工到终端产品的监管链；适用于建筑铝型材、幕墙等
+* 木材：FSC/PEFC CoC——建筑用木材（结构用材、地板、模板）适用I.6节所述认证框架
+* 移民劳工风险：建筑行业是移民劳工比例最高的行业之一，尤其集中于海湾地区（UAE、卡塔尔）和东南亚的建设项目。卡法拉（Kafala）制度下的劳工风险是合规重点；ILO《强迫劳动议定书》（2014年）和加拿大《供应链透明度法》均将建筑业列为高风险行业
+
+## 8.10　医疗器械与化妆品行业
+
+* 矿产暴露：医疗器械中含有多种关键矿产——钴（外科植入物、电池）、钨（导管、放射屏蔽）、铂族金属（导电接触件、血糖仪）。适用3TG/钴的DD框架
+* 云母（化妆品）：云母广泛用于化妆品（眼影、唇膏、指甲油的闪光/光泽效果）。主要供应国为印度（加尔肯德邦、比哈尔邦）和马达加斯加，童工和非法采矿风险极高。负责任云母倡议（Responsible Mica Initiative，RMI）是目前主要的行业联合应对工具
+* 棕榈衍生物（化妆品）：棕榈油衍生物广泛存在于化妆品配方中（十二烷基硫酸钠、甘油等）。RSPO认证（I.5节）适用于化妆品行业的棕榈油衍生物
+* 监管要求：EU化妆品法规/REACH——禁止特定有害物质，要求成分溯源文件；FDA（美国）——化妆品生产设施须遵守GMP标准；医疗器械的MDR/IVDR法规含有供应链文件要求
+
+# 第九章　AI时代的尽职调查自动化：从人工驱动到智能体系
 
 自动化不能替代尽职调查的核心判断，但可以将大量重复性、数据密集型工作从人工操作转移到系统执行，让合规团队的时间聚焦于需要判断力的决策点。
 
-## 8.1　可以自动化 vs 不可以自动化
+## 9.1　可以自动化 vs 不可以自动化
 
 **高度适合自动化**
 
@@ -667,7 +813,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 • 退出决定和救济行动的设计
 
-## 8.2　公开数据的机器可读来源
+## 9.2　公开数据的机器可读来源
 
 • 制裁名单　OFAC SDN名单：每日更新，XML批量下载。URL：https://www.treasury.gov/ofac/downloads/sdn.xml
 (可用Python的xml.etree库或pandas直接解析)。
@@ -682,7 +828,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 • 年度指数数据　TI-CPI、FSI、Freedom House等年度指数均提供Excel/CSV下载。建议在指数年度发布后自动触发供应商风险评分重新计算。
 
-## 8.3　自动化工作流架构建议
+## 9.3　自动化工作流架构建议
 
 适合中等规模合规团队（3-10人）的自动化架构，无需大型IT投入：
 
@@ -696,7 +842,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 • LLM集成层（政策监控）：使用LLM定期分析OECD、欧盟立法网站、US Federal Register等来源的更新内容，提取与供应链尽职调查相关的法规变化摘要。LLM还可辅助起草政策更新草稿（人工审核后发布），将政策更新周期从数月缩短至数周。
 
-## 8.4　AI工具在风险情报分析中的应用
+## 9.4　AI工具在风险情报分析中的应用
 
 • 新闻监测与摘要：配置LLM定期扫描Global Witness、Business \& Human Rights Resource Centre、IPIS官网的最新报告，提取与你的供应商名单或采购矿区相关的信息，生成每周简报。
 
@@ -708,7 +854,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 ▌重要边界　所有AI生成的分析和文件均须经过合规人员的实质性审核。特别是：供应商上制裁名单的最终确认、风险评级决定、以及整改计划的批准，须由具备资质的人员执行（AI是效率工具，不是决策主体）。
 
-## 8.5　商业平台 vs 自建系统的选择框架
+## 9.5　商业平台 vs 自建系统的选择框架
 
 • 适合商业平台　初创合规体系（<500供应商，团队<5人）：优先使用Assent Compliance（矿产）或EcoVadis（综合ESG）等成品平台。主要考量：是否支持CMRT自动化收集？是否有中文支持？
 
@@ -716,11 +862,11 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 • 自建系统　大型多品类供应链（>5000供应商或特殊行业需求）：考虑自建或深度定制的供应链情报系统，集成ACLED/RMI/OFAC数据管道，与ERP系统（SAP/Oracle）集成，实现采购决策与合规风险的实时联动。
 
-# 第九章　完整工具资源索引
+# 第十章　完整工具资源索引
 
 以下按类别汇总本指南涉及的所有公开工具和数据来源。
 
-## 9.1　冶炼厂/精炼厂审核项目
+## 10.1　冶炼厂/精炼厂审核项目
 
 > RMI RMAP（3TG + 钴合规冶炼厂名单）
   https://www.responsiblemineralsinitiative.org/rmap/conformant-smelters-and-refiners/\\\\\\\*
@@ -737,7 +883,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 珠宝行业完整供应链认证查询，2024版COP/COC已于2025年1月生效
 
-## 9.2　矿山级认证项目
+## 10.2　矿山级认证项目
 
 > IRMA 认证矿区查询
   https://responsiblemining.net/irma-certification/certified-sites/\\\\\\\*
@@ -764,7 +910,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> ASM矿产负责任采购的最大推动机构\*
 
-## 9.3　冲突及高风险地区（CAHRA）识别工具
+## 10.3　冲突及高风险地区（CAHRA）识别工具
 
 > HIIK 冲突晴雨表（海德堡）
   https://hiik.de/conflict-barometer/?lang=en\\\\\\\*
@@ -796,7 +942,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 刚果民主共和国武装团体与矿产融资的深度调查\*
 
-## 9.4　制裁与实体名单（所有提供批量下载）
+## 10.4　制裁与实体名单（所有提供批量下载）
 
 > OpenSanctions（汇聚329个制裁来源，含API）
   https://www.opensanctions.org/\\\\\\\*
@@ -833,7 +979,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 美国海关扣留订单，产品级别的强迫劳动执法记录\*
 
-## 9.5　国家/地区风险指数
+## 10.5　国家/地区风险指数
 
 > Transparency International CPI（含Excel下载）
   https://www.transparency.org/en/cpi\\\\\\\*
@@ -865,7 +1011,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 204件商品x82个国家的童工/强迫劳动清单，2024年大幅扩容\*
 
-## 9.6　矿种专属负责任采购项目
+## 10.6　矿种专属负责任采购项目
 
 > ASI — 铝行业管理倡议（认证实体查询）
   https://aluminium-stewardship.org/asi-certifications/certified-entities/\\\\\\\*
@@ -917,7 +1063,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 珠宝行业完整供应链标准，含Chain of Custody认证，2000+成员\*
 
-## 9.7　ESG与劳工评估平台
+## 10.7　ESG与劳工评估平台
 
 > EcoVadis 供应商可持续性评级
   https://ecovadis.com/\\\\\\\*
@@ -944,7 +1090,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 100家公司的人权绩效基准评估，含供应链尽职调查指标\*
 
-## 9.8　自动化、AI与贸易数据工具
+## 10.8　自动化、AI与贸易数据工具
 
 > OpenSanctions API（制裁筛查API）
   https://www.opensanctions.org/api/\\\\\\\*
@@ -986,7 +1132,7 @@ CSDDD要求企业建立并执行以下六项义务，这些义务与OECD五步DD
 
 -> 9M+企业、30个数据来源的贸易记录，供应链可见度分析\*
 
-## 9.9　主要国际指南文件（仅列出，已广泛可获取）
+## 10.9　主要国际指南文件（仅列出，已广泛可获取）
 
 > OECD DDG for Responsible Business Conduct (2018)
   https://mneguidelines.oecd.org/duediligence/
@@ -1396,635 +1542,6 @@ OECD DDG矿产指南第三步（设计并实施风险应对策略）；供应商
 
 ========================================================================
 
-*本指南为实操参考文件，不构成法律意见。请结合适用司法管辖区的法律顾问建议使用。随法规演进持续更新，最新版本以发布日期为准。*
-
-
-
-# 补充章节　欧盟电池法规（EU Battery Regulation 2023/1542）供应链尽职调查与合规实操
-
-本章是对原指南的重要补充。欧盟电池法规（EUBR）已于2023年8月正式生效，并进入分阶段强制执行期。对于向欧盟市场销售或供应含锂、镍、钴、锰、天然石墨电池产品的中国制造商、品牌商及其供应链，EUBR已成为最紧迫的新增合规义务之一。本章重点覆盖实操层面，不重复OECD DDG基础内容（见原指南各章）。
-
-**▌ 原计划2025年2月起，在欧盟市场销售的EV动力电池和工业电池必须附带碳足迹声明（Carbon Footprint Declaration）。虽有延期，但欧盟仍在推进该法规。**
-
-## E1　法规概览与分阶段执行时间表（原计划）
-
-EU Battery Regulation（Regulation (EU) 2023/1542）取代了2006年电池指令，将动力电池、工业电池和便携式电池的整个生命周期纳入监管，涵盖：碳足迹、尽职调查、再生材料含量、电池护照、终端处理。
-
-以下是各类电池的主要合规节点：
-
-|生效日期|适用电池类型|合规要求|对中国供应链的影响|
-|-|-|-|-|
-|2023年8月17日|全部|法规正式生效；旧电池指令废止|开始准备合规体系|
-|2024年2月18日|EV电池、工业电池（>2kWh）、SLI电池|开始适用碳足迹法规授权条例|启动LCA数据收集|
-|2025年2月18日|EV电池、工业电池（>2kWh）|碳足迹声明（CFD）强制附随产品 尽职调查政策强制要求|✦ 已进入执行期|
-|2025年8月18日|EV电池、工业电池（>2kWh）|碳足迹绩效等级（A-E）标注|碳足迹必须达到特定等级|
-|2026年2月18日|EV电池、工业电池（>2kWh）|电池护照（Battery Passport）强制启用|供应链全链数据采集截止|
-|2027年8月18日|便携式电池（>500Wh）|碳足迹声明强制 尽职调查政策强制|扩大至消费电子电池|
-|2027年2月18日|全部电池|再生材料最低含量要求（Co 16%、Li 6%、Ni 6%、Pb 85%）|供应商原材料来源须可追溯|
-
-# 
-
-## E2　EUBR尽职调查义务：具体要求与OECD DDG的关系
-
-### E2.1　EUBR尽职调查的矿种范围
-
-EUBR尽职调查范围不限于3TG，覆盖所有与电池相关的责任矿产：
-
-|矿种|化学符号|主要来源国|主要风险|
-|-|-|-|-|
-|钴（Cobalt）|Co|刚果（金）为主|ASM童工风险突出；RMAP/CRT适用|
-|天然石墨（Natural Graphite）|C|中国约占65%产量|新疆UFLPA风险；马达加斯加童工风险|
-|锂（Lithium）|Li|智利/阿根廷水权冲突|玻利维亚社区权益|
-|镍（Nickel）|Ni|印度尼西亚/菲律宾环境风险|俄罗斯制裁风险|
-|锰（Manganese）|Mn|南非/加蓬|矽肺病职业健康风险|
-|铜（Copper）|Cu|智利/秘鲁/刚果金|部分EUBR产品链涉及|
-
-## 
-
-### E2.2　EUBR vs. OECD DDG：两者如何叠加
-
-EUBR的尽职调查义务与OECD DDG高度对齐但不完全相同。理解两者的差异有助于避免重复建立体系：
-
-|维度|OECD DDG|EUBR补充要求|
-|-|-|-|
-|矿种范围|3TG + 延伸矿种（各国监管差异）|钴、天然石墨、锂、镍、锰（法定范围）|
-|尽职调查框架|5步循环（可选基准）|法规授权条例规定具体格式（强制）|
-|溯源深度|至冶炼厂/精炼厂层|至采矿层（Battery Passport要求）|
-|碳足迹|未涵盖|碳足迹声明+绩效等级（强制）|
-|电池护照|未涵盖|2026年起强制，含全链溯源数据|
-|再生材料|未涵盖|最低再生含量要求（2027年起）|
-|公开报告|建议年度报告|通过电池护照系统强制公开|
-|执法机构|非强制|EU成员国市场监管机构+CE认证|
-
-
-
-**▌ 建议：以OECD DDG 5步循环为内部管理框架，在此基础上叠加EUBR特定要求（碳足迹、电池护照、再生含量），而非建立两套独立体系。**
-
-## E3　碳足迹声明（Carbon Footprint Declaration, CFD）实操指南
-
-### E3.1　CFD要求什么
-
-碳足迹声明须覆盖电池从原材料开采到出厂交付的全生命周期碳排放（Cradle-to-Gate），以kg CO₂e/kWh（电池容量）为单位，遵循ISO 14067:2018和欧盟授权条例中的PEF（产品环境足迹）方法。
-
-* 原材料开采与加工（含矿山、冶炼、精炼阶段的碳排放）
-* 正极材料、负极材料、电解液、隔膜的制造
-* 电池单体（Cell）制造
-* 电池包（Pack）组装
-* 运输至客户的物流排放
-
-▌ **关键点：碳足迹声明所需的原材料来源数据与尽职调查所需的供应链溯源数据高度重叠。建议统一数据收集流程，避免向同一供应商重复发送问卷。**
-
-### E3.2　数据收集：向供应商要什么
-
-以下是编制CFD所需的供应商数据清单（与尽职调查数据收集合并进行效率更高）：
-
-|数据项目|具体内容|优先级|
-|-|-|-|
-|原材料来源|矿山/矿区名称、国家、GPS坐标（用于碳排放系数查找）|必填|
-|开采方式|LSM/ASM；露天/地下；能源来源（煤/电/混合）|必填|
-|冶炼/精炼能耗|每吨产品的能耗（MWh/t）；能源结构（可再生占比）|必填|
-|运输方式|海运/空运/陆运；运输距离（km）|必填|
-|工厂用电碳排因子|所在国/区域电网碳排因子（gCO₂e/kWh）|建议|
-|包装材料|包装重量、材质|次要|
-
-## 
-
-E3.3　碳足迹绩效等级（A–E）说明
-
-（原计划）2025年8月起，EV电池和工业电池须标注碳足迹绩效等级（A为最优，E为入市门槛）。等级阈值由欧盟委员会基于市场数据每三年更新一次。
-
-▌ **目前等级阈值尚未最终发布（请留意有关通知）。建议现阶段先完成碳足迹数值计算，等级标注待阈值确认后补充。**
-
-## E4　电池护照（Battery Passport）：2026年准备指南
-
-### E4.1　电池护照是什么
-
-电池护照是一个数字化数据载体（通过二维码/RFID访问），随每块电池（>2kWh EV电池和工业电池）进入欧盟市场。护照包含电池的全链信息，供监管机构、回收商、终端用户查验。
-
-### E4.2　电池护照须包含的数据字段
-
-|数据类别|具体字段|状态|
-|-|-|-|
-|基本信息|电池型号、容量（Ah）、电压、制造商、序列号、制造日期|强制|
-|碳足迹|CFD值（kg CO₂e/kWh）、绩效等级、生命周期阶段分解|强制|
-|再生材料含量|钴/锂/镍/铅的再生含量百分比|强制（原计划2027年起）|
-|供应链溯源|原材料来源国、矿山名称/坐标（至采矿层）|强制|
-|尽职调查|尽职调查政策文件链接、SoR列表、RMAP合规状态|强制|
-|电池状态|使用历史、充放电次数、剩余容量（State of Health）|强制（使用阶段）|
-|有害物质|危险物质含量、RoHS合规声明|强制|
-|制造商联系|技术支持、保修、回收渠道|强制|
-|安全信息|运输安全等级、储存要求|强制|
-
-## 
-
-### E4.3　供应链数据采集路线图（为电池护照做准备）
-
-电池护照要求的溯源深度超过CMRT（至采矿层，不仅是冶炼厂层）。以下是2025-2026年的准备路线：
-
-* 2025 Q1-Q2：完成EUBR矿种（Co、Li、Ni、Mn、石墨）的Tier 1供应商数据问卷，获取SoR名单和来源国
-* 2025 Q3：向SoR层（精炼厂/冶炼厂）延伸，收集矿山层级来源数据；对高风险来源委托IPIS/第三方现场核查
-* 2025 Q4：完成碳足迹计算（Cradle-to-Gate），准备CFD文件
-* 2026 Q1：完成电池护照数字系统对接（对接欧盟电池护照注册平台或认可的第三方平台）
-* 2026 Q2（2026年2月强制执行前）：完成护照数据上传，通过CE认证机构合规核查
-
-▌ **关键风险：SoR层往往由贸易商控制，贸易商不愿披露矿山层级信息。建议在合同续签时将矿山来源披露作为合同条款纳入采购协议。**
-
-## E5　再生材料最低含量要求（原计划2027年/2031年）
-
-EUBR要求电池中的关键矿产必须达到最低再生材料含量比例，分两阶段执行：
-
-|矿种|2027年目标（%）|2031年目标（%）|实操挑战|
-|-|-|-|-|
-|钴（Co）|16%|26%|回收钴供应有限；需建立回收来源证明链|
-|锂（Li）|6%|12%|回收锂技术成本高；二次电池来源需证明|
-|镍（Ni）|6%|15%|回收镍质量标准需与原生镍对齐|
-|铅（Pb）|85%|85%|铅酸电池已有成熟回收体系，相对可达|
-
-
-
-实操建议：现阶段（2025年）先建立再生材料供应商名单和来源证明体系，为2027年目标做好数据基础。再生材料来源需提供可靠的回收链证明（如第三方认证回收商证书）。
-
-## E6　EUBR合规体系建设：针对中国制造商的优先行动
-
-### E6.1　立即行动（2025年）
-
-* ✦ 确认是否有产品进入EU市场，落实EUBR适用范围（类型、容量门槛）
-* ✦ 发布书面尽职调查政策，覆盖钴、天然石墨、锂、镍、锰
-* ✦ 启动Tier 1供应商EUBR数据问卷（矿种来源、SoR名称、RMAP状态）
-* ✦ 启动碳足迹数据收集（LCA问卷向关键材料供应商发送）
-* ✦ 指定EUBR合规负责人，建立内部跨部门工作组（采购/质量/法务/可持续）
-
-### E6.2　中期行动（2025-2026年）
-
-* 完成Cradle-to-Gate碳足迹计算，准备CFD文件和绩效等级评估
-* 对钴/石墨高风险来源实施强化DD，委托第三方核查（IPIS/Verité等）
-* 建立矿山层级供应链溯源数据库（用于电池护照）
-* 评估并对接电池护照数字平台（Global Battery Alliance/国内平台）
-* 对未能提供矿山来源数据的贸易商启动替代来源评估
-
-### E6.3　长期行动（2026-2031年）
-
-* 电池护照全面上线，完成CE合规认证
-* 建立再生材料采购渠道，分步实现2027/2031年再生含量目标
-* 将EUBR合规指标纳入供应商年度绩效评估体系
-* 对外发布EUBR合规进展报告（可整合入年度可持续发展报告）
-
-## E7　EUBR与其他法规的协同管理
-
-对于同时面临多个法规要求的企业，以下协同策略可显著降低合规成本：
-
-■ 供应商问卷合并：EUBR矿种数据 + OECD DDG DD信息 + 碳足迹LCA数据合并为单一问卷，减少供应商填报负担
-
-■ CMRT/EMRT复用：CMRT（3TG）+EMRT（Co/Mica）+EUBR问卷（Li/Ni/Mn/石墨）可统一发送；SoR名单互相复用
-
-■ 风险评分整合：原5维风险模型加入"EUBR合规状态"维度（碳足迹提交、护照就绪度、再生含量达标情况）
-
-■ DD政策统一：制定一份覆盖OECD DDG + EUBR + UFLPA + LkSG的综合尽职调查政策，避免多份政策冲突
-
-■ 内部审计整合：EUBR合规审查纳入年度DD审计计划，由同一内部/外部审计团队覆盖
-
-■ 数据平台对接：考虑使用支持EUBR电池护照+CMRT+碳足迹的集成平台（如SupplyShift、Sourcemap等），避免数据孤岛
-
-## E8　EUBR相关工具与资源索引
-
-> EU Battery Regulation\\\*\\\*全文\\\*\\\*  —  EUR-Lex
-
-https://eur-lex.europa.eu/legal-content/EN/TXT/?uri=CELEX:32023R1542
-
-*→ **法规正文，附件**VI*\*（尽职调查要求）尤为关键\*
-
-**> Global Battery Alliance — 电池护照  —  GBA**
-
-https://www.globalbattery.org/battery-passport/
-
-*→ GBA Battery Passport v3.0规范；数字注册平台*
-
-**> RMI Extended Minerals Reporting Template  —  RMI**
-
-https://www.responsibleminerals.org/rmap/emrt
-
-*→ Co/Mica EMRT*\*；可扩展至**Li/Ni/Mn**用于EUBR\*
-
-**> EU Product Environmental Footprint (PEF)  —  EC JRC**
-
-https://eplca.jrc.ec.europa.eu/PEFwebsite.html
-
-\*→ \**碳足迹计算基础*
-
-> ecoinvent\\\*\\\*数据库\\\*\\\*  —  ecoinvent
-
-https://ecoinvent.org/
-
-\*→ \**背景数据库；**LCA**碳排因子来源*
-
-**> IPIS — 刚果矿产地图  —  IPIS**
-
-https://ipisresearch.be/mapping/
-
-\*→ **钴**/\**锡矿山武装团体存在情况核查*
-
-**> Fair Cobalt Alliance  —  FCA**
-
-https://www.faircobalt.com/
-
-*→ DRC手工钴负责任来源认证项目*
-
-**> Responsible Minerals Initiative Cobalt List  —  RMI**
-
-https://www.responsibleminerals.org/rmap/cobalt
-
-*→ RMI合规钴精炼厂名单*
-
-> CATL/BYD\\\*\\\*电池护照参考实践\\\*\\\*  —  \\\*\\\*行业参考\\\*\\\*
-
-N/A（内部项目）
-
-\*→ \**可参考中国主要电池厂商的护照实施进展*
-
-────────────────────────────────────────────────────────────
-
-# 补充章节　供应链图谱工具使用指南（配套工具说明）
-
-第二章详述了供应链图谱绘制的方法。本节为该章的工具配套说明，介绍如何使用本指南配套软件工具套件中的供应链图谱模块，将第二章的方法转化为可操作的数字化图谱。
-
-# SC1　供应链图谱工具的功能定位
-
-配套工具（DD Tools — 供应链图谱模块）提供以下功能：
-
-* 以节点-连线方式可视化展示多层供应商关系（矿山→贸易商→冶炼厂→材料商→零部件商→您的公司）
-* 每个节点标注风险状态（绿/黄/橙/红），状态来源于风险评分模块的输出
-* 自动标记CAHRA来源地、制裁命中节点、RMAP非合规节点
-* 支持导出为PDF/PNG（用于客户报告、内部审计、监管提交）
-* 对接制裁筛查模块，在图谱中实时显示制裁状态变化
-
-# SC2　建立供应链图谱的基本步骤
-
-* 步骤1：在DD Tools中完成机构设置（矿种范围、供应商层级数）
-* 步骤2：在"供应链图谱"模块中逐层录入供应商节点，或批量导入CSV供应商名单
-* 步骤3：建立节点间的供应关系连接，标注每条连线的矿种和大致数量
-* 步骤4：运行风险评分，图谱节点颜色自动更新
-* 步骤5：对红/橙节点启动对应行动（制裁筛查、CMRT核查、CAP启动）
-* 步骤6：完成核查后更新节点状态，图谱实时反映最新合规状态
-
-# SC3　ASM供应链的特殊处理
-
-对于存在ASM矿产暴露的供应链，图谱中的处理原则参见原指南第二章E2.3节（CRAFT Code自评路径）。工具层面的补充建议：
-
-* 在节点属性中标注"ASM来源"标签，触发不同的核查清单（CRAFT Code自评表vs.工业矿山核查清单）
-* ASM节点不要求达到LSM同等溯源精度；记录"已采取与风险相称的合理措施"即符合OECD DDG要求
-* 对ASM节点定期（建议每6个月）更新IPIS地图核查结果，因武装团体控制情况会随时变化
-
-▌ 参见配套工具：DD Tools → **供应链图谱模块（Phase 2功能，预计发布）**
-
-────────────────────────────────────────────────────────────
-
-本补充章节结束。请参阅配套工具套件中的相关模块进行实操。
-
-# 第I章　行业专项尽职调查框架
-
-## I.1　行业专项尽职调查的必要性
-
-前述各章节所介绍的OECD五步法尽职调查框架是一套适用于所有行业的通用方法论。然而，各行业在供应链风险暴露方式、监管要求和主流认证工具方面存在显著差异——电子行业的冲突矿产合规与食品行业的森林砍伐合规，遵循完全不同的行业规则和认证体系。本章系统梳理了全球主要行业的专项DD框架，帮助尽职调查人员将通用方法论与行业专属工具有效结合。
-
-本章涉及三个核心概念，贯穿所有行业认证体系：
-
-* 监管链（Chain of Custody，CoC）：证明受认证材料从认证源头到最终产品全程可追溯的体系。CoC认证通过范围证书（SC）和交易证书（TC）实现，是所有行业认证计划的技术基础。
-* 交易证书（Transaction Certificate，TC）：针对特定批次/货物由认证机构出具的证明文件，证实该批次来自经认证供应商，用于核实具体交易中的认证合规性。
-* 范围证书（Scope Certificate，SC）：证明某一生产设施（工厂、农场、加工厂）已获得特定标准认证，在特定认证范围内有效从事相关业务。TC的有效性以供应商持有有效SC为前提。
-  *实操提示：采购TC证书时，须首先核验供应商的SC是否仍在有效期内。SC过期后，该期间内签发的所有TC均失去法律效力。建议在每个采购季开始前、而非在发货时才核验SC状态。*
-
-## I.2　电子与科技行业
-
-【风险特征】电子行业是冲突矿产监管的核心驱动行业。锡、钽、钨、金（3TG）是电子产品的基础原材料，其中大量来自冲突和高风险地区（CAHRA），尤其集中于刚果民主共和国及其邻国。随着新能源电池需求激增，钴的来源合规性已成为与3TG并重的核心议题。
-
-* 核心认证机构：RBA（负责任商业联盟，前EICC）——电子及ICT行业最主要的供应链合规联盟，成员含苹果、三星、戴尔等主流品牌商
-* 核心工具：CMRT（冲突矿产报告模板，RMI运营）——3TG供应链信息收集的通用工具；CRT（钴报告模板）——钴供应链的对应工具，结构与CMRT平行
-* RMAP（责任矿产保证流程）：对冶炼厂/精炼厂进行第三方审计，是冲突矿产合规的核心验证节点。品牌商须确保其3TG/钴的冶炼厂/精炼厂通过RMAP认证
-* 监管要求：Dodd-Frank法第1502条（美国上市公司）；EU冲突矿产法规2021/821（EU进口商）；UFLPA（棉花/强迫劳动）
-
-## I.3　汽车与新能源电池行业
-
-【风险特征】新能源转型大幅增加了对钴、锂、镍、锰和天然石墨的需求，使汽车行业成为矿产溯源合规最复杂的行业之一。与传统汽车供应链相比，电池材料供应链层级更深（矿山→精炼→前驱体→正负极材料→电芯→电池包），溯源难度极高。
-
-* RBA/Drive Sustainability：Drive Sustainability由BMW、福特、大众等主流车企组成，联合使用SAQ作为供应商自评工具。而RBA的VAP则是供应商审核工具，许多电子、车企均已采用该工具管理供应商
-* EU电池法规（2023/1542）：要求电池护照（Battery Passport）、碳足迹声明、再生内容比例披露；对钴、锂、镍、天然石墨的供应商尽职调查设有强制要求
-* IRMA（负责任采矿保证倡议）：矿山级别的环境和社会标准，被越来越多的主流汽车OEM（宝马、大众、特斯拉等）引用作为矿山评估标准
-* 电池溯源前沿挑战：电芯级追溯是行业公认的技术难题。电池护照将要求追溯至电芯级别，意味着从矿山到整车的全链路数字追踪
-
-## I.4　服装、纺织与鞋类行业
-
-【风险特征】服装行业面临原材料溯源风险（棉花来源、合成纤维再生含量、皮革来源）和工厂层面劳工风险的双重叠加，是全球供应链合规体系最复杂的行业之一。
-
-## I.4.1　监管链认证体系
-
-|认证标准|运营机构|认证范围|核心特点|
-|-|-|-|-|
-|GOTS （全球有机纺织品标准）|GOTS国际工作组|有机纤维含量≥70%（标签级）或≥95%（有机级）|覆盖社会标准+化学品要求，是有机纺织品最严格的综合标准；TC+SC双证体系|
-|OCS （有机含量标准）|纺织品交易所|仅验证有机材料含量，不含社会/化学品标准|比GOTS门槛低；适合中间产品的有机含量声明|
-|GRS （全球再生标准）|纺织品交易所|再生输入材料含量（聚酯、尼龙、棉等）|循环经济核心工具；覆盖社会/化学品要求；须全链条持证|
-|RCS （再生含量声明）|纺织品交易所|仅验证再生含量，轻量版GRS|无社会/化学品要求；仅作含量声明；转化成本低|
-|Fairtrade纺织品|Fairtrade International|Fairtrade棉花及其他纤维|最低价格保障+Fairtrade溢价；农场层面影响最直接|
-|BCI（更好棉花）|BCI（更好棉花倡议）|棉花农场可持续种植（质量提升）|质量平衡体系（非实物隔离）；农场培训为主；不适用于需要实物追溯的声明|
-
-## 
-
-## I.4.2　交易证书链的运作方式
-
-以GOTS有机棉为例，TC证书链的完整路径为：
-
-* 农场（有机棉）→ 轧棉厂（TC-1）→ 纺纱厂（TC-2）→ 织造/针织厂（TC-3）→ 染整厂（TC-4）→ 成衣厂（TC-5）→ 品牌商收货
-* 链条要求：每一个环节的企业须持有当前有效的SC；在向下游发货前向认证机构申请TC；TC须注明标准、SC编号、产品类别、数量
-  常见DD失误：接受TC而未核验供应商的当前SC有效期；SC已过期但TC仍在使用（TC因此失效）；TC中产品类别与实际货物不符。
-
-## I.4.3　化学品管理：ZDHC与OEKO-TEX
-
-* ZDHC（零排放有害化学品）：行业计划，目标是消除纺织/鞋类供应链中的有害化学品。企业需使用ZDHC MRSL（制造限制物质清单）合规的化学品，并通过废水检测证明合规
-* OEKO-TEX STANDARD 100：产品层面的化学品安全认证。对成品纺织品进行有害物质检测（按婴儿/皮肤接触/非皮肤接触/装饰品分级）；与ZDHC互补（工艺合规vs产品合规）
-
-## I.4.4　关键法规
-
-* EU生态设计法规（ESPR）/数字产品护照：将对纺织品设定耐久性、可修复性、再生含量等要求；数字产品护照（DPP）将成为在EU销售纺织品的必备文件（2026年起分批实施）
-* EU强迫劳动法规（2024/3015）：禁止使用强迫劳动生产的产品在EU上市；采购链各环节均须评估强迫劳动风险；高风险时须核查至原材料层级
-* UFLPA（美国）：来自特定地区的棉花适用强迫劳动推定（可反驳）；美国海关已建立针对棉纺织品的专项检查机制
-* 欧洲供应链法律：EU CSDDD、德国LkSG、法国尽职调查法——均明确将服装供应链纳入适用范围
-
-## I.5　食品、农业与饮料行业
-
-【风险特征】森林砍伐、童工、土地权利侵害和水资源争夺是主导风险。EU森林砍伐法规（EUDR）从2025年起将牛肉、可可、咖啡、棕榈油、大豆、木材、橡胶及其衍生产品的进口商纳入强制合规要求，重塑了行业DD框架。
-
-|认证/工具|适用原材料|机制类型|关键合规要求|
-|-|-|-|-|
-|RSPO（可持续棕榈油圆桌会议）|棕榈油及棕榈核油|CoC认证；从农场到终端产品全链追溯|采购商须持RSPO会员资格；SC/TC双证核验；RSPO-P（物理分离）和RSPO-MB（质量平衡）为主流|
-|RTRS / ProTerra（大豆）|大豆（主要来自南美）|CoC认证；农场→压榨→贸易→食品生产商|与EU EUDR兼容；RTRS主要在巴西/阿根廷有成熟认证基础|
-|雨林联盟（咖啡/可可/茶）|咖啡、可可、茶、香蕉、鲜花|农场认证+供应链追溯|与UTZ于2018年合并；认证标准重视环境保护+农民生计；TC体系正在从批次认证向数字化升级|
-|Fairtrade International|咖啡、可可、糖、香蕉、棉花、黄金|最低价格保障+Fairtrade溢价|溢价专款用于社区发展；对小农组织（合作社）特别友好|
-|EUDR合规|牛肉、可可、咖啡、棕榈油、大豆、木材、橡胶|政府监管+行业自律|运营商须收集农业地块GPS坐标；提交尽职调查声明；不可逆森林砍伐风险须降至最低|
-
-## 
-
-## I.6　林业、纸张与包装行业
-
-【风险特征】非法采伐、森林砍伐和生物多样性丧失是主导风险。木材是最早建立监管链认证体系的受监管商品。
-
-* FSC CoC：森林管理委员会的监管链认证，是全球最权威的林产品认证体系。认证覆盖森林管理（FSC FM）和监管链（FSC CoC）两个层级，TC+SC双证机制与纺织品行业类似
-* PEFC CoC：森林认证体系认可计划，以相互认可方式背书各国本地森林认证体系（如中国的CFCC）；在欧洲特别活跃，与FSC并列为主流认证
-* 监管框架：EU木材法规（EUTR，自2013年起）禁止将非法采伐木材投放EU市场；2025年起由EU森林砍伐法规（EUDR）进一步强化要求——木材相关产品须提交地理定位数据和DD声明
-* 实操DD要求：每年核验供应商FSC/PEFC CoC证书状态和有效期；检查产品类别与SC是否匹配；对来自高风险地区（东南亚、刚果盆地、亚马逊）的木材进行额外核查
-
-## I.7　珠宝、钻石与贵金属行业
-
-* RJC CoC（负责任珠宝理事会）：两级认证体系——（1）实践守则（COP）认证：对企业道德、人权、劳工、环境责任进行综合审计；（2）CoC认证：验证黄金、铂族金属（PGMs）、钻石从认证成员流向成员的全链路追溯。2024年版COP/COC已于2025年1月生效，新增ESG披露要求。珠宝行业超2,000个成员
-* 金伯利进程（KPCS）：钻石毛坯的政府间证书体系，是国际贸易中钻石合规的最低门槛。注意：KPCS仅限于毛坯钻石，不覆盖切割/打磨环节；其对「冲突钻石」的定义被批评者认为过窄（仅覆盖反政府武装，不覆盖政府军侵权）
-* Fairmined / Fairtrade Gold：ASM（手工小规模采矿）黄金/白银/铂族金属的矿山到精炼厂CoC认证。认证标准最严格，但认证供应量有限；适合承诺溢价采购ASM黄金的品牌
-* RMAP黄金：RMI对黄金精炼厂的审计计划，与3TG的RMAP类似，侧重于精炼厂层面对冲突黄金和ASM黄金风险的管控
-
-## I.8　海鲜与水产养殖行业
-
-* MSC（海洋管理理事会）CoC：野生捕捞海鲜认证。渔场须通过MSC渔场标准认证；其后每个加工/贸易环节须持CoC证书；最终产品才可贴MSC蓝色标签
-* ASC（水产养殖管理理事会）CoC：养殖海鲜认证。养殖场须通过ASC农场标准认证；同样通过TC+SC双证体系追溯至零售端
-* BAP（最佳水产养殖实践）：四星认证，覆盖养殖场、孵化场、饲料厂和加工厂。美国市场认可度高；认证层级越多（四星），溯源链完整性越高
-* EU IUU法规：所有进入欧盟的海洋渔业产品须附带捕捞证书（Catch Certificate，CC），证明捕捞作业合法合规；旗国政府签发CC是合规前提
-* 劳工风险：渔船强迫劳动是有据可查的高风险领域，尤其集中于泰国、印度尼西亚等东南亚深海渔业。ILO《渔业工作公约》（C188）为监控框架，但在高风险旗国的执行力度有限
-
-## I.9　建筑与建材行业
-
-* ResponsibleSteel：钢铁行业矿山到市场的CoC认证。站点级认证覆盖环境、人权、劳工和公司治理；可作为建筑行业钢铁供应链的正面风险降低依据
-* ASI（铝业管理倡议）：铝行业的绩效标准和CoC标准。ASI CoC证书追踪铝锭从采矿→冶炼→加工到终端产品的监管链；适用于建筑铝型材、幕墙等
-* 木材：FSC/PEFC CoC——建筑用木材（结构用材、地板、模板）适用I.6节所述认证框架
-* 移民劳工风险：建筑行业是移民劳工比例最高的行业之一，尤其集中于海湾地区（UAE、卡塔尔）和东南亚的建设项目。卡法拉（Kafala）制度下的劳工风险是合规重点；ILO《强迫劳动议定书》（2014年）和加拿大《供应链透明度法》均将建筑业列为高风险行业
-
-## I.10　医疗器械与化妆品行业
-
-* 矿产暴露：医疗器械中含有多种关键矿产——钴（外科植入物、电池）、钨（导管、放射屏蔽）、铂族金属（导电接触件、血糖仪）。适用3TG/钴的DD框架
-* 云母（化妆品）：云母广泛用于化妆品（眼影、唇膏、指甲油的闪光/光泽效果）。主要供应国为印度（加尔肯德邦、比哈尔邦）和马达加斯加，童工和非法采矿风险极高。负责任云母倡议（Responsible Mica Initiative，RMI）是目前主要的行业联合应对工具
-* 棕榈衍生物（化妆品）：棕榈油衍生物广泛存在于化妆品配方中（十二烷基硫酸钠、甘油等）。RSPO认证（I.5节）适用于化妆品行业的棕榈油衍生物
-* 监管要求：EU化妆品法规/REACH——禁止特定有害物质，要求成分溯源文件；FDA（美国）——化妆品生产设施须遵守GMP标准；医疗器械的MDR/IVDR法规含有供应链文件要求
-
-## I.11　跨行业社会审核体系
-
-社会审核（Social Audit）在工厂层面评估劳工标准合规情况，与CoC认证计划互补——认证关注材料来源，社会审核关注生产工厂的运营条件。主要跨行业社会审核体系如下：
-
-|审核体系|运营机构|审核内容|主要用户行业|局限性|
-|-|-|-|-|-|
-|SMETA （Sedex道德贸易审核）|Sedex|2 Pillars（劳工+健康安全）或4 Pillars（+环境+商业道德）|服装、消费品、食品、零售|结果互认度高|
-|amfori BSCI|amfori（前FTA）|劳工权利、健康安全、环境、道德|欧洲零售商和品牌广泛采用|年度审核数量仅次于SMETA|
-|Higg FEM/FSLM|Cascale（原SAC，可持续服装联盟）/Worldly|工厂环境/劳工模块；标准化工厂自评+核实|服装、纺织、鞋类为主|自评数据质量参差不齐，多数采用验证后的数据|
-|SA8000|Social Accountability International|国际劳工标准（ILO公约为基础）；认证制，非审核记录|制造业、服装、食品；高合规要求客户|认证工厂数量较少；认证成本较高；但公信力强|
-
-
-
-*重要局限性：社会审核是时点评估，存在已知局限——预先通知导致工厂临时改善、员工被指导如何回答问题、文件造假。审核结果不应作为劳工合规的充分证明，建议配合工人访谈（独立于管理层）和持续监控机制使用。*
-
-## I.12　监管链项目对比速查表
-
-|行业|主要CoC认证计划|机制类型|验证层级|
-|-|-|-|-|
-|电子/科技|CMRT（RMI）；RMAP；RBA VAP|报告模板+冶炼厂审计|冶炼厂/精炼厂|
-|汽车/新能源|CMRT+CRT；IRMA；EU Battery Passport|报告+矿山审计+数字护照|矿山+冶炼厂|
-|服装/纺织|GOTS；GRS；OCS；BCI；Fairtrade|TC+SC双证认证|全链路（农场→品牌商）|
-|食品/农业|RSPO；RTRS；雨林联盟；Fairtrade|TC+SC双证认证+EUDR声明|农场→加工→贸易商|
-|林业/纸张|FSC CoC；PEFC CoC|TC+SC双证认证|森林→加工→终端产品|
-|珠宝/贵金属|RJC CoC；Fairmined；RMAP Gold|会员审计+精炼厂认证|矿山→精炼厂→品牌商|
-|海鲜|MSC CoC；ASC CoC；BAP|TC+SC双证认证|渔场→加工→零售|
-|建筑/钢铝|ResponsibleSteel；ASI CoC|站点认证+CoC证书|矿山→生产→建筑商|
-
-## 
-
-## I.13　监管链项目管理实操清单
-
-无论适用哪种CoC认证计划，以下步骤代表最低尽责管理实践标准：
-
-* 下达采购订单前：核验供应商当前持有的、适用标准的有效SC（检查有效期、认证范围、产品类别是否匹配）；SC过期须停止采购，直至供应商完成证书续展
-* 发货时：向供应商索取针对本批货物的TC。TC须注明：（a）标准名称；（b）供应商SC编号；（c）产品类别和数量；（d）认证机构名称和印章。对照TC核验货物与证书描述是否一致
-* 文件保留：将所有SC和TC保存至少5年；在记录管理系统中将TC与采购订单和发票关联存档，以便接受客户或监管机构审查
-* 年度核验：每个采购季开始前主动检查供应商SC的续期状态；提前60天提醒供应商进行证书续期，避免因SC失效造成合规断链
-* 供应商通知：在供应商合同和采购条款中明确规定：适用的CoC标准、声明类型（物理隔离/质量平衡/Mass Balance）、TC义务，以及证书失效时的通知义务
-* 纠正措施：发现TC缺口（如某批次缺少TC）时，启动整改行动计划（CAP）；评估是否需要向客户、认证机构或监管机构披露；避免在缺口未解决时继续声明认证状态
-
-## I.14　各行业环境认证体系
-
-I.2至I.13节所述CoC认证和社会审核体系侧重于溯源合规和劳工合规。各行业还运行独立的环境认证/标签体系，与CoC体系形成互补。本节按行业梳理主要环境认证要求：
-
-## I.14.1　电子与科技行业
-
-* RoHS（有害物质限制指令）：EU第2011/65/EU号指令，限制10种有害物质（铅、汞、镉、六价铬、PBBs、PBDEs等）在电子电气产品中的使用；中国有对应的RoHS法规（《电子电气产品有害物质限制使用管理办法》）
-* WEEE（废弃电子电气设备指令）：EU第2012/19/EU号指令，要求生产商和进口商资助废旧电子产品回收体系；中国有对应的《废弃电器电子产品回收处理管理条例》
-* EPEAT：电子产品环境评估工具，自愿性生态标签，设金/银/铜分级；常作为政府采购的技术规格要求
-* IEC 62321系列标准：限制物质（RoHS相关）检测方法标准；供应商产品须通过第三方检测机构（SGS、TÜV等）依据该系列标准出具检测报告
-
-## I.14.2　汽车与新能源电池行业
-
-* LCA/ISO 14040/44：矿山到产品的生命周期评估，越来越多的汽车OEM要求电池和关键部件提供LCA报告（碳足迹声明）；EU电池法规将LCA声明列为必要合规文件
-* ELV指令（报废汽车，2000/53/EC，修订中）：限制汽车中有害物质（铅、汞、镉、六价铬）的使用；通过IMDS（国际物料数据系统）管理整车物料数据
-* ISO 14001：环境管理体系认证，是汽车OEM（宝马、丰田、大众、福特）对供应商的普遍强制要求
-
-## I.14.3　服装、纺织与鞋类行业
-
-* bluesign：纺织工厂（染整/印花）层级认证，覆盖资源效率、化学品安全和工人健康安全；是目前最权威的纺织工厂环境认证
-* 摇篮到摇篮（Cradle to Cradle，C2C）：产品层面的循环设计认证，涵盖材料健康、循环性、再生能源使用、水资源管理、社会公平五项指标
-* EU纺织品生态标签：EU官方自愿性环境标签，适用于纺织品和鞋类，覆盖限制物质、耐久性和可持续纤维要求
-* AWS（水资源管理联盟）：站点级水资源管理标准，在纺织湿加工（染色、洗涤）行业尤为重要
-
-## I.14.4　食品、农业与饮料行业
-
-* GlobalG.A.P.：农业良好操作规范（GAP）体系，覆盖食品安全、环境（土壤健康、生物多样性）、工人健康安全；是出口至欧洲零售商的常见前提条件
-* USDA有机/EU有机法规：分别由美国农业部国家有机计划（NOP）和EU有机法规2018/848管辖；要求全链条有机认证，并通过TC证书证明
-* EUDR地理定位合规：EUDR要求运营商收集所有生产农地的GPS坐标；这一要求实质上推动了农业供应链的全面数字化溯源改造，对小农户众多的咖啡/可可产区影响尤为深远
-
-## I.14.5　林业、纸张与包装行业
-
-* EPD（环境产品声明）——木质产品：基于ISO 14025和EN 15804的生命周期环境声明，适用于结构用材、人造板、纸张等；在绿色建筑（LEED、BREEAM）项目中被要求提供
-* FSC生态系统服务/FSC NatureFirst：新版FSC标准将生态系统服务（水源涵养、生物多样性保护）纳入认证评估；将成为采购方评估森林可持续性的更全面工具
-
-## I.14.10　跨行业基线：ISO 14001与水资源管理
-
-ISO 14001环境管理体系认证是跨越所有行业的基线要求，绝大多数跨国品牌商均将ISO 14001列为供应商准入的必要条件。在此基础上，水资源高风险地区（中国华北、印度旁遮普、土耳其、摩洛哥等）的供应商还须关注：
-
-* AWS（水资源管理联盟）：站点级水资源管理认证，适用于用水密集型行业（纺织、食品加工、造纸）
-* CDP Water Security：水资源信息披露框架，A级为最高得分，要求供应商完成详细的水风险评估和治理报告
-* ZDHC废水核查：纺织行业特有要求，纺织工厂须定期提交第三方废水检测报告（按ZDHC废水指南），证明无有害化学品排放超标
-
-# 
-
-# 第J章：环境信息披露义务
-
-## J.1  The New Mandatory Reporting Landscape / 强制披露的新形势
-
-A fundamental shift is underway in environmental compliance: what was once voluntary disclosure is becoming mandatory reporting with legal consequence. Five overlapping frameworks now govern what large companies and increasingly their supply chain partners must disclose about environmental performance, climate risk, and nature dependencies.
-
-环境合规领域正在经历根本性转变：曾经的自愿披露正逐步演变为具有法律效力的强制报告。当前，五大相互交织的框架规范着大型企业以及日益扩展至其供应链伙伴必须披露的环境绩效、气候风险和自然依存度信息。
-
-For Chinese companies, the practical trigger is typically a request from a multinational customer asking them to complete a CDP questionnaire, provide Scope 3 emissions data, or commit to SBTi targets. Understanding the frameworks underlying these requests and the data they require from supply chains is essential preparation.
-
-对于中国企业而言，实际触发点通常是跨国客户要求其填写CDP问卷、提供范围三排放数据或承诺SBTi目标。理解这些请求背后的框架及其对供应链数据的要求，是必要的准备工作。
-
-## J.2  GHG Protocol - The Universal Accounting Foundation / 温室气体核算协议——通用会计基础
-
-The Greenhouse Gas Protocol (GHG Protocol), developed by WRI and WBCSD, is the foundational methodology on which all other climate reporting frameworks are built. Understanding it is a prerequisite for everything in this chapter.
-
-* Scope 1 - Direct Emissions: Scope 1: Direct emissions from sources owned or controlled by the company (e.g., fuel combustion in owned vehicles and machinery, process emissions, fugitive emissions from refrigerants).
-* Scope 2 - Energy Indirect: Scope 2: Indirect emissions from purchased electricity, steam, heat or cooling. Two methods: Location-Based (grid average emission factor) and Market-Based (contractual instruments - RECs, guarantees of origin, supplier-specific emission rates).
-* Scope 3 - Value Chain Emissions: Scope 3: All other indirect emissions across the value chain - both upstream (purchased goods and services, capital goods, fuel and energy activities, transportation, waste) and downstream (use of sold products, end-of-life treatment, investments). Scope 3 typically represents 70-90% of a company total emissions footprint. The GHG Protocol Scope 3 Standard defines 15 categories.
-  Supply chain DD implication: When a customer requests your Scope 3 Category 1 (Purchased Goods \& Services) data, they are asking for the cradle-to-gate GHG emissions embodied in everything they buy from you. Providing this requires either: (a) primary activity data from your own operations and a recognised emission factor database (IPCC, IEA, ecoinvent); or (b) a product-level carbon footprint per ISO 14067.
-
-供应链尽职调查启示：当客户要求提供其范围三第1类（采购商品与服务）数据时，意即客户希望了解其向您采购的所有产品所含的摇篮至大门温室气体排放量。提供此数据需要：(a) 基于本公司运营的原始活动数据及公认排放因子数据库；或 (b) 符合ISO 14067的产品碳足迹。
-
-## J.3  EU CSRD / ESRS - Mandatory EU Sustainability Reporting / 欧盟企业可持续发展报告指令
-
-The Corporate Sustainability Reporting Directive (CSRD, EU 2022/2464) replaces the Non-Financial Reporting Directive (NFRD) and massively expands the scope of mandatory sustainability disclosure in the EU. Reporting is governed by the European Sustainability Reporting Standards (ESRS).
-
-|Wave|In-scope companies|First report (for FY)|
-|-|-|-|
-|Wave 1|EU large companies already subject to NFRD (>500 employees, listed or public interest entities)|FY 2024 (published 2025)|
-|Wave 2|All other large EU companies (>250 employees OR >EUR40M turnover OR >EUR20M total assets, meeting 2 of 3)|FY 2025 (published 2026)|
-|Wave 3|EU-listed SMEs (with opt-out to 2028)|FY 2026 (published 2027)|
-|Wave 4|Non-EU companies with >EUR150M net turnover in EU AND at least one large EU subsidiary or branch|FY 2028 (published 2029)|
-
-
-
-ESRS relevant to supply chain environmental DD:
-
-* ESRS E1 - Climate: ESRS E1: Climate Change - Scope 1, 2, 3 GHG emissions; transition plan; TCFD-aligned climate risk assessment. Scope 3 Category 1 requires supplier-level data.
-* ESRS E2 - Pollution: ESRS E2: Pollution - Substances of concern in production and products; REACH-relevant for manufacturing supply chains.
-* ESRS E3 - Water: ESRS E3: Water \& Marine Resources - Water consumption, water risk, marine resource impacts. Requires supply chain water data for significant upstream water use.
-* ESRS E4 - Biodiversity: ESRS E4: Biodiversity \& Ecosystems - Nature-related dependencies and impacts; deforestation (links to EUDR); mine-site biodiversity (links to IRMA). TNFD-aligned.
-* ESRS E5 - Circular Economy: ESRS E5: Resource Use \& Circular Economy - Material efficiency, waste, product end-of-life design. Relevant to packaging suppliers and WEEE/ELV compliance.
-* ESRS S2 - Supply Chain Workers: ESRS S2: Workers in the Value Chain - Supply chain labor conditions, living wage, safe working conditions. The social audit and CoC programmes in Chapter I directly support ESRS S2 disclosure.
-  Chinese supplier DD implication: Wave 4 brings Chinese companies with large EU operations into direct CSRD scope by 2028. However, the indirect effect is immediate - EU customers in Waves 1-3 must report their supply chain data (ESRS E1 Scope 3, ESRS S2 value chain workers), which means they will cascade data requests to Chinese suppliers regardless of whether those suppliers are directly regulated.
-
-中国供应商尽职调查启示：第四波将在欧盟设有大型业务的中国企业纳入CSRD直接适用范围（2028年起）。然而，间接影响是即时的——处于第一至三波的欧盟客户须披露其供应链数据，这意味着它们将向中国供应商层层传导数据收集要求，无论这些供应商是否直接受到监管。
-
-## J.4  ISSB IFRS S1 / S2 - Global Climate Disclosure Baseline / 国际可持续发展信息披露准则
-
-The International Sustainability Standards Board (ISSB), under the IFRS Foundation, published IFRS S1 (General Requirements) and IFRS S2 (Climate-related Disclosures) in June 2023. These establish the global baseline for investor-facing sustainability disclosure.
-
-* Jurisdictional Adoption: Scope: Listed companies in jurisdictions that adopt ISSB standards. Adopted or in adoption process: UK (from FY2025), Australia (from FY2025), Singapore (from FY2025), Japan (listed companies from FY2025), Canada (consultation), Hong Kong (listed issuers from FY2025).
-* IFRS S2 Requirements: IFRS S2 requires disclosure of: (1) governance over climate risks and opportunities; (2) climate-related risks and opportunities and their effects; (3) strategy and transition planning; (4) risk management processes; (5) Scope 1, 2, 3 GHG metrics and climate-related targets. Incorporates TCFD recommendations.
-* Supply Chain Implication: Supply chain DD implication: Scope 3 emissions data from supply chain is required. Companies reporting under IFRS S2 will escalate supplier data requests. Chinese companies listed on HKEx, Singapore Exchange, or with global parent companies are directly affected.
-
-## J.5  CDP - Supply Chain Programme / 碳披露项目——供应链项目
-
-CDP (formerly Carbon Disclosure Project) runs the world largest environmental disclosure system. Over 23,000 companies reported through CDP in 2023. The CDP Supply Chain Programme is the mechanism through which large companies collect environmental data from their suppliers.
-
-* CDP Supply Chain Programme Mechanics: How it works: CDP member companies (typically large buyers: Apple, BMW, Walmart, IKEA, Samsung) send CDP questionnaire requests to their suppliers. Suppliers respond via the CDP online platform. Responses are scored A-D (A = Leadership, D = Disclosure only). Buyer members use supplier scores to inform procurement decisions and track progress.
-* Three Questionnaire Streams: Three questionnaires: Climate Change (Scope 1/2/3, targets, governance, risks); Water Security (water withdrawal, water risks, targets); Forests (deforestation commodities - timber, palm oil, soy, cattle, rubber, cocoa, coffee). Chinese suppliers to multinational brands will typically receive the Climate Change questionnaire first.
-* Supplier Engagement Rating: Supplier Engagement Rating (SER): CDP separately scores large companies on how well they engage their supply chains - pushing buyers to not just disclose their own Scope 3 but actively support supplier disclosure capacity. Companies with poor SER scores face investor scrutiny.
-* Practical Steps: Practical preparation for Chinese suppliers: (1) Establish GHG inventory (Scope 1 + 2 minimum) per GHG Protocol; (2) Measure energy consumption by source (electricity, natural gas, diesel, coal); (3) Register on CDP platform (free for suppliers responding to customer requests); (4) Target a minimum C (Awareness) score in year 1; progress to B (Management) in year 2.
-
-## J.6  SBTi - Science Based Targets / 科学碳目标倡议
-
-The Science Based Targets initiative (SBTi) enables companies to set GHG reduction targets aligned with the Paris Agreement 1.5 degrees C pathway. Over 7,000 companies have committed globally (2024). SBTi is increasingly a condition of supply chain partnerships with European and North American multinationals.
-
-* SBTi Corporate Net-Zero: Corporate Net-Zero Standard (2021): Requires near-term targets (2030 or earlier, covering Scope 1+2+material Scope 3) and long-term net-zero targets (2050) with residual emissions neutralised by permanent carbon removal. Scope 3 targets required if Scope 3 >40% of total emissions.
-* SBTi FLAG - Land Sector: SBTi FLAG (Forests, Land \& Agriculture): Sector-specific guidance for food, agriculture, and forestry companies. Requires companies to set science-based targets covering land-sector emissions and removals, including supply chain deforestation commitments aligned with EUDR.
-* SBTi SME Route: SBTi for SMEs (SME Route): Simplified target-setting pathway for companies with <500 employees. Commit to a 50% absolute reduction in Scope 1+2 emissions by 2030. No sector-specific guidance required.
-* Supply Chain Implication: Supply chain DD implication: Large companies with SBTi-validated Scope 3 targets must demonstrate progress on supplier emissions reductions. This drives supplier engagement programmes - suppliers are asked to (a) disclose emissions via CDP, (b) set their own SBTi targets, and (c) demonstrate year-on-year reduction. Suppliers that cannot demonstrate progress risk being de-selected.
-
-## J.7  TCFD - Climate Risk Disclosure / 气候相关财务信息披露工作组
-
-The Task Force on Climate-related Financial Disclosures (TCFD), established by the FSB in 2015, published its recommendations in 2017. TCFD has become the global standard for climate risk disclosure to investors and lenders. It is now embedded in ISSB IFRS S2, EU CSRD ESRS E1, and the UK mandatory TCFD reporting regime.
-
-* Four Pillars: Governance: Board-level oversight of climate risks and opportunities; management roles and responsibilities.
-* Four Pillars: Strategy: Climate risks (physical risks - acute and chronic; transition risks - policy, technology, market, reputation) and opportunities. Scenario analysis using at least two scenarios (e.g., 1.5 degrees C and 3 degrees C). Assess impact on business model, strategy, and financial planning.
-* Four Pillars: Risk Management: Processes for identifying, assessing and managing climate risks; integration into overall risk management.
-* Four Pillars: Metrics \& Targets: Scope 1, 2, 3 GHG; climate-related targets; internal carbon price if used.
-  Supply chain DD implication: TCFD physical risk assessment requires mapping of supply chain exposure to climate hazards (floods, heat, drought, storms) by geography. This links directly to the country risk intelligence in Chapter 3 of this guidance and requires supply chain mapping (Chapter SC) as a prerequisite.
-
-## J.8  TNFD - Nature \& Biodiversity Disclosure / 自然相关财务信息披露工作组
-
-The Taskforce on Nature-related Financial Disclosures (TNFD) published its final recommendations in September 2023, using TCFD as a template. TNFD addresses biodiversity loss, ecosystem degradation, and nature-related financial risks - the nature equivalent of TCFD.
-
-* TNFD LEAP Approach: The LEAP Approach: TNFD core methodology - Locate (footprint and interface with nature), Evaluate (dependencies and impacts), Assess (material risks and opportunities), Prepare (strategy, disclosure, targets). Requires supply chain nature footprint mapping.
-* Supply Chain Linkage: Linkage to supply chain DD: TNFD specifically requires assessment of supply chain biodiversity impacts. For companies sourcing from high-biodiversity-value areas - tropical forests (cocoa, rubber, palm oil), ocean fisheries, mining in critical biodiversity areas - TNFD disclosure will require the CoC and certification data from Chapter I as supporting evidence.
-* SBTN: SBTN (Science Based Targets for Nature): Parallel to SBTi but for nature. Companies set targets to halt and reverse nature loss by 2030. In early adoption phase (2024-2025). High relevance for food, agriculture, forestry, and mining companies.
-
-## J.9  Integrated Practical Roadmap / 综合实施路线图
-
-The following roadmap sequences environmental reporting preparation for a company that is currently facing supplier data requests from multinational customers:
-
-|Phase|Actions|Timeframe|Output|
-|-|-|-|-|
-|Phase 1: Baseline Inventory|1. Measure Scope 1 energy consumption (gas, diesel, coal, process fuels) 2. Collect electricity invoices; identify grid emission factor 3. Calculate Scope 1+2 GHG per GHG Protocol 4. Identify top 5 purchased material/energy categories for Scope 3 Category 1 estimate|Months 1-3|GHG inventory report; energy data register|
-|Phase 2: CDP Response|1. Register on CDP platform (app.cdp.net) 2. Respond to customer CDP requests (Climate Change questionnaire minimum) 3. Target score: C (Awareness) - requires inventory data and basic governance description 4. Identify water risk using WRI Aqueduct; consider CDP Water if in water-stressed basin|Months 3-6|CDP submission; score letter from CDP|
-|Phase 3: Certification Baseline|1. Achieve/maintain ISO 14001 certification 2. For textile/food/electronics: achieve industry-specific environmental certification (bluesign, GlobalG.A.P., RoHS DoC) 3. Implement AWS water assessment if in high water-risk area|Months 4-12|ISO 14001 certificate; industry scheme certificate|
-|Phase 4: SBTi Commitment|1. Submit SBTi commitment letter (free, 24-month validation window) 2. Develop near-term Scope 1+2 target (absolute reduction % by 2030) 3. Assess Scope 3 materiality - if Category 1 or Category 11 >40% of total, set Scope 3 target 4. For food/land sector companies: engage with SBTi FLAG methodology|Months 6-18|SBTi commitment; validated target|
-|Phase 5: CSRD/ISSB Readiness|1. Map which customer/parent is subject to CSRD waves 1-3 2. Identify which ESRS standards will generate upstream data requests (E1 Scope 3, S2 supply chain workers) 3. Ensure supply chain CoC records (Chapter I) are structured to support ESRS E4 (biodiversity) and E5 (circular economy) queries 4. For HKEx/SGX-listed companies: prepare IFRS S2 disclosure process|Months 12-36|CSRD readiness gap assessment; ISSB disclosure draft|
-|Phase 6: TNFD / Nature|1. Conduct TNFD LEAP assessment for highest-nature-impact supply chain locations 2. Identify FSC/RSPO/MSC certifications already held - these serve as TNFD evidence 3. Engage with SBTN if in food, agriculture, forestry or mining sectors|Months 18-36|TNFD disclosure; SBTN commitment (if applicable)|
-
-## 
-
-## J.10  What Chinese Exporters and Manufacturers Need to Know / 中国出口商与制造商须知
-
-China own mandatory sustainability reporting is also developing rapidly, creating a two-sided compliance pressure for Chinese companies:
-
-* China Mandatory Disclosure: CSRC (China Securities Regulatory Commission) issued mandatory ESG disclosure guidelines for listed companies in 2024. A- and H-share listed companies on SSE, SZSE and HKEx face phased mandatory reporting from 2026. This parallels CSRD but follows Chinese national standards (GB/T series).
-* China ETS / CCER: CCER (China Certified Emission Reductions) and the national ETS (Emission Trading Scheme): China carbon market now covers power, steel, and cement. Expansion to aluminium, building materials, petrochemicals and aviation is planned. Companies in covered sectors must monitor and report verified emissions annually.
-* HKEx ESG Reporting: HKEx ESG Reporting Guide (revised 2023): Hong Kong-listed companies must report Scope 1, 2, and significant Scope 3 emissions; climate-related risks per TCFD; biodiversity impacts. Key Scope 3 categories that require supplier data: Category 1 (purchased goods), Category 3 (energy), Category 4 (upstream transport).
-* Practical Priority for All Chinese Exporters: Customer data cascade: Even companies not subject to any mandatory scheme will receive requests if they supply to EU, US, Japanese, or Korean multinationals. The immediate practical steps are: (1) build a GHG inventory; (2) respond to CDP if requested; (3) achieve ISO 14001; (4) collect industry-specific certifications relevant to your product category.
-
-## J.11  Framework Comparison and Overlap / 框架对比与交叉
-
-
-
-|Framework|Mandatory or Voluntary|Scope|Supply Chain Data Required?|Linked Standards|Who It Affects (China)|
-|-|-|-|-|-|-|
-|GHG Protocol|Voluntary (methodology)|Global|Yes - Scope 3 Cat 1 requires supplier data|Foundation of all others|All exporters facing data requests|
-|CDP|Voluntary (customer-driven)|Global|Yes - supplier questionnaires|GHG Protocol, TCFD|Suppliers to EU/US/JP multinationals|
-|SBTi|Voluntary (investor/customer-driven)|Global|Yes - Scope 3 target requires supplier engagement|GHG Protocol, ISSB|Companies with SBTi-committed customers|
-|TCFD|Mandatory in UK, NZ, HK, SG; embedded in CSRD/ISSB|Global|Yes - Scope 3, supply chain physical risk|ISSB S2, CSRD E1|HKEx-listed; EU customer supply chains|
-|CSRD / ESRS|Mandatory (EU + large non-EU)|EU + global supply chains|Yes - ESRS E1 Scope 3, ESRS S2 value chain|GHG Protocol, TCFD, TNFD|Wave 4: Chinese co. with >EUR150M EU turnover from 2028; all suppliers to EU Wave 1-3 companies|
-|ISSB IFRS S1/S2|Mandatory in HK, SG, AU, UK, JP|Global (adopted jurisdictions)|Yes - Scope 3|GHG Protocol, TCFD|HKEx-listed (from FY2025); SGX-listed|
-|TNFD|Voluntary (early adoption)|Global|Yes - LEAP supply chain nature footprint|CSRD E4, SBTN|Food, agriculture, forestry, mining sectors|
-|China ETS|Mandatory (covered sectors in China)|China|No (facility-level only)|GHG Protocol, ISO 14064|Power, steel, cement manufacturers in China|
-|HKEx ESG|Mandatory (HK-listed companies)|HK-listed|Yes - Scope 3 significant categories|TCFD, GHG Protocol|HKEx-listed Chinese companies|
-
-
-
-Note: CSRD ESRS, ISSB IFRS S2, and TCFD are technically separate frameworks but substantially converged. A company that prepares a TCFD-aligned climate disclosure meets the core requirements of IFRS S2 and satisfies most of ESRS E1. Avoid building separate reporting processes - a single integrated data collection process can feed all three.
-
-注：CSRD ESRS、ISSB IFRS S2和TCFD是相互独立但高度趋同的框架。符合TCFD框架的气候信息披露，基本满足IFRS S2核心要求，并可覆盖ESRS E1的绝大部分内容。建议采用统一的综合数据收集流程，避免各框架单独建立报告流程。
-
----
 
 ## 本指南配套模板
 
@@ -2079,3 +1596,6 @@ Note: CSRD ESRS, ISSB IFRS S2, and TCFD are technically separate frameworks but 
 📖 完整提示词库与进阶技巧 → [用 AI 生成定制化合规文件](/zh/ai-prompts)
 :::
 
+*本指南为实操参考文件，不构成法律意见。请结合适用司法管辖区的法律顾问建议使用。随法规演进持续更新，最新版本以发布日期为准。*
+
+---

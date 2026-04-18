@@ -7,10 +7,10 @@
 供应链尽责管理系列
 2025年版
 
-本术语表配套《供应链尽责管理实操指南》系列全套六册指南使用：《尽职调查审核指南》《劳工与社会责任审核指南》《环境合规审核指南》《供应链安全、网络与数据合规审核指南》《知识产权保护审核指南》《商业道德财务韧性审核指南》
+本术语表配套《供应链尽责管理实操指南》系列全套六册指南使用：《劳工与社会责任审核指南》《环境合规审核指南》《供应链安全、网络与数据合规审核指南》《知识产权保护审核指南》《商业道德财务韧性审核指南》《尽职调查审核指南》
 
-*术语按主题分类，每条目含中文名称、英文原名及简明定义。
-如需比较相关认证标准，请参阅 standardsmap.org。*
+*术语按主题分类，每条目含中文名称、英文原名及简明定义。*
+
 
 # 一、尽职调查基础
 
@@ -46,7 +46,7 @@ OECD DDG规定的标准流程：①建立强有力的公司管理系统；②识
 
 识别对企业财务绩效或对环境/社会产生重大影响的ESG议题的过程。CSRD/ESRS要求"双重重要性"评估（见第七类：报告与披露框架）。
 
-## 延伸生产者责任（Extended Producer Responsibility (EPR)）
+## 生产者责任延伸（Extended Producer Responsibility (EPR)）
 
 要求产品生产商对产品全生命周期（包括废弃阶段）承担环境责任的政策工具，典型应用包括欧盟WEEE（电子废物回收）和包装废物回收指令。
 
@@ -86,7 +86,7 @@ OECD DDG定义的存在武装冲突、社会动荡或人权侵犯风险的区域
 
 ## RMAP合规状态（Responsible Minerals Assurance Process (RMAP)）
 
-负责任矿产倡议（RMI）运营的冶炼厂/精炼厂审计项目，是唯一获OECD和《多德-弗兰克法案》认可的3TG及钴冶炼厂认证体系。合规状态分为：Conformant（合规）/ Active（审计进行中）/ Non-Conformant（不合规）。
+负责任矿产倡议（RMI）运营的冶炼厂/精炼厂审核项目，是唯一获OECD和《多德-弗兰克法案》认可的3TG及钴冶炼厂认证体系。合规状态分为：Conformant（合规）/ Active（审核进行中）/ Non-Conformant（不合规）。
 
 ## CMRT（Conflict Minerals Reporting Template）
 
@@ -136,7 +136,7 @@ GHG Protocol定义的排放核算边界：Scope 1（企业直接排放，如燃�
 
 ## 产品碳足迹（Product Carbon Footprint (PCF)）
 
-产品全生命周期（从原材料提取到废弃处置）内GHG排放总量，以kg CO₂e/功能单位表示。核算标准：ISO 14067；欧盟官方方法论：PEF（产品环境足迹）。也叫做CFP, Carbon Footprint of a Product.
+产品全生命周期（从原材料提取到废弃处置）内GHG排放总量，以kg CO₂e/功能单位表示。核算标准：ISO 14067；欧盟官方方法论：PEF（产品环境足迹）。PCF也叫做CFP, Carbon Footprint of a Product.
 
 ## 生命周期评估（Life Cycle Assessment (LCA)）
 
@@ -144,7 +144,7 @@ GHG Protocol定义的排放核算边界：Scope 1（企业直接排放，如燃�
 
 ## 碳边境调节机制（Carbon Border Adjustment Mechanism (CBAM)）
 
-欧盟法规（EU 2023/956），要求进口高碳商品（钢铁、铝、水泥、化肥、电力、氢）的贸易商购买与欧盟碳价等价的碳证书，以防止碳泄漏。2026年正式执行（过渡期2023-2025年）。
+欧盟法规（EU 2023/956），要求进口高碳商品（钢铁、铝、水泥、化肥、电力、氢）的贸易商购买与欧盟碳价等价的碳证书，以防止碳泄漏。2026年正式执行。
 
 ## 全国碳排放权交易市场（China National Emissions Trading Scheme (ETS)）
 
@@ -152,7 +152,7 @@ GHG Protocol定义的排放核算边界：Scope 1（企业直接排放，如燃�
 
 ## 可再生能源证书（Renewable Energy Certificate (REC) / 绿证）
 
-证明1兆瓦时（MWh）电力来自可再生能源的凭证，中国称"绿色电力证书（绿证）"。企业可通过购买绿证实现Scope 2电力排放的市场化核算。
+证明1兆瓦时（MWh）电力来自可再生能源的凭证，中国称"绿色电力证书（绿证）"。企业可通过购买绿证实现Scope 2电力排放的市场化核算（时下也被称之为”漂绿“）。
 
 ## RE100（100%可再生电力）
 
@@ -516,7 +516,7 @@ RBA开发的供应商审核标准流程，由RBA认证审核机构执行，审�
 
 ## 负责任矿产倡议（Responsible Minerals Initiative (RMI)）
 
-电子和汽车行业主导的多方倡议，开发CMRT/EMRT模板、运营RMAP冶炼厂审计项目。官网：responsiblemineralsinitiative.org。
+电子和汽车行业主导的多方倡议，开发CMRT/EMRT模板、运营RMAP冶炼厂审核项目。官网：responsiblemineralsinitiative.org。
 
 ## 生态环境部（Ministry of Ecology and Environment (MEE)）
 
@@ -680,7 +680,7 @@ Textile Exchange是非营利组织，管理GRS（全球回收标准）、OCS（�
 |EMAS|欧盟生态管理与审核计划（Eco-Management and Audit Scheme）|
 |EPD|环境产品声明（Environmental Product Declaration）|
 |EPEAT|电子产品环境评估工具（Electronic Product Environmental Assessment Tool）|
-|EPR|延伸生产者责任（Extended Producer Responsibility）|
+|EPR|生产者责任延伸（Extended Producer Responsibility）|
 |ESPR|生态设计可持续产品法规（Ecodesign for Sustainable Products Regulation）|
 |ESRS|欧洲可持续发展报告准则（European Sustainability Reporting Standards）|
 |ETS|排放交易体系（Emissions Trading Scheme）|

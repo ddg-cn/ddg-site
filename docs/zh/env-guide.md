@@ -67,7 +67,7 @@
 * 范围二（Scope 2）：外购电力、热力、蒸汽、冷量产生的间接排放
 * 范围三（Scope 3）：价值链上下游的其他间接排放，共15个子类别。对制造型工厂而言，最相关的为：采购原材料（Category 1）、物流运输（Category 4/9）、产品使用阶段（Category 11）
 
-!\[GHG Protocol三大排放范围边界示意图（Scope 1/2/3）](/images/env/ghg-scope-diagram.png)
+![GHG Protocol三大排放范围边界示意图（Scope 1/2/3）](/images/env/ghg-scope-diagram.png)
 
 *图1 | GHG Protocol三大排放范围边界示意图。资料来源：GHG Protocol（ghgprotocol.org）*
 
@@ -161,13 +161,13 @@
 
 \*访问链接（获取最新交互式图表）：\**https://ourworldindata.org/renewable-energy*
 
-!\[企业能源管理四级优先级框架](/images/env/energy-priority-hierarchy.png)
-
-*图2 | 企业能源管理四级优先级框架。减少用量和提高能效优先于采购可再生能源，碳补偿为最后手段。*
-
 ## 2.1 概述
 
 能源管理是温室气体控制的最直接抓手，同时也是工厂降本增效的核心环节。节能合规既是法律义务，也是买家ESG要求中最容易量化和比较的指标之一。
+
+![企业能源管理四级优先级框架](/images/env/energy-priority-hierarchy.png)
+
+*图2 | 企业能源管理四级优先级框架。减少用量和提高能效优先于采购可再生能源，碳补偿为最后手段。*
 
 ## 2.2 法律与标准框架
 
@@ -220,13 +220,13 @@
 
 # 第三章　水资源与废水管理
 
-!\[水风险评估维度与工厂用水管理优先级](/images/env/water-risk-dimensions.png)
-
-*图3 | **水风险**评估维度（左）与工厂用水管理优先级（右）。<b>水风险</b>数据参考：WRI Aqueduct（wri.org/aqueduct）*
-
 ## 3.1 概述
 
 水资源风险正在成为供应链中继气候之后的第二大环境议题。CDP水安全（CDP Water Security）问卷、AWS认证要求、以及欧盟ESRS E3（水与海洋资源）强制披露，都要求企业掌握其供应链在水资源敏感地区的暴露程度。对于纺织印染、电子清洗、食品饮料等用水密集型行业工厂，废水排放合规是最高优先级的环境合规事项。
+
+![水风险评估维度与工厂用水管理优先级](/images/env/water-risk-dimensions.png)
+
+*图3 | **水风险**评估维度（左）与工厂用水管理优先级（右）。<b>水风险</b>数据参考：WRI Aqueduct（wri.org/aqueduct）*
 
 ## 3.2 法律与标准框架
 
@@ -290,6 +290,7 @@
 
 **📊 Our World in Data 参考图表**\*\*
 **空气污染：全球死亡负担与PM2.5暴露**
+
 \*\*展示室外及室内空气污染导致的全球死亡人数及各国PM2.5平均暴露水平，帮助理解工业废气排放对公共健康的宏观影响。
 
 \*访问链接（获取最新交互式图表）：\**https://ourworldindata.org/air-pollution*
@@ -344,6 +345,7 @@
 4. 去年贵厂废气是否有超标情况？如有，原因是什么？如何处理的？
 5. 重污染天气预警时，贵厂有什么应对措施？
 
+
 # 第五章　废物与危险物质管理
 
 **📊 Our World in Data 参考图表**\*\*
@@ -365,7 +367,7 @@
 * 《危险废物转移联单管理办法》（MEE）：危废转移须使用全国危废转移联单系统（电子联单）
 * IFC EHS通用准则：废物管理层级（减量→再用→再生→回收→处置）；危废识别与管理
 
-!\[废物管理五级优先层级（Waste Hierarchy）](/images/env/waste-hierarchy.png)
+![废物管理五级优先层级（Waste Hierarchy）](/images/env/waste-hierarchy.png)
 
 *图4 | 废物管理五级优先层级（Waste Hierarchy）。符合EU废物框架指令（2008/98/EC）及中国《固废法》减量化原则。*
 
@@ -408,6 +410,7 @@
 4. （对仓库管理员）这批废桶里原来装的是什么？准备怎么处理？
 5. 今年向政府申报的危废产生量是多少？我们能核对一下台账吗？
 6. 贵厂是否设立减排目标？
+
 
 # 第六章　化学品与受限物质
 
@@ -516,7 +519,7 @@ PFAS在常规化学品审核中容易被忽视（因其无色无味、用量极�
 * 《欧盟反毁林法规》（EUDR，EU 2023/1115）：7类商品（牛、可可、咖啡、棕榈油、大豆、木材、橡胶）及衍生品须提交尽职调查声明（DDS）；证明产品来自2020年12月31日之后未发生毁林的土地；要求GPS地块坐标
 * FSC/PEFC认证：森林管理认证中包含对生物多样性保护区的识别和保护要求（参见第I章第I.6节）
 
-!\[TNFD LEAP四步评估方法](/images/env/tnfd-leap-framework.png)
+![TNFD LEAP四步评估方法](/images/env/tnfd-leap-framework.png)
 
 *图5 | TNFD LEAP四步评估方法。资料来源：TNFD Framework v1.0（**tnfd.global**）*
 
@@ -545,12 +548,13 @@ PFAS在常规化学品审核中容易被忽视（因其无色无味、用量极�
 3. （适用EUDR的商品采购方）您是否了解欧盟反毁林法规？贵公司向欧盟出口的商品中是否涉及七类受控商品？
 4. 贵厂厂区附近有没有自然保护区或生态保护红线？厂区建设前做过环评吗？
 
+
 # 第八章　循环经济与产品责任
 
 ## 8.1 概述
 
 循环经济要求将“取用-制造-废弃”的线性生产模式转向“减少-再用-再生”的循环模式。对工厂而言，最直接的影响来自产品设计要求（可拆解、可回收）、包装减量和可持续材料要求，以及生产者延伸责任制度（EPR）。
-!\[循环经济模型示意图](/images/env/circular-economy-model.png)
+![循环经济模型示意图](/images/env/circular-economy-model.png)
 
 *图6 | 循环经济模型示意图。参考：艾伦·麦克阿瑟基金会蝴蝶图框架（ellenmacarthurfoundation.org）及EU ESPR法规。*
 
@@ -575,9 +579,10 @@ PFAS在常规化学品审核中容易被忽视（因其无色无味、用量极�
 2. 向欧盟出口的产品包装是否符合欧盟包装法规的要求？是否了解数字产品护照的要求？
 3. 贵厂有没有做过产品碳足迹（PCF）或生命周期评估（LCA）？客户是否有要求？
 
+
 # 第九章　环境管理体系
 
-!\[ISO 14001:2015 PDCA持续改进循环](/images/env/iso14001-pdca.png)
+![ISO 14001:2015 PDCA持续改进循环](/images/env/iso14001-pdca.png)
 
 *图7 | ISO 14001:2015 PDCA持续改进循环。资料来源：ISO 14001:2015标准框架（iso.org）*
 
@@ -793,9 +798,9 @@ H\&M通过《供应商可持续发展要求》（Sustainability Requirements for
 
 # 第三部分　跨行业环境认证与披露体系
 
-!\[主流环境框架七维度覆盖示意雷达图](/images/env/standards-radar-chart.png)
+![主流环境框架七维度覆盖示意雷达图](/images/env/standards-radar-chart.png)
 
-*图10 | 主流环境**框架七维**度覆盖示意雷达图（评分为相对强度，仅供参考对比）。如需完整标准比较，<b>请访问</b> standardsmap.org*
+*图8 | 主流环境**框架七维**度覆盖示意雷达图（评分为相对强度，仅供参考对比）。如需完整标准比较，<b>请访问</b> standardsmap.org*
 
 本部分系统梳理跨越多个行业的主流环境认证与信息披露框架，帮助审核员理解其认证逻辑、适用场景及与审核工作的关联。如需比较300余项可持续性标准的覆盖范围、认证要求与地域适用性，可参阅国际贸易中心（ITC，联合国/WTO联合机构）维护的StandardsMap平台（standardsmap.org）。
 
@@ -945,9 +950,9 @@ Higg FEM（Facility Environmental Module）由Cascale（原可持续服装联盟
 
 # 第四部分　环境现场审核指引
 
-!\[环境现场审核八阶段流程](/images/env/audit-process-flow.png)
+![环境现场审核八阶段流程](/images/env/audit-process-flow.png)
 
-*图8 | 环境现场审核**八阶段**流程。ECAP（环境纠正行动计划）为审核后整改跟进的核心机制。*
+*图9 | 环境现场审核**八阶段**流程。ECAP（环境纠正行动计划）为审核后整改跟进的核心机制。*
 
 本部分从实操角度系统讲解环境现场审核的全流程，涵盖审核准备、开场会、现场巡查路线、文件审阅、访谈技巧、末次会议及报告撰写，并介绍环境纠正行动计划（ECAP）的跟进机制。由于部分内容在前文有所涉及，下文再次提及时会简略带过。
 
@@ -981,9 +986,7 @@ Higg FEM（Facility Environmental Module）由Cascale（原可持续服装联盟
 |临近敏感区（自然保护区/饮用水源）|重点核查环评要求及风险防控措施|
 |高能耗行业（铸造/陶瓷/水泥）|重点核查能源计量及大气排放监测|
 
-## 
-
-4.2　开场会（Opening Meeting）
+## 4.2　开场会（Opening Meeting）
 
 开场会是审核的正式起点，标准时长15-30分钟，应由工厂高管参与（如厂长/EHS经理）。
 
@@ -1080,10 +1083,6 @@ ECAP是整改跟进的核心工具，结构与CAP类似，但侧重于可验证�
 
 # 第五部分　强制性法规合规要求
 
-!\[欧盟及全球主要环境法规时间线（2023-2030）](/images/env/regulatory-timeline.png)
-
-\*图9 | 欧盟及全球主要环境法规与可持续发展报告要求时间线（2023-2030）。\**CSRD/ESRS/CBAM/EUDR/ESPR/CSDDD/DPP。*
-
 本部分聚焦主要司法管辖区的环境强制性法规，帮助审核员理解监管底线，并识别供应商所在地或销售目标市场的法规义务。法规文本以官方发布版本为准，如有修订请以最新版为准。
 
 ## 5.1　中国环境法规体系
@@ -1138,6 +1137,10 @@ ECAP是整改跟进的核心工具，结构与CAP类似，但侧重于可验证�
 
 ## 5.2　欧盟环境法规体系
 
+![欧盟及全球主要环境法规时间线（2023-2030）](/images/env/regulatory-timeline.png)
+
+\*图10 | 欧盟及全球主要环境法规与可持续发展报告要求时间线（2023-2030）。\**CSRD/ESRS/CBAM/EUDR/ESPR/CSDDD/DPP。*
+
 ### 5.2.1　CSRD/ESRS：企业可持续发展报告指令
 
 CSRD（Corporate Sustainability Reporting Directive，EU 2022/2464）于2023年生效，取代NFRD，大幅扩大强制披露范围。
@@ -1175,6 +1178,7 @@ CBAM（Carbon Border Adjustment Mechanism，EU 2023/956）要求进口商对特�
 * 过渡期（2023-2025）：进口商须报告商品内嵌GHG排放，暂无缴费义务。
 * 正式期（2026年起）：须按季度提交CBAM申报并购买证书，证书价格与EU ETS挂钩。
 * 供应商影响：出口欧盟的中国钢铁、铝材供应商须提供经核查的产品碳足迹数据；这将成为买家要求的新课题。
+
   \*\*【**指引**】 \*\*权威来源：欧委会CBAM官网（taxation-customs.ec.europa.eu/carbon-border-adjustment-mechanism）；CBAM过渡期报告指南。
 
 ## 5.3　美国环境法规体系
@@ -1309,6 +1313,7 @@ ASM供应链透明度低，混矿（Commingling）和重新标签风险高，是
 * 水文数据：WRI Aqueduct（wri.org/aqueduct）评估水风险；UN Water（unwater.org）提供水资源统计。
 * 矿产溯源技术：区块链溯源（如RCS Global Chain-of-Custody、Minespider）；同位素指纹技术（区分矿产来源地）——了解这些技术有助于评估买家的溯源要求可行性。
 
+
 # 第七部分　趋势与展望
 
 环境合规审核领域正在经历快速变革。本部分梳理未来3-5年将深刻影响审核实践的核心趋势，帮助审核员提前布局，在方法论和知识结构上保持前沿。
@@ -1320,6 +1325,7 @@ ASM供应链透明度低，混矿（Commingling）和重新标签风险高，是
 * 时间线：纺织品、电池（已率先实施于《电池法》EU 2023/1542）、电子产品等优先品类将在2026-2030年逐步要求DPP；其他产品类别陆续跟进。
 * 对供应商的影响：供应商须向买家提供材料成分（物质级别）、产品碳足迹（LCA数据）、有害物质声明等数字化数据，并符合指定数据格式（基于GS1标准）。
 * 对审核的影响：审核员须核查供应商是否具备DPP数据收集和传输能力；LCA数据质量（是否经第三方评审）；产品碳足迹核算方法（PEF指引）。
+
   \*\*【**指引**】 \*\*权威来源：欧委会DPP官网（ec.europa.eu/growth/sectors/sustainable-products）；EU Battery Regulation DPP实施细则；GS1官网（gs1.org）数据标准。
 
 ## 7.2　Scope 3供应链减排：从报告到行动
@@ -1330,6 +1336,7 @@ ASM供应链透明度低，混矿（Commingling）和重新标签风险高，是
 * 技术解决方案：PACT Pathfinder（数据交换规范，carbon-transparency.org）旨在实现产品碳足迹数据的供应链自动传递；PCF（产品碳足迹）将成为新的"B2B环境护照"。
 * 审核关联：核查供应商是否具备GHG核算能力（Scope 1/2）；评估数据收集系统（能源管理软件 vs. 人工台账）；识别减排路径（能效提升/可再生能源替代/工艺改造）。
 * 中国供应商准备度：部分大型制造商（如立讯精密、歌尔股份）已发布碳中和路线图；更多中小供应商处于能力建设阶段；全国碳市场扩容将加速企业GHG核算能力积累。
+
   \*\*【**指引**】 \*\*PACT Pathfinder框架：carbon-transparency.org；PCF How-To Guide：ghgprotocol.org；SBTi供应链接触指南：sciencebasedtargets.org。
 
 ## 7.3　TNFD与自然资本风险的主流化
@@ -1339,6 +1346,7 @@ TNFD（自然相关财务信息披露框架）于2023年9月发布最终版（v1
 * LEAP方法应用：企业使用TNFD LEAP评估与自然的依赖关系（如淡水、土壤、传粉服务）和影响（如土地转化、污染），识别高自然风险地点（使用IBAT工具，ibat-alliance.org）。
 * SBTN（科学自然目标）：类比SBTi，帮助企业为淡水、土地、海洋、生物多样性设定科学目标；目标设定方法论于2023年发布初稿。
 * 审核关联：识别供应商（尤其农业、采矿、林业）的关键生产场地与自然生态系统的空间关系；核查是否处于KBA（关键生物多样性区域，keybiodiversityareas.org）或世界遗产缓冲区。
+
   \*\*【**指引**】 \*\*TNFD官网（tnfd.global）；IBAT（综合生物多样性评估工具）：ibat-alliance.org；SBTN：sciencebasedtargetsnetwork.org；关键生物多样性区域数据库：keybiodiversityareas.org。
 
 ### 7.3.1　KBA筛查实操步骤（审核员操作指引）
