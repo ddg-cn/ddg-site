@@ -26,6 +26,14 @@
 
 ---
 
+## 工具
+
+| 文件 | 用途 | 说明 |
+|------|------|------|
+| [🧪 SLCP 核查工具质检器 v1.1](/downloads/tools/slcp-verifier-qc-checker-v1.1.zip) | 提交前检查已填写的 SLCP 离线核查工具 2.0.0，输出 Excel 质检报告 | Python 3.9+ · [使用说明](/zh/tools/slcp-verifier-qc) |
+
+---
+
 ## 模板文件
 
 模板文件请访问 **[模板总览](/zh/templates/)** 页面，包含：
