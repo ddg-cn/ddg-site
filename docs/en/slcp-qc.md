@@ -40,27 +40,6 @@ The checker (Python) runs inside your browser. The tool is read in memory on you
 
 Only questions that currently apply are checked. A question hidden by show/hide logic isn't reported, even if it still holds an old value.
 
-## Calibrated on real reports
-
-A rule that fires on many genuine, verified reports is more likely wrong than the reports. The rules were run against **1,000 randomly sampled, anonymised platform VRFs**, and the ones that fired too often were adjusted:
-
-| Rule | Fired before | Change | After |
-|------|------|------|------|
-| OSH committee employer + worker ≠ total | 37 % | Committees often have other members; only *more than* the total is flagged | 3 % |
-| Take-home pay below basic wage | 18 % | Deductions are common; flagged below 80 % of basic | 6 % |
-| Unticked checklist option marked *Accurate* or *Not visible* | 31–38 % | Unticked is a valid answer; no longer flagged | — |
-| Legal Reference without X | 60 % | Warning → Info | — |
-
-Only aggregated rates were used. Every report was anonymised locally before analysis, and no facility, verifier body or personal data was involved.
-
-## Offline version
-
-To check many files on your own PC, download the offline version (Python 3.9+ with `openpyxl`):
-
-[⬇️ Download offline version (zip)](/tools/slcp-qc/slcp-verifier-qc-checker.zip)
-
-Drop one or more `.xlsm` files onto `Run Quality Checker.bat`. The report is saved next to each tool.
-
 ::: warning Please note
 This is a self-check aid for verifiers. It does **not** replace the SLCP verification protocol or a verifier body's quality review.
 :::
