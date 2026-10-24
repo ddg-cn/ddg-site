@@ -27,6 +27,7 @@ export default withMermaid(defineConfig({
               { text: 'Business Ethics & Financial Resilience', link: '/en/ethics-guide' },
               { text: 'Due Diligence Handbook', link: '/en/dd-guide' },
               { text: 'Glossary', link: '/en/glossary' },
+              { text: 'SLCP Verifier Tool Online QC', link: '/en/slcp-qc' },
             ],
           },
         ],
@@ -117,6 +118,7 @@ export default withMermaid(defineConfig({
 
           // ─── 参考资源 ─────────────────────────────────────────
           { text: '名词解释', link: '/zh/glossary' },
+          { text: '🧪 SLCP 核查工具在线质检', link: '/zh/tools/slcp-qc' },
         ],
       },
     },
