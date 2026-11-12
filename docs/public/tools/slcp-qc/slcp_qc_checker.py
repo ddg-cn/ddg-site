@@ -37,7 +37,7 @@ try:
 except ImportError:  # pragma: no cover
     sys.exit("openpyxl is required:  py -m pip install openpyxl")
 
-CHECKER_VERSION = "1.2 (2026-10-24)"
+CHECKER_VERSION = "1.3 (2026-11-12)"
 PUBLIC_BUILD = True    # build_public.py sets True: only tool versions released to the public are accepted
 
 # --------------------------------------------------------------------------------------
@@ -62,6 +62,12 @@ MIN_M2_PER_WORKER = 2          # built area per worker below this - wrong unit?
 
 SEV_ORDER = {"Error": 0, "Warning": 1, "Info": 2}
 
+# SLCP platform checks (List of automated data quality checks, 2026-10-30): rule titles cite them as [SLCP #n]
+EXPLANATION_MAX_CHARS = 6000   # Assessor/Verifier Explanation limit (#6)
+REASON_RE = re.compile(r"\breason\s*:", re.I)   # #19: the word "Reason:" must be used ...
+SOURCE_RE = re.compile(r"facility walk[\s-]?through|worker interviews?|management interviews?|documentation review", re.I)  # ... plus a source
+FULL_VIRTUAL = "slcp full virtual verification"   # #13: not an allowed validation method
+
 LOCAL_LANGUAGE_PATTERN = re.compile(r"in local language", re.I)
 PLACEHOLDERS = {"n/a", "na", "n.a.", "n.a", "none", "nil", "-", "--", ".", "null", "tbd", "tba",
                 "unknown", "xxx", "x", "test", "0", "not applicable", "no", "nothing"}
@@ -74,22 +80,24 @@ RULES = OrderedDict([
     ("LANG-03", ("Language", "Facility answered in a non-English language but the selection is 'Accurate'", "Error")),
     ("LANG-04", ("Language", "Verifier-entered answer (Verification Details) must be in English", "Error")),
     # 2 Verification selection
-    ("SEL-01", ("Verification Selection", "'Accurate' must not have a Corrected Response", "Error")),
-    ("SEL-02", ("Verification Selection", "'Inaccurate*' / 'Updated during Verification': Corrected Response must differ from the Facility Response", "Error")),
+    ("SEL-01", ("Verification Selection", "'Accurate' must not have a Corrected Response [SLCP #2]", "Error")),
+    ("SEL-02", ("Verification Selection", "Corrected Response must differ from the Facility Response [SLCP #7]", "Error")),
     ("SEL-03", ("Verification Selection", "'Inaccurate*' / 'Updated during Verification': Corrected Response is required", "Error")),
-    ("SEL-04", ("Verification Selection", "'Inaccurate*' / 'Updated during Verification': Verification Data is required", "Error")),
+    ("SEL-04", ("Verification Selection", "'Inaccurate*' / 'Updated during Verification': Verification Data is required [SLCP #8, #18]", "Error")),
     ("SEL-05", ("Verification Selection", "'Not visible to facility during SA/JA': Facility Response must be blank", "Error")),
     ("SEL-06", ("Verification Selection", "'Not visible to facility during SA/JA': Corrected Response is normally expected", "Warning")),
     ("SEL-07", ("Verification Selection", "'No longer applicable due to assessment/verification': no Corrected Response or Verification Data", "Error")),
-    ("SEL-08", ("Verification Selection", "Facility Response given but Verification Selection is blank", "Error")),
+    ("SEL-08", ("Verification Selection", "Facility Response given but Verification Selection is blank [SLCP #1]", "Error")),
     ("SEL-09", ("Verification Selection", "Follow-up question: Verification Selection cannot be blank or N/A", "Error")),
     ("SEL-10", ("Verification Selection", "Verification Selection is not a valid option for this question", "Error")),
     ("SEL-11", ("Verification Selection", "'Facility did not reply during SA/JA' but a Facility Response exists", "Warning")),
-    ("SEL-12", ("Verification Selection", "'Accurate' selected on a question the facility did not answer", "Warning")),
+    ("SEL-12", ("Verification Selection", "Facility did not answer: selection can only be 'Facility did not reply', 'Not visible', 'No longer applicable' or 'Verification only' [SLCP #4]", "Error")),
     ("SEL-13", ("Verification Selection", "Input in a column this verification type does not use (Corrected Response / Non-Compliance)", "Error")),
-    ("SEL-14", ("Verification Selection", "Verification Data required (mandatory narrative / special circumstances)", "Warning")),
+    ("SEL-14", ("Verification Selection", "Verification Data required: mandatory narrative key, 'Not applicable due to special facility circumstances' or 'Facility did not reply' [SLCP #15, #18]", "Error")),
     ("SEL-15", ("Verification Selection", "Verification Data looks like placeholder / sample text or is too short", "Warning")),
     ("SEL-16", ("Verification Selection", "Verification-only question has a Facility Response (col S should be blank)", "Warning")),
+    ("SEL-17", ("Verification Selection", "Verification Data longer than 6,000 characters [SLCP #6]", "Error")),
+    ("SEL-18", ("Verification Selection", "Verification Data must contain 'Reason:' and cite a source: Facility Walkthrough, Worker Interview, Management Interview or Documentation Review [SLCP #19]", "Error")),
     # 3 Data types
     ("DATA-01", ("Data Type", "Whole number required (no decimals, no negatives, no text)", "Error")),
     ("DATA-02", ("Data Type", "Number required (no negatives, no text)", "Error")),
@@ -99,17 +107,20 @@ RULES = OrderedDict([
     ("DATA-06", ("Data Type", "Answer is not one of the question's options", "Error")),
     ("DATA-07", ("Data Type", "Checkbox value must be 'X' or blank", "Error")),
     ("DATA-08", ("Data Type", "Percentage between 0 and 1 - entered as a fraction?", "Warning")),
+    ("DATA-09", ("Data Type", "Date question that requires an answer is blank [SLCP #11]", "Error")),
     # 4 Legal flag
-    ("LEGAL-01", ("Legal Flag", "Non-Compliance 'X' requires a Legal Reference (not blank / N/A)", "Error")),
-    ("LEGAL-02", ("Legal Flag", "Legal-requirement question answered as a violation: Non-Compliance 'X' and Legal Reference required", "Error")),
+    ("LEGAL-01", ("Legal Flag", "Non-Compliance 'X' requires a Legal Reference (not blank / N/A) [SLCP #5]", "Error")),
+    ("LEGAL-02", ("Legal Flag", "Legal-requirement question answered as a violation: Non-Compliance 'X' and Legal Reference required [SLCP #16]", "Error")),
     ("LEGAL-03", ("Legal Flag", "Non-Compliance 'X' on an answer that is compliant / has no applicable legal requirement", "Warning")),
-    ("LEGAL-04", ("Legal Flag", "Legal Reference entered without Non-Compliance 'X'", "Info")),
+    ("LEGAL-04", ("Legal Flag", "Legal Reference entered without Non-Compliance 'X' [SLCP #5]", "Error")),
     ("LEGAL-05", ("Legal Flag", "Non-Compliance value must be 'X'", "Error")),
+    ("LEGAL-06", ("Legal Flag", "Non-Compliance 'X' with a Legal Reference also needs Verification Data describing the non-compliance [SLCP #14]", "Error")),
+    ("LEGAL-07", ("Legal Flag", "China with a union in place: legal non-compliance must be raised on the free-to-form, free-to-join and federations questions [SLCP #17]", "Error")),
     # 5 Specific Q&A
     ("SPEC-01", ("Specific Q&A", "Working hours over 60 per week cannot come with 2+ weekly rest days", "Error")),
     ("SPEC-02", ("Specific Q&A", "More than 2 weekly rest days but rest days 'not in line with legal requirements'", "Warning")),
     ("SPEC-03", ("Specific Q&A", "Forced overtime and voluntary overtime cannot both be 'Yes'", "Error")),
-    ("SPEC-04", ("Specific Q&A", "Start/First date cannot be later than End/Last date", "Error")),
+    ("SPEC-04", ("Specific Q&A", "Start/First date cannot be later than End/Last date [SLCP #9]", "Error")),
     ("SPEC-05", ("Specific Q&A", "Social audits / certifications duplicated", "Warning")),
     ("SPEC-06", ("Specific Q&A", "Subcontractors duplicated", "Error")),
     ("SPEC-07", ("Specific Q&A", "Youngest worker under 14 but 'workers under legal minimum age when hired' is not 'Yes'", "Error")),
@@ -119,12 +130,13 @@ RULES = OrderedDict([
     ("SPEC-12", ("Specific Q&A", "Cases of harassment / violence / abuse reported but male & female breakdown both zero", "Error")),
     ("SPEC-13", ("Specific Q&A", "Email address format", "Warning")),
     ("SPEC-14", ("Specific Q&A", "Working-hours answers inconsistent (60/72/80/90 h thresholds, weekly vs daily)", "Error")),
-    ("SPEC-15", ("Specific Q&A", "Youngest-worker age inconsistent with the under-18 / under-minimum-age counts", "Error")),
+    ("SPEC-15", ("Specific Q&A", "Youngest-worker age inconsistent with the under-18 / under-minimum-age counts [SLCP #3]", "Error")),
     ("SPEC-16", ("Specific Q&A", "'How many cases' must be at least 1 when the evidence question triggers it", "Error")),
     ("SPEC-17", ("Specific Q&A", "Duplicate nationality / language / union entries", "Error")),
     ("SPEC-18", ("Specific Q&A", "Verification sampling data contradicts the survey answers", "Warning")),
     ("SPEC-19", ("Specific Q&A", "OS ID format (2-letter country + 7 digits + 6 characters)", "Warning")),
     ("SPEC-20", ("Specific Q&A", "Subcontractor count does not match the subcontractor details entered", "Warning")),
+    ("SPEC-21", ("Specific Q&A", "Validation method cannot be 'SLCP Full Virtual Verification' (not allowed by the Verification Protocol) [SLCP #13]", "Error")),
     # 6 Relevance / logic
     ("REL-01", ("Relevance", "Answered, but the parent question's (effective) answer means it does not apply", "Error")),
     ("REL-02", ("Relevance", "'No longer applicable' selected, but the parent answer still triggers the question", "Warning")),
@@ -137,7 +149,12 @@ RULES = OrderedDict([
     ("PLAUS-02", ("Plausibility", "Maximum lead time over 52 weeks - entered in days?", "Warning")),
     ("PLAUS-03", ("Plausibility", "Wage of 0 for one gender while the other gender has a wage", "Warning")),
     ("PLAUS-04", ("Plausibility", "Built area below 2 m2 per worker - wrong unit?", "Warning")),
-    # 8 Other
+    # 8 SLCP platform advisory checks (the platform warns but does not block submission)
+    ("ADV-01", ("Platform Advisory", "Verification not on consecutive days but the reason is not described [SLCP #29]", "Warning")),
+    ("ADV-02", ("Platform Advisory", "No 'Inaccurate - Incorrect' in the whole report - check the use of 'Inaccurate - Misunderstanding' [SLCP #30]", "Warning")),
+    ("ADV-03", ("Platform Advisory", "'Not applicable due to special facility circumstances' is for exceptional cases only [SLCP #31]", "Warning")),
+    ("ADV-04", ("Platform Advisory", "Zero legal non-compliances in the whole report - check this is accurate [SLCP #32]", "Warning")),
+    # 9 Other
     ("SYNC-01", ("Other", "Main Survey Actual is out of sync with the Data Collection Tool sheet", "Warning")),
     ("INFO-01", ("Other", "Rule could not run on this template (question not found)", "Info")),
 ])
@@ -627,8 +644,48 @@ class Checker:
         self.rules_relevance()
         self.rules_logic()
         self.rules_plausibility()
+        self.rules_advisory()
         self.rules_sync()
         return self.issues
+
+    # ---------- SLCP platform advisory checks (#29-#33) ----------
+    def rules_advisory(self):
+        self.skipped.append(("SLCP #10", "Joint-assessment details: the offline tool has no 'joint assessment conducted' question; "
+                             "the platform checks this on submission."))
+        self.skipped.append(("SLCP #33", "Better Work Zero Tolerance Protocol: the platform's list of zero-tolerance answers is not "
+                             "published, so this advisory is not replicated."))
+        verified = [it for it in self.items if it.vtype and it.mtype not in ("META", "Header", "MS Header", "Instructions", "CALCULATED")
+                    and it.vis != 0 and self.relevant(it)]
+        # ADV-01 not consecutive days -> describe why (#29)
+        if self.has("vd-e8") and self.has("vd-e9") and norm(self.eff("vd-e8")) == "no" and blank(self.eff("vd-e9")):
+            self.add("ADV-01", self.item("vd-e9"), f"{self.qn('vd-e8')} = 'No' (not on consecutive days). If correct, explain why in "
+                     f"{self.qn('vd-e9')}.", field="Facility Response (S)")
+        if not verified or not any(self.selnorm(it) for it in verified):
+            return  # nothing verified yet: report-level advisories would only be noise
+        # ADV-02 no Inaccurate - Incorrect anywhere (#30)
+        if not any(self.selnorm(it).startswith("inaccurate - incorrect") for it in verified):
+            mis = [it for it in verified if self.selnorm(it).startswith("inaccurate - misunderstanding")]
+            anchor = mis[0] if mis else next(it for it in verified if self.selnorm(it))
+            self.add("ADV-02", anchor, "The report has no 'Inaccurate - Incorrect' selection"
+                     + (f" but {len(mis)} 'Inaccurate - Misunderstanding'" if mis else "")
+                     + ". Check this is correct and that 'Inaccurate - Misunderstanding' is used as the Verification Protocol defines it.",
+                     field="Verification Selection (Y)")
+        # ADV-03 special facility circumstances (#31)
+        for it in verified:
+            if self.selnorm(it).startswith("not applicable due to special"):
+                na = [o for o in self.options.get(it.opt_list, []) if norm(o).startswith(("not applicable", "n/a"))]
+                if na:
+                    self.add("ADV-03", it, f"The question offers the answer '{na[0]}'; 'Not applicable due to special facility "
+                             "circumstances' is only for questions without one.", field="Verification Selection (Y)")
+                else:
+                    self.add("ADV-03", it, "Exceptional selection: make sure Verification Data explains in full why it was used.",
+                             "Info", field="Verification Selection (Y)")
+        # ADV-04 zero legal non-compliances (#32)
+        if not any(norm(it.nc) == "x" for it in verified):
+            lf = [it for it in verified if it.noncom_list == "lf"]
+            if lf:
+                self.add("ADV-04", lf[0], "No legal non-compliance is flagged anywhere in the report. Check this is accurate "
+                         "(see the SLCP calibration webinars and the Verification Protocol).", field="Non-Compliance (AN)")
 
     # ---------- 1. language ----------
     def rules_language(self):
@@ -658,6 +715,9 @@ class Checker:
                 self.add("LANG-01", it, "Legal Reference " + p[1], "Warning", "Legal Reference (AP)")
 
     # ---------- 2. verification selection ----------
+    BLANK_FAC_SELECTIONS = ("facility did not reply", "not visible to facility", "no longer applicable", "verification only",
+                            "verification not required")
+
     def rules_selection(self):
         for it in self.items:
             if not it.vtype or it.mtype in ("META", "Header", "MS Header", "Instructions", "CALCULATED"):
@@ -686,13 +746,7 @@ class Checker:
                 if not cor_b:
                     self.add("SEL-01", it, f"Selection is 'Accurate' but Corrected Response = '{short(it.cor, 60)}'. "
                              "Clear the Corrected Response or change the selection.", field="Corrected Response (AB)")
-                if fac_b and not is_cb and "optional" not in it.text.lower():
-                    self.add("SEL-12", it, "Facility Response is blank but marked 'Accurate'. Use 'Facility did not reply during SA/JA' "
-                             "or 'Not visible to facility during SA/JA' as appropriate.", field="Verification Selection (Y)")
             elif self.is_inaccurate(sel):
-                if not cor_b and norm(it.cor) == norm(it.fac):
-                    self.add("SEL-02", it, f"Corrected Response '{short(it.cor, 60)}' is the same as the Facility Response.",
-                             field="Corrected Response (AB)")
                 if cor_b and "Corrected Response" in (allowed_cols or {"Corrected Response"}):
                     if not (is_cb and not fac_b):  # unticking a checkbox is expressed by a blank correction
                         self.add("SEL-03", it, "No Corrected Response for an inaccurate/updated answer.",
@@ -718,10 +772,25 @@ class Checker:
                 if cor_b and "Corrected Response" in (allowed_cols or set()):
                     self.add("SEL-06", it, "No Corrected Response for a question the facility did not answer.", "Warning",
                              field="Corrected Response (AB)")
+                if exp_b:
+                    self.add("SEL-14", it, "'Facility did not reply during SA/JA' needs Verification Data.",
+                             field="Verification Data (AH)")
             elif sel.startswith("not applicable due to special"):
                 if exp_b:
                     self.add("SEL-14", it, "Explain the special facility circumstances in Verification Data.",
                              field="Verification Data (AH)")
+
+            # SEL-02 the verifier's answer repeats the facility's (platform check #7 applies to every selection)
+            if sel != "accurate" and not cor_b and not fac_b and norm(it.cor) == norm(it.fac):
+                self.add("SEL-02", it, f"Corrected Response '{short(it.cor, 60)}' is the same as the Facility Response.",
+                         field="Corrected Response (AB)")
+            # SEL-12 facility did not answer: only the platform's automated selections are allowed (platform check #4).
+            # Unticked checklist options are answers, not blanks.
+            if fac_b and sel and not is_cb and not sel.startswith(self.BLANK_FAC_SELECTIONS) and it.vis != 0 \
+                    and self.relevant(it):
+                self.add("SEL-12", it, f"Facility Response is blank but the selection is '{s(it.sel)}'. A question the facility did not "
+                         "answer can only be 'Facility did not reply during SA/JA', 'Not visible to facility during SA/JA', "
+                         "'No longer applicable due to assessment/verification' or 'Verification only'.", field="Verification Selection (Y)")
 
             # SEL-16 verification-only question carrying a facility answer
             if it.vtype == "only-verf" and not fac_b:
@@ -738,9 +807,20 @@ class Checker:
             if it.narrative.lower() == "yes" and it.vis == 1 and sel and exp_b and not sel.startswith("no longer") \
                     and not sel.startswith("verification not required"):
                 self.add("SEL-14", it, "Mandatory narrative question - Verification Data is blank.", field="Verification Data (AH)")
-            # SEL-15 placeholder / too short
+            # SEL-15 placeholder / too short, SEL-17 length, SEL-18 required structure
             if not exp_b:
                 e = s(it.exp)
+                if len(e) > EXPLANATION_MAX_CHARS:
+                    self.add("SEL-17", it, f"Verification Data is {len(e):,} characters; the platform accepts at most "
+                             f"{EXPLANATION_MAX_CHARS:,}. Shorten it.", field="Verification Data (AH)")
+                miss = []
+                if not REASON_RE.search(e):
+                    miss.append("the word 'Reason:'")
+                if not SOURCE_RE.search(e):
+                    miss.append("a source (Facility Walkthrough, Worker Interview, Management Interview or Documentation Review)")
+                if miss:
+                    self.add("SEL-18", it, f"Verification Data does not contain {' or '.join(miss)}: '{short(e, 70)}'.",
+                             field="Verification Data (AH)")
                 if re.search(r"sample text|lorem ipsum|\btbd\b|\btest(ing)?\b|asdf|xxx", e, re.I):
                     self.add("SEL-15", it, f"Verification Data looks like placeholder text: '{short(e, 70)}'.",
                              field="Verification Data (AH)")
@@ -810,7 +890,18 @@ class Checker:
                 elif dtp == "checkbox":
                     if norm(v) != "x":
                         self.add("DATA-07", it, f"'{short(v, 40)}' - checkbox cells take 'X' only.", field=field)
+            # DATA-09 a required date left blank (platform check #11: dates must not be empty)
+            if dtp == "date" and self.date_required(it) and blank(self.eff(it)):
+                self.add("DATA-09", it, "Date is blank - enter it as YYYY-MM-DD.",
+                         field="Facility Response (S)" if not it.vtype else "Corrected Response (AB)")
         self._geo_check()
+
+    def date_required(self, it):
+        if it.vis != 1 or it.mtype not in ("Question", "Follow-up") or not self.relevant(it):
+            return False
+        if self.selnorm(it).startswith(("no longer applicable", "verification not required")):
+            return False
+        return it.needs == 1 or it.key.startswith("vd-")
 
     def _geo_check(self):
         lat_it, lon_it = self.item("fp-bas-5"), self.item("fp-bas-6")
@@ -887,7 +978,11 @@ class Checker:
                 self.add("LEGAL-01", it, f"Legal Reference is '{s(it.lr) or 'blank'}'. Cite the law/article breached.",
                          field="Legal Reference (AP)")
             if lr and not nc:
-                self.add("LEGAL-04", it, "Legal Reference given but Non-Compliance is not flagged 'X'.", field="Non-Compliance (AN)")
+                self.add("LEGAL-04", it, "Legal Reference given but Non-Compliance is not flagged 'X'. Raise the flag, or clear the "
+                         "Legal Reference if the facility is compliant.", field="Non-Compliance (AN)")
+            if nc == "x" and lr and lr not in PLACEHOLDERS and blank(it.exp):
+                self.add("LEGAL-06", it, "Legal non-compliance flagged with a Legal Reference, but Verification Data is blank. "
+                         "Describe the non-compliance.", field="Verification Data (AH)")
             if it.noncom_list != "lf" or self.selnorm(it).startswith("no longer"):
                 continue
             ans = self.eff(it)
@@ -900,6 +995,25 @@ class Checker:
             elif v is False and nc == "x":
                 self.add("LEGAL-03", it, f"Flagged 'X' but the answer '{short(ans, 60)}' is compliant / has no applicable legal requirement.",
                          field="Non-Compliance (AN)")
+        self._china_foa()
+
+    # LEGAL-07: SLCP guidance for China - with a union in place, free to form / free to join / federations carry a legal NC
+    CHINA_FOA_KEYS = ("wi-foa-2", "wi-foa-3", "foa-cb-2--5")
+
+    def _china_foa(self):
+        if not self.need("LEGAL-07", "fp-bi-7", "foa-cb-2", *self.CHINA_FOA_KEYS):
+            return
+        if not norm(self.eff("fp-bi-7")).startswith("china") or not self.is_yes("foa-cb-2") or not self.relevant(self.item("foa-cb-2")):
+            return
+        for k in self.CHINA_FOA_KEYS:
+            it = self.item(k)
+            if not self.relevant(it) or self.selnorm(it).startswith("no longer"):
+                continue
+            nc, lr = norm(it.nc), norm(it.lr)
+            if nc != "x" or not lr or lr in PLACEHOLDERS:
+                miss = [x for x, ok in (("Non-Compliance 'X'", nc == "x"), ("Legal Reference", lr and lr not in PLACEHOLDERS)) if not ok]
+                self.add("LEGAL-07", it, f"Facility is in China and {self.qn('foa-cb-2')} reports a union in place, so SLCP guidance "
+                         f"requires a legal non-compliance here; missing {' and '.join(miss)}.", field="Non-Compliance (AN)")
 
     # ---------- 5. specific questions ----------
     def need(self, rule, *keys):
@@ -1044,6 +1158,13 @@ class Checker:
         # SPEC-07 / SPEC-15 youngest worker
         if self.need("SPEC-07", "cl-1--2", "rh-chi-13"):
             age = self.effn("cl-1--2")
+            if age is None:  # 1.7.x answers with options: 'Under 12', '12'..'18', 'Over 18' (+ exact age in a follow-up)
+                a = norm(self.eff("cl-1--2"))
+                exact = self.effn("cl-1--2-8f") if self.has("cl-1--2-8f") else None
+                if a.startswith("under 12"):
+                    age = exact if exact is not None and exact < 12 else 11
+                elif a.startswith("over 18"):
+                    age = exact if exact is not None and exact > 18 else 19
             if age is not None:
                 if age < INTERNATIONAL_MIN_AGE and not self.is_yes("rh-chi-13"):
                     self.add("SPEC-07", I("rh-chi-13"), f"Youngest worker is {s(age)} (< {INTERNATIONAL_MIN_AGE}, the international minimum) "
@@ -1063,6 +1184,11 @@ class Checker:
                 u18 = self.effn("fp-ed-12") if self.has("fp-ed-12") else None
                 if u18 is not None and (f or 0) + (m or 0) > u18:
                     self.add("SPEC-15", I("rh-chi-4"), f"Under-minimum-age workers ({s((f or 0) + (m or 0))}) exceed workers under 18 ({s(u18)}).")
+
+        # SPEC-21 validation method (platform check #13)
+        if self.need("SPEC-21", "vd-veri-1") and norm(self.eff("vd-veri-1")) == FULL_VIRTUAL:
+            self.add("SPEC-21", I("vd-veri-1"), f"{self.qn('vd-veri-1')} = 'SLCP Full Virtual Verification', which the SLCP Verification "
+                     "Protocol does not allow.", field="Facility Response (S)")
 
         # SPEC-08 volume vs capacity
         if self.need("SPEC-08", "fp-pi-10", "fp-pi-13"):
@@ -1229,7 +1355,8 @@ class Checker:
                 continue
             if it.needs != 1 and it.vtype not in ("only-verf",):
                 continue
-            if blank(self.eff(it)) and not self.selnorm(it) and not it.mtype == "Follow-up":
+            if blank(self.eff(it)) and not self.selnorm(it) and not it.mtype == "Follow-up" \
+                    and not (it.dtype == "date" and self.date_required(it)):  # reported as DATA-09
                 who = "verifier (Verification-only question)" if it.vtype == "only-verf" or not it.vtype else "facility/verifier"
                 self.add("REL-06", it, f"No answer and no Verification Selection - to be completed by the {who}.")
         for hk, opts in self.ms_groups.items():
