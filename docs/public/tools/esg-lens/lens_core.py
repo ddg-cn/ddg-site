@@ -14,7 +14,7 @@ import math
 import re
 from collections import Counter, defaultdict
 
-CORE_VERSION = "2.0"
+CORE_VERSION = "2.1"
 CJK = r"㐀-鿿豈-﫿"
 SEV = ["High", "Medium", "Low", "Info"]
 SEV_ORDER = {s: i for i, s in enumerate(SEV)}
@@ -1130,10 +1130,7 @@ def the_read(res, L, prev=None):
         strengths.append(L["s_scope123"] if st("E-CL-09") == "Disclosed" else L["s_scope12"])
     if st("G-RP-03") != "Missing":
         strengths.append(L["s_assure"].format(p=cov["G-RP-03"]["First page"]))
-    tgt = [(p, s) for p, s in target_units(res["units"])
-           if re.search(r"(到|至|于|在|by|before)\s*20(2[6-9]|3[0-5])\s*年?", s, re.I)
-           and re.search(r"\d+(\.\d+)?\s*[%％]|碳中和|净零|net[- ]zero|carbon neutral", s, re.I)
-           and not re.search(r"可持续发展目标|SDG|行业领先", s)]
+    tgt = dated_targets(res["units"], report_year(res))
     if tgt:
         strengths.append(L["s_target"].format(p=tgt[0][0], s=short(tgt[0][1], 90)))
     yrs = {k["year"] for k in res["kpis"]}
@@ -1183,6 +1180,115 @@ def the_read(res, L, prev=None):
     return {"headline": headline, "strengths": strengths[:7], "weaknesses": weak[:7], "limits": limits}
 
 
+# ======================================================================= content rating
+RATE_TXT = {
+    "en": {
+        "dims": {"coverage": "Coverage", "data": "Data depth", "accuracy": "Numbers add up", "claims": "Claims are supported",
+                 "targets": "Targets", "verify": "Verifiable"},
+        "r_cov": "{g}% of exchange-guideline indicators addressed (E {e}% · S {s}% · G {gv}%).",
+        "r_data": "{d} of {n} quantitative indicators have a figure; {k} table values over {y} year(s).{drop}",
+        "r_drop": " {n} item(s) dropped since last year.",
+        "r_acc": "{p} arithmetic check(s) passed, {h} problem(s) at High/Medium, {l} at Low.{rest}",
+        "r_rest": " {n} prior-year value(s) changed without a note.",
+        "r_acc_na": "Not rated: too few table values to check.",
+        "r_claims": "{h} High, {m} Medium and {l} Low claim flag(s); {v} vague commitments per 10,000 characters.",
+        "r_tgt": "{n} dated, quantified near-term target(s); {i} target flag(s) (no baseline, no date, long-dated only).",
+        "r_ver": "Assurance: {a}; GHG method/base year: {m}; boundary: {b}; materiality: {t}.",
+        "st": {"Disclosed": "yes", "Partly": "partly", "Missing": "no"},
+        "grade": {"A": "Strong disclosure", "B": "Good, with gaps", "C": "Mixed", "D": "Weak", "E": "Very weak"},
+        "note": "Rates how complete, consistent and verifiable the report is - not the company's ESG performance.",
+    },
+    "zh": {
+        "dims": {"coverage": "覆盖面", "data": "数据深度", "accuracy": "数字一致", "claims": "表述有依据",
+                 "targets": "目标质量", "verify": "可验证性"},
+        "r_cov": "交易所指引相关指标覆盖 {g}%（环境 {e}% · 社会 {s}% · 治理 {gv}%）。",
+        "r_data": "{n} 项定量指标中 {d} 项有数据；数据表共 {k} 个数值，覆盖 {y} 个年度。{drop}",
+        "r_drop": "去年披露的 {n} 项今年未见。",
+        "r_acc": "通过 {p} 项算术核对；高/中问题 {h} 项，低 {l} 项。{rest}",
+        "r_rest": "{n} 个往年数值被改动且无说明。",
+        "r_acc_na": "不评分：可核对的表格数据太少。",
+        "r_claims": "表述标记：高 {h}、中 {m}、低 {l}；模糊承诺每万字 {v} 次。",
+        "r_tgt": "带年份的量化近期目标 {n} 个；目标相关标记 {i} 项（无基准、无期限、只有远期目标）。",
+        "r_ver": "第三方鉴证：{a}；核算方法/基准年：{m}；报告边界：{b}；重要性评估：{t}。",
+        "st": {"Disclosed": "有", "Partly": "部分", "Missing": "无"},
+        "grade": {"A": "披露扎实", "B": "较好，有缺口", "C": "参差", "D": "较弱", "E": "很弱"},
+        "note": "评的是报告的完整性、一致性和可验证性，不是公司的 ESG 表现。",
+    },
+}
+RATE_W = {"coverage": 20, "data": 20, "accuracy": 20, "claims": 15, "targets": 10, "verify": 15}
+TARGET_RULES = ("GW-04", "GW-05", "GW-06", "GW-07")
+
+
+def report_year(res):
+    ys = [int(k["year"]) for k in res.get("kpis", []) if str(k.get("year", "")).isdigit()]
+    return max(ys) if ys else 2025
+
+
+def dated_targets(us, ry=2025):
+    def near(s):
+        return any(ry < int(y) <= ry + 10 for t in re.findall(r"(?:by|before|until)\s*(20[2-4]\d)|(?<!\d)(20[2-4]\d)\s*年(?!度)", s, re.I) for y in t if y)
+    return [(p, s) for p, s in target_units(us)
+            if near(s)
+            and re.search(r"\d+(\.\d+)?\s*[%％]|碳中和|净零|net[- ]zero|carbon neutral", s, re.I)
+            and not re.search(r"可持续发展目标|SDG|行业领先", s)]
+
+
+def rating(res, lang, prev=None):
+    """Transparent 0-100 rating of the report's content in six dimensions, plus an overall grade A-E."""
+    R = RATE_TXT["zh" if lang == "zh" else "en"]
+    cov, iss = res["coverage"], res["issues"]
+    by = {r["ID"]: r for r in cov}
+    clamp = lambda x: max(0, min(100, round(x)))  # noqa: E731
+    dims = {}
+
+    def pil(p):
+        rows = [r for r in cov if r["Pillar"] == p and r["Guideline"] == "Y"]
+        return score(rows) if rows else "-"
+    dims["coverage"] = (res["score_guide"], R["r_cov"].format(g=res["score_guide"], e=pil("E"), s=pil("S"), gv=pil("G")))
+
+    quant = [r for r in cov if r["Quant"] == "Y"]
+    qd = sum(r["Status"] == "Disclosed" for r in quant)
+    yrs = {k["year"] for k in res["kpis"]}
+    dropped = [i for i in iss if i["rule"] in ("YOY-01", "YOY-02")] if prev is not None else []
+    s = 70 * qd / max(len(quant), 1) + 15 * min(1, len(res["kpis"]) / 150) + (15 if len(yrs) >= 3 else 8 if len(yrs) == 2 else 0)
+    s -= min(20, 4 * len(dropped))
+    dims["data"] = (clamp(s), R["r_data"].format(d=qd, n=len(quant), k=len(res["kpis"]), y=len(yrs),
+                                                 drop=R["r_drop"].format(n=len(dropped)) if dropped else ""))
+
+    cons = [i for i in iss if i["type"] == "Consistency" and i["sev"] != "Info"]
+    hm = sum(i["sev"] in ("High", "Medium") for i in cons)
+    lo = sum(i["sev"] == "Low" for i in cons)
+    rest = [i for i in iss if i["rule"] == "YOY-03" and i["sev"] == "Medium"] if prev is not None else []
+    if res["checks_passed"] + len(cons) < 3:
+        dims["accuracy"] = (None, R["r_acc_na"])
+    else:
+        dims["accuracy"] = (clamp(100 - 20 * hm - 7 * lo - 10 * len(rest)),
+                            R["r_acc"].format(p=res["checks_passed"], h=hm, l=lo, rest=R["r_rest"].format(n=len(rest)) if rest else ""))
+
+    cl = [i for i in iss if i["type"] == "Claim" and i["rule"] not in TARGET_RULES]
+    ch, cm, cl_ = (sum(i["sev"] == x for i in cl) for x in ("High", "Medium", "Low"))
+    vague = sum(res["density"].values())
+    s = 100 - 15 * ch - 6 * cm - min(20, 2 * cl_) - min(20, 8 * max(0, vague - 1.5))
+    dims["claims"] = (clamp(s), R["r_claims"].format(h=ch, m=cm, l=cl_, v=round(vague, 1)))
+
+    tg = dated_targets(res["units"], report_year(res))
+    ti = [i for i in iss if i["rule"] in TARGET_RULES and i["sev"] in ("High", "Medium", "Low")]
+    s = 25 if not tg else (65 if len(tg) == 1 else 80) + (20 if not ti else -8 * len(ti))
+    dims["targets"] = (clamp(s), R["r_tgt"].format(n=len(tg), i=len(ti)))
+
+    pts = {"Disclosed": 1, "Partly": 0.5, "Missing": 0}
+    st = lambda i: by.get(i, {}).get("Status", "Missing")  # noqa: E731
+    s = 40 * pts[st("G-RP-03")] + 20 * pts[st("E-CL-11")] + 20 * pts[st("G-RP-02")] + 20 * pts[st("G-GV-04")]
+    dims["verify"] = (clamp(s), R["r_ver"].format(a=R["st"][st("G-RP-03")], m=R["st"][st("E-CL-11")],
+                                                   b=R["st"][st("G-RP-02")], t=R["st"][st("G-GV-04")]))
+
+    used = [(k, v[0]) for k, v in dims.items() if v[0] is not None]
+    overall = round(sum(RATE_W[k] * v for k, v in used) / max(sum(RATE_W[k] for k, _ in used), 1))
+    grade = "A" if overall >= 85 else "B" if overall >= 70 else "C" if overall >= 55 else "D" if overall >= 40 else "E"
+    return {"overall": overall, "grade": grade, "label": R["grade"][grade], "note": R["note"],
+            "dims": [{"key": k, "name": R["dims"][k], "score": v[0], "weight": RATE_W[k], "why": v[1]} for k, v in dims.items()]}
+
+
 # ======================================================================= main entry
 def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
     """doc -> result dict. cfg = compile_config(...) output."""
@@ -1215,6 +1321,7 @@ def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
         i["no"] = n
     res.update(issues=issues, density=dens, checks_passed=passed)
     res["read"] = the_read(res, L, prev)
+    res["rating"] = rating(res, lang, prev)
     res["counts"] = {s: sum(i["sev"] == s for i in issues) for s in SEV}
     return res
 
@@ -1222,7 +1329,7 @@ def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
 def public(res):
     """JSON-safe subset for the web page."""
     keep = ("file", "prev_file", "core", "lang", "report_lang", "n_pages", "score_all", "score_guide", "issues", "read", "counts",
-            "checks_passed", "density", "scanned")
+            "checks_passed", "density", "scanned", "rating")
     out = {k: res[k] for k in keep if k in res}
     out["coverage"] = [{k: r[k] for k in ("ID", "Pillar", "Topic", "Indicator", "Indicator EN", "Guideline", "Status", "Pages", "Number found")}
                        for r in res["coverage"]]
@@ -1238,6 +1345,7 @@ XL = {
            "good": "What is good", "bad": "What needs work", "limits": "Limits of this check", "vague": "Vague-language density (per 10,000 characters)",
            "h_issues": ["No", "Severity", "Type", "Rule", "Issue", "Pages", "Found", "Evidence / detail", "Note", "Why it matters", "What good looks like"],
            "h_data": ["Page", "Table", "Section", "Label", "Unit", "Year", "Value", "Check group"],
+           "rating": "Content rating", "weight": "weight",
            "disclaimer": "Automated screening. Flags are prompts for a reviewer, not verdicts. Check every page reference before quoting."},
     "zh": {"read": "解读", "issues": "问题清单", "cov": "覆盖", "data": "数据表", "title": "ESG 报告透镜",
            "report": "报告", "prev": "对比报告", "pages": "页数", "lang": "报告语言", "sg": "交易所指引覆盖得分",
@@ -1245,6 +1353,7 @@ XL = {
            "good": "做得好的", "bad": "需要改进的", "limits": "本检查的局限", "vague": "模糊用语密度（每万字）",
            "h_issues": ["序号", "严重程度", "类型", "规则", "问题", "页码", "匹配内容", "证据 / 详情", "备注", "为什么重要", "更好的做法"],
            "h_data": ["页码", "表", "栏目", "指标", "单位", "年份", "数值", "核对分组"],
+           "rating": "内容评级", "weight": "权重",
            "disclaimer": "自动筛查结果。标记只是提示审阅人关注，并非结论。引用前请逐一核对页码。"},
 }
 
@@ -1285,6 +1394,16 @@ def write_xlsx(res, path_or_buffer, when=""):
         ws.write(r, 0, head, B)
         for it in items or ["—"]:
             ws.write(r, 1, mark + it, C)
+            r += 1
+    rt = res.get("rating")
+    if rt:
+        r += 1
+        ws.write(r, 0, X["rating"], B)
+        ws.write(r, 1, f'{rt["grade"]} ({rt["overall"]}/100) - {rt["label"]}. {rt["note"]}', B)
+        r += 1
+        for d in rt["dims"]:
+            ws.write(r, 0, f'  {d["name"]} ({X["weight"]} {d["weight"]}%)', C)
+            ws.write(r, 1, f'{"-" if d["score"] is None else d["score"]} / 100 - {d["why"]}', C)
             r += 1
     r += 1
     ws.write(r, 0, X["vague"], B)

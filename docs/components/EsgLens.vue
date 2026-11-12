@@ -12,10 +12,21 @@ const T = {
     or: 'or',
     choose: 'Choose PDF',
     linkPh: 'Paste a link to a PDF report (e.g. cninfo, SSE, SZSE, HKEX, company site)',
-    check: 'Check link',
-    prevToggle: 'Compare with last year’s report (optional)',
-    prevNote: 'Adds year-on-year checks: dropped indicators, changed prior-year figures, targets that disappeared.',
-    prevSet: 'Last year: {name}',
+    step1: 'This year’s report',
+    step2: 'Last year’s report',
+    required: 'required',
+    optional: 'optional',
+    prevNote: 'Add it to also check what changed: indicators that disappeared, prior-year figures that were altered, targets no longer mentioned.',
+    prevLinkPh: 'Paste a link to last year’s PDF, or choose the file',
+    change: 'Change',
+    run: 'Run check',
+    runCompare: 'Check and compare',
+    addPrev: 'Compare with last year’s report',
+    addPrevNote: 'This year’s report is already read; only last year’s file is added.',
+    compare: 'Compare',
+    rating: 'Content rating',
+    na: 'n/a',
+    allScore: 'All {n} indicators: {a}/100',
     clear: 'Remove',
     privacy: 'The PDF is read in your browser and not stored anywhere. Links are fetched through a scdd.pro relay only because report sites block direct downloads.',
     runtime: 'Loading the checker (first time about 20 s, cached afterwards)…',
@@ -61,10 +72,21 @@ const T = {
     or: '或',
     choose: '选择 PDF',
     linkPh: '粘贴 PDF 报告链接（如巨潮资讯、上交所、深交所、港交所或公司官网）',
-    check: '检查链接',
-    prevToggle: '与去年的报告对比（可选）',
-    prevNote: '增加跨年检查：被删除的指标、被改动的往年数据、消失的目标。',
-    prevSet: '去年报告：{name}',
+    step1: '今年的报告',
+    step2: '去年的报告',
+    required: '必填',
+    optional: '可选',
+    prevNote: '加上去年的报告，可同时检查变化：消失的指标、被改动的往年数据、不再提及的目标。',
+    prevLinkPh: '粘贴去年报告的 PDF 链接，或选择文件',
+    change: '更换',
+    run: '开始检查',
+    runCompare: '检查并对比',
+    addPrev: '与去年的报告对比',
+    addPrevNote: '今年的报告已读取，只需添加去年的文件。',
+    compare: '对比',
+    rating: '内容评级',
+    na: '不评分',
+    allScore: '全部 {n} 项指标：{a}/100',
     clear: '移除',
     privacy: 'PDF 在您的浏览器中读取，不会被保存。报告网站禁止跨站直接下载，因此链接通过 scdd.pro 中转获取。',
     runtime: '正在加载检查程序（首次约 20 秒，之后会缓存）……',
@@ -119,7 +141,8 @@ const csvUrl = ref('')
 const secs = ref(0)
 const dragging = ref(false)
 const link = ref('')
-const showPrev = ref(false)
+const cur = ref(null)                // { file } | { url }
+const lastSrc = ref(null)
 const prevSrc = ref(null)            // { file } | { url }
 const prevLink = ref('')
 const sevOn = ref({ High: true, Medium: true, Low: true, Info: false })
@@ -230,7 +253,17 @@ async function readPdf(buffer, name) {
   return { file: name, pages }
 }
 
+const cache = new Map()              // extracted documents, so a compare re-run does not read this year's PDF again
+const keyOf = (src) => src.file ? `f:${src.file.name}:${src.file.size}:${src.file.lastModified}` : `u:${src.url}`
 async function load(src) {
+  const k = keyOf(src)
+  if (cache.has(k)) return cache.get(k)
+  const doc = await loadFresh(src)
+  cache.set(k, doc)
+  if (cache.size > 3) cache.delete(cache.keys().next().value)
+  return doc
+}
+async function loadFresh(src) {
   const name = src.file ? src.file.name : nameFromUrl(src.url)
   const buf = src.file ? await src.file.arrayBuffer() : await fetchPdf(src.url, name)
   if (!isPdf(buf)) throw Object.assign(new Error('not a pdf'), { code: 'e_notpdf' })
@@ -241,8 +274,9 @@ async function load(src) {
 function startTimer() { secs.value = 0; stopTimer(); timer = setInterval(() => secs.value++, 1000) }
 function stopTimer() { if (timer) clearInterval(timer); timer = null }
 
-async function run(src) {
+async function run(src, prevS) {
   if (!src || (!src.file && !src.url)) return
+  lastSrc.value = src
   fail.value = null; result.value = null; open.value = {}
   typeSel.value = ''; query.value = ''; limit.value = 100; covSel.value = 'Missing'
   sevOn.value = { High: true, Medium: true, Low: true, Info: false }
@@ -251,7 +285,7 @@ async function run(src) {
   warm()
   try {
     const doc = await load(src)
-    const prev = prevSrc.value ? await load(prevSrc.value) : null
+    const prev = prevS ? await load(prevS) : null
     stage.value = { key: 'analysing', o: {} }
     const m = await analyseInWorker(doc, prev)
     result.value = m.result
@@ -265,13 +299,18 @@ async function run(src) {
     state.value = 'failed'
   } finally { stopTimer() }
 }
-function onPick(e) { run({ file: e.target.files[0] }); e.target.value = '' }
-function onDrop(e) { dragging.value = false; const f = e.dataTransfer.files[0]; if (f) run({ file: f }) }
-function onLink() { const u = link.value.trim(); if (/^https?:\/\//i.test(u)) run({ url: u }) }
-function onPrevPick(e) { const f = e.target.files[0]; if (f) prevSrc.value = { file: f }; e.target.value = '' }
-function onPrevLink() { const u = prevLink.value.trim(); if (/^https?:\/\//i.test(u)) prevSrc.value = { url: u } }
-function reset() { state.value = 'idle'; result.value = null; fail.value = null }
-const prevName = computed(() => prevSrc.value ? (prevSrc.value.file ? prevSrc.value.file.name : nameFromUrl(prevSrc.value.url)) : '')
+const isUrl = (u) => /^https?:\/\/\S+$/i.test((u || '').trim())
+const srcOf = (s, l) => s || (isUrl(l) ? { url: l.trim() } : null)
+const srcName = (s) => s ? (s.file ? s.file.name : nameFromUrl(s.url)) : ''
+const curSrc = computed(() => srcOf(cur.value, link.value))
+const prevReady = computed(() => srcOf(prevSrc.value, prevLink.value))
+function onPick(e) { const f = e.target.files[0]; if (f) { cur.value = { file: f }; link.value = '' } e.target.value = '' }
+function onDrop(e) { dragging.value = false; const f = e.dataTransfer.files[0]; if (f) { cur.value = { file: f }; link.value = '' } }
+function onPrevPick(e) { const f = e.target.files[0]; if (f) { prevSrc.value = { file: f }; prevLink.value = '' } e.target.value = '' }
+function startRun() { run(curSrc.value, prevReady.value) }
+function compareNow() { if (prevReady.value) run(lastSrc.value, prevReady.value) }
+function reset() { state.value = 'idle'; result.value = null; fail.value = null; cur.value = null; link.value = ''; prevSrc.value = null; prevLink.value = '' }
+const barClass = (v) => v == null ? 'na' : v >= 70 ? 'hi' : v >= 50 ? 'mid' : 'lo'
 
 // ---------------------------------------------------------------- results
 const counts = computed(() => result.value?.counts || {})
@@ -312,32 +351,42 @@ onBeforeUnmount(() => {
 <template>
   <div class="lens">
     <template v-if="state === 'idle' || state === 'failed'">
-      <div class="drop" :class="{ over: dragging }"
-           @dragenter.prevent="dragging = true; warm()" @dragover.prevent @dragleave.prevent="dragging = false"
-           @drop.prevent="onDrop" @mouseenter="warm" @focusin="warm">
-        <p class="drop-main">{{ t.drop }}</p>
-        <button class="btn primary" @click="input.click()">{{ t.choose }}</button>
-        <input ref="input" type="file" accept=".pdf,application/pdf" hidden @change="onPick">
-        <p class="drop-or">{{ t.or }}</p>
-        <form class="linkrow" @submit.prevent="onLink">
-          <input v-model="link" type="url" :placeholder="t.linkPh" :aria-label="t.linkPh">
-          <button class="btn" type="submit" :disabled="!/^https?:\/\//i.test(link.trim())">{{ t.check }}</button>
-        </form>
+      <div class="step">
+        <div class="step-h"><span class="num">1</span><b>{{ t.step1 }}</b><span class="tag">{{ t.required }}</span></div>
+        <div v-if="cur" class="picked">
+          <span>📄 {{ srcName(cur) }}</span>
+          <button class="btn small" @click="cur = null">{{ t.change }}</button>
+        </div>
+        <div v-else class="drop" :class="{ over: dragging }"
+             @dragenter.prevent="dragging = true; warm()" @dragover.prevent @dragleave.prevent="dragging = false"
+             @drop.prevent="onDrop" @mouseenter="warm" @focusin="warm">
+          <p class="drop-main">{{ t.drop }}</p>
+          <button class="btn" @click="input.click()">{{ t.choose }}</button>
+          <input ref="input" type="file" accept=".pdf,application/pdf" hidden @change="onPick">
+          <p class="drop-or">{{ t.or }}</p>
+          <div class="linkrow">
+            <input v-model="link" type="url" :placeholder="t.linkPh" :aria-label="t.linkPh" @keyup.enter="startRun">
+          </div>
+        </div>
       </div>
 
-      <details class="prev" :open="showPrev" @toggle="showPrev = $event.target.open">
-        <summary>{{ t.prevToggle }}</summary>
+      <div class="step">
+        <div class="step-h"><span class="num">2</span><b>{{ t.step2 }}</b><span class="tag opt">{{ t.optional }}</span></div>
         <p class="fine">{{ t.prevNote }}</p>
-        <div v-if="prevSrc" class="prevset">
-          <span>📄 {{ fmt(t.prevSet, { name: prevName }) }}</span>
-          <button class="btn small" @click="prevSrc = null; prevLink = ''">{{ t.clear }}</button>
+        <div v-if="prevSrc" class="picked">
+          <span>📄 {{ srcName(prevSrc) }}</span>
+          <button class="btn small" @click="prevSrc = null">{{ t.clear }}</button>
         </div>
-        <div v-else class="linkrow">
+        <div v-else class="linkrow left">
           <button class="btn" @click="prevInput.click()">{{ t.choose }}</button>
           <input ref="prevInput" type="file" accept=".pdf,application/pdf" hidden @change="onPrevPick">
-          <input v-model="prevLink" type="url" :placeholder="t.linkPh" :aria-label="t.linkPh" @change="onPrevLink" @keyup.enter="onPrevLink">
+          <input v-model="prevLink" type="url" :placeholder="t.prevLinkPh" :aria-label="t.prevLinkPh">
         </div>
-      </details>
+      </div>
+
+      <div class="runrow">
+        <button class="btn primary big" :disabled="!curSrc" @click="startRun">▶ {{ prevReady ? t.runCompare : t.run }}</button>
+      </div>
       <p class="fine">🔒 {{ t.privacy }}</p>
 
       <div v-if="state === 'failed'" class="alert" role="alert">
@@ -365,11 +414,24 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
-      <section class="read">
-        <div class="scores">
-          <div class="score"><b>{{ result.score_guide }}</b><span>/100</span><div class="fine">{{ t.sg }}</div></div>
-          <div class="score dim"><b>{{ result.score_all }}</b><span>/100</span><div class="fine">{{ t.sa }}</div></div>
+      <section v-if="result.rating" class="rating">
+        <div class="grade" :class="'g' + result.rating.grade">
+          <b>{{ result.rating.grade }}</b><span>{{ result.rating.overall }}/100</span>
         </div>
+        <div class="rating-main">
+          <h3>{{ t.rating }} · {{ result.rating.label }}</h3>
+          <p class="fine">{{ result.rating.note }} {{ fmt(t.allScore, { n: result.coverage.length, a: result.score_all }) }}</p>
+          <div class="dims">
+            <div v-for="d in result.rating.dims" :key="d.key" class="dim">
+              <div class="dim-h"><span>{{ d.name }}</span><b>{{ d.score == null ? t.na : d.score }}</b></div>
+              <div class="bar"><i :class="barClass(d.score)" :style="{ width: (d.score || 0) + '%' }"></i></div>
+              <div class="fine">{{ d.why }}</div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section class="read">
         <h3>{{ t.read }}</h3>
         <p class="headline">{{ result.read.headline }}</p>
         <div class="cols">
@@ -384,6 +446,23 @@ onBeforeUnmount(() => {
         </div>
         <details class="limits"><summary>{{ t.limits }}</summary><ul><li v-for="(s, n) in result.read.limits" :key="n">{{ s }}</li></ul></details>
       </section>
+
+      <details v-if="!result.prev_file" class="addprev">
+        <summary>➕ {{ t.addPrev }}</summary>
+        <p class="fine">{{ t.addPrevNote }}</p>
+        <div class="linkrow left">
+          <template v-if="prevSrc">
+            <span class="picked-inline">📄 {{ srcName(prevSrc) }}</span>
+            <button class="btn small" @click="prevSrc = null">{{ t.clear }}</button>
+          </template>
+          <template v-else>
+            <button class="btn" @click="prevInput.click()">{{ t.choose }}</button>
+            <input ref="prevInput" type="file" accept=".pdf,application/pdf" hidden @change="onPrevPick">
+            <input v-model="prevLink" type="url" :placeholder="t.prevLinkPh" :aria-label="t.prevLinkPh">
+          </template>
+          <button class="btn primary" :disabled="!prevReady" @click="compareNow">{{ t.compare }}</button>
+        </div>
+      </details>
 
       <div class="chips">
         <button v-for="sv in ['High', 'Medium', 'Low', 'Info']" :key="sv"
@@ -464,10 +543,35 @@ onBeforeUnmount(() => {
 .drop-or { color: var(--vp-c-text-2); }
 .linkrow { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; max-width: 640px; margin: 0 auto; }
 .linkrow input { flex: 1 1 260px; min-width: 0; border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 6px 10px; background: var(--vp-c-bg); color: var(--vp-c-text-1); font-size: .9em; }
-.prev { margin: 12px 0 4px; font-size: .95em; }
-.prev summary { cursor: pointer; color: var(--vp-c-brand-1); }
-.prev .linkrow { justify-content: flex-start; margin: 8px 0 0; max-width: none; }
-.prevset { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; margin-top: 8px; }
+.step { margin: 0 0 16px; }
+.step-h { display: flex; align-items: center; gap: 8px; margin-bottom: 8px; }
+.step-h .num { width: 22px; height: 22px; border-radius: 50%; background: var(--vp-c-brand-3); color: var(--vp-c-white); font-size: .8em; display: inline-flex; align-items: center; justify-content: center; font-weight: 600; }
+.tag { font-size: .75em; padding: 1px 8px; border-radius: 999px; background: var(--vp-c-brand-soft); color: var(--vp-c-brand-1); }
+.tag.opt { background: var(--vp-c-default-soft); color: var(--vp-c-text-2); }
+.step > .fine { margin: 0 0 8px; }
+.picked { display: flex; gap: 12px; align-items: center; flex-wrap: wrap; padding: 10px 14px; border-radius: 10px; background: var(--vp-c-bg-soft); border: 1px solid var(--vp-c-divider); word-break: break-all; }
+.picked-inline { align-self: center; word-break: break-all; }
+.linkrow.left { justify-content: flex-start; margin: 0; max-width: none; }
+.runrow { margin: 8px 0 12px; }
+.btn.big { padding: 10px 28px; font-size: 1em; font-weight: 600; }
+.addprev { margin: 0 0 16px; padding: 12px 16px; border-radius: 12px; border: 1px dashed var(--vp-c-divider); }
+.addprev summary { cursor: pointer; color: var(--vp-c-brand-1); font-weight: 500; }
+.addprev .fine { margin: 8px 0; }
+.rating { display: flex; gap: 20px; margin: 16px 0; padding: 16px; border-radius: 12px; border: 1px solid var(--vp-c-divider); }
+.grade { flex: none; width: 92px; height: 92px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--vp-c-white); }
+.grade b { font-size: 2.6em; line-height: 1; }
+.grade span { font-size: .8em; opacity: .9; margin-top: 4px; font-variant-numeric: tabular-nums; }
+.grade.gA { background: #18794e; } .grade.gB { background: #3a8f5c; } .grade.gC { background: #b7791f; } .grade.gD { background: #c2571a; } .grade.gE { background: #b42318; }
+.rating-main { flex: 1; min-width: 0; }
+.rating-main h3 { margin: 0 0 4px; padding: 0; border: 0; font-size: 1.1em; }
+.rating-main > .fine { margin: 0 0 10px; }
+.dims { display: grid; grid-template-columns: 1fr 1fr; gap: 12px 20px; }
+.dim-h { display: flex; justify-content: space-between; font-size: .92em; font-weight: 500; }
+.dim-h b { font-variant-numeric: tabular-nums; }
+.bar { height: 6px; border-radius: 3px; background: var(--vp-c-default-soft); margin: 4px 0; overflow: hidden; }
+.bar i { display: block; height: 100%; border-radius: 3px; }
+.bar i.hi { background: #3a8f5c; } .bar i.mid { background: #d4a72c; } .bar i.lo { background: #d1503f; }
+@media (max-width: 640px) { .rating { flex-direction: column; } .dims { grid-template-columns: 1fr; } }
 .fine { color: var(--vp-c-text-2); font-size: .85em; line-height: 1.5; }
 .mono { font-family: var(--vp-font-family-mono); font-size: .85em; }
 .nowrap { white-space: nowrap; }
@@ -492,12 +596,8 @@ onBeforeUnmount(() => {
 .read ul { margin: 0; padding-left: 20px; }
 .read li { margin: 4px 0; font-size: .92em; line-height: 1.55; }
 .headline { margin: 0; font-weight: 500; }
-.scores { display: flex; gap: 16px; float: right; margin: 0 0 8px 16px; }
-.score { text-align: center; }
-.score b { font-size: 1.8em; font-variant-numeric: tabular-nums; color: var(--vp-c-brand-1); }
-.score.dim b { color: var(--vp-c-text-2); font-size: 1.3em; }
 .cols { display: grid; grid-template-columns: 1fr 1fr; gap: 16px; clear: both; }
-@media (max-width: 640px) { .cols { grid-template-columns: 1fr; } .scores { float: none; margin: 0 0 8px; } }
+@media (max-width: 640px) { .cols { grid-template-columns: 1fr; } }
 .good { color: var(--vp-c-green-1, #18794e); }
 .bad { color: var(--vp-c-danger-1); }
 .limits { margin-top: 10px; font-size: .88em; color: var(--vp-c-text-2); }
