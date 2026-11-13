@@ -1,0 +1,10 @@
+{
+  "redirects": [
+    { "source": "/", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/zh/tools/esg-lens.html", "permanent": false },
+    { "source": "/en", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/en/esg-lens.html", "permanent": false },
+    { "source": "/zh", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/zh/tools/esg-lens.html", "permanent": false }
+  ],
+  "headers": [
+    { "source": "/(.*)", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] }
+  ]
+}
