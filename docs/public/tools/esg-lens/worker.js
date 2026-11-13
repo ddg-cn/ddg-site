@@ -32,10 +32,10 @@ sys.path.insert(0, "/app")
 import lens_core as core
 CFG = core.compile_config(json.load(open("/app/lens_rules.json", encoding="utf-8")))
 
-def run_lens(doc_json, prev_json, lang, when):
+def run_lens(doc_json, prev_json, lang, when, stds=""):
     doc = json.loads(doc_json)
     prev = json.loads(prev_json) if prev_json else None
-    res = core.analyse(doc, CFG, lang, prev_doc=prev)
+    res = core.analyse(doc, CFG, lang, prev_doc=prev, standards=[s for s in stds.split(",") if s] or None)
     core.write_xlsx(res, "/work/report.xlsx", when)
     return json.dumps(core.public(res), ensure_ascii=False)
 `);
@@ -57,9 +57,10 @@ self.onmessage = async (e) => {
       py.globals.set("prev_json", e.data.prev ? JSON.stringify(e.data.prev) : "");
       py.globals.set("out_lang", e.data.lang || "auto");
       py.globals.set("run_when", e.data.when || "");
+      py.globals.set("run_stds", (e.data.standards || ["auto"]).join(","));
       let res;
       try {
-        res = JSON.parse(await py.runPythonAsync("run_lens(doc_json, prev_json, out_lang, run_when)"));
+        res = JSON.parse(await py.runPythonAsync("run_lens(doc_json, prev_json, out_lang, run_when, run_stds)"));
       } catch (err) {
         const m = String((err && err.message) || err);
         post("failed", { code: "error", detail: m.trim().split("\n").slice(-3).join("\n").slice(0, 400) });

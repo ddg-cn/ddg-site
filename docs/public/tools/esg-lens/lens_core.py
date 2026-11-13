@@ -14,7 +14,7 @@ import math
 import re
 from collections import Counter, defaultdict
 
-CORE_VERSION = "2.1"
+CORE_VERSION = "2.2"
 CJK = r"㐀-鿿豈-﫿"
 SEV = ["High", "Medium", "Low", "Info"]
 SEV_ORDER = {s: i for i, s in enumerate(SEV)}
@@ -30,9 +30,24 @@ TXT = {
     "en": {
         "sev": {"High": "High", "Medium": "Medium", "Low": "Low", "Info": "Info"},
         "type": {"Consistency": "Numbers", "Claim": "Claim", "Gap": "Gap", "Change": "Year on year"},
-        "headline": "Covers {g}% of the exchange-guideline indicators ({a}% of all {n} indicators checked). {issues}",
+        "headline": "Checked against {stds}. {issues}",
+        "std_stated": " (stated in report)",
+        "s_index": "GRI content index: {ok} of {n} page references point to matching content.",
+        "w_index": "GRI content index lists {n} disclosure(s) with no matching content in the report, e.g. GRI {e}.",
+        "w_index_p": "GRI content index: {n} page reference(s) point to the wrong page.",
+        "l_std_default": "The report does not say which standards it follows, so it was checked against {stds}.",
+        "l_std_other": "Also referenced in the report but not checked: {x}.",
+        "l_index_sections": "The GRI content index cites sections, not page numbers, so only 'is it in the report at all' was checked.",
+        "i_missing": "GRI index lists {c} ({t}), but no matching content was found",
+        "i_missing_d": "The content index cites “{loc}” for GRI {c}; a keyword search of the rest of the report found nothing on this topic.",
+        "i_page": "GRI index points to the wrong page for {c} ({t})",
+        "i_page_d": "The index says p.{pp} (PDF p.{pdf}); the topic is not there but appears on PDF p.{where}.",
+        "i_why": "An index that points to missing or wrong content misleads readers and does not meet GRI's 'in accordance' requirements.",
+        "i_fix": "Re-check the index against the final layout; for anything not reported, state the omission and the reason.",
+        "i_omit": "GRI content index states {n} omission(s) with reasons.",
+        "gap_req": "Expected by: {r}.",
         "issues_line": "{c} number problem(s), {h} high- and {m} medium-priority claim(s) to substantiate, {k} key gap(s).",
-        "s_cov": "Broad coverage: {g}% of the exchange-guideline indicators are addressed.",
+        "s_cov": "Broad coverage of the selected standards: {l}.",
         "s_scope123": "Discloses Scope 1, 2 and 3 emissions figures.",
         "s_scope12": "Discloses Scope 1 and Scope 2 emissions figures.",
         "s_assure": "External assurance mentioned (p.{p}).",
@@ -45,7 +60,7 @@ TXT = {
         "w_numbers": "{n} number problem(s) in the data, e.g. {e}",
         "w_claims": "{n} claim(s) that need evidence, e.g. “{e}” (p.{p}).",
         "w_gaps": "Key gaps: {e}.",
-        "w_cov": "Thin coverage: only {g}% of the exchange-guideline indicators are addressed.",
+        "w_cov": "Thin coverage of the selected standards: {l}.",
         "w_vague": "Vague language is frequent ({d} vague commitments per 10,000 characters).",
         "w_boundary": "Some data covers only part of the company (partial boundary, p.{p}).",
         "w_dropped": "{n} item(s) disclosed last year are missing or no longer quantified this year.",
@@ -104,9 +119,24 @@ TXT = {
     "zh": {
         "sev": {"High": "高", "Medium": "中", "Low": "低", "Info": "提示"},
         "type": {"Consistency": "数据", "Claim": "表述", "Gap": "缺失", "Change": "跨年"},
-        "headline": "交易所指引相关指标覆盖 {g}%（全部 {n} 项指标覆盖 {a}%）。{issues}",
+        "headline": "对照 {stds}。{issues}",
+        "std_stated": "（报告声明采用）",
+        "s_index": "GRI 内容索引：{n} 个页码引用中 {ok} 个指向相符内容。",
+        "w_index": "GRI 内容索引列出的 {n} 个披露项在报告中找不到对应内容，例如 GRI {e}。",
+        "w_index_p": "GRI 内容索引：{n} 个页码引用指向了错误的页面。",
+        "l_std_default": "报告未说明采用哪些标准，因此默认对照 {stds}。",
+        "l_std_other": "报告还提到了以下标准，但本次未检查：{x}。",
+        "l_index_sections": "GRI 内容索引引用的是章节名称而非页码，因此只检查了“报告中是否有相关内容”。",
+        "i_missing": "GRI 索引列出 {c}（{t}），但未找到相应内容",
+        "i_missing_d": "内容索引称 GRI {c} 见“{loc}”，但在报告其余部分按关键词搜索未找到相关内容。",
+        "i_page": "GRI 索引中 {c}（{t}）的页码有误",
+        "i_page_d": "索引标注第 {pp} 页（PDF 第 {pdf} 页），该页没有相关内容；相关内容在 PDF 第 {where} 页。",
+        "i_why": "索引指向缺失或错误的内容会误导读者，也不符合 GRI“符合标准”的要求。",
+        "i_fix": "按最终排版重新核对索引；未披露的项目应注明从略及原因。",
+        "i_omit": "GRI 内容索引说明了 {n} 项从略及原因。",
+        "gap_req": "要求来源：{r}。",
         "issues_line": "数据问题 {c} 项，需补充依据的高/中风险表述 {h}/{m} 项，关键缺失 {k} 项。",
-        "s_cov": "覆盖面广：交易所指引相关指标覆盖 {g}%。",
+        "s_cov": "所选标准覆盖面广：{l}。",
         "s_scope123": "披露了范围一、范围二和范围三排放数据。",
         "s_scope12": "披露了范围一和范围二排放数据。",
         "s_assure": "提及第三方鉴证（第 {p} 页）。",
@@ -119,7 +149,7 @@ TXT = {
         "w_numbers": "数据中有 {n} 处数字问题，例如：{e}",
         "w_claims": "{n} 处表述需要依据支撑，例如“{e}”（第 {p} 页）。",
         "w_gaps": "关键缺失：{e}。",
-        "w_cov": "覆盖不足：交易所指引相关指标仅覆盖 {g}%。",
+        "w_cov": "所选标准覆盖不足：{l}。",
         "w_vague": "模糊用语较多（每万字 {d} 次模糊承诺）。",
         "w_boundary": "部分数据只覆盖公司的一部分（边界不完整，第 {p} 页）。",
         "w_dropped": "{n} 项去年披露的内容今年未见或不再量化。",
@@ -221,7 +251,25 @@ def compile_config(cfg):
         if rx and str(t.get("Active (Y/N)", "Y")).strip().upper() != "N":
             ids = {x.strip() for x in re.split(r"[,;\s]+", t.get("Rules (blank = all)") or "") if x.strip()}
             terms.append({"rx": rx, "rules": ids})
-    return {"indicators": inds, "rules": rules, "terms": terms}
+    stds = []
+    for x in cfg.get("standards", []):
+        if not x.get("Code") or str(x.get("Active (Y/N)", "Y")).strip().upper() == "N":
+            continue
+        x = dict(x)
+        x["re_detect"] = compile_or_none(x.get("Detect (regex)"), re.I)
+        x["checked"] = str(x.get("Checked (Y/N)", "Y")).strip().upper() != "N"
+        x["default"] = str(x.get("Default (Y/N)", "N")).strip().upper() == "Y"
+        stds.append(x)
+    cmap = []
+    for m in cfg.get("map", []):
+        if not m.get("Standard") or not m.get("Clause"):
+            continue
+        m = dict(m)
+        m["Clause"] = str(m["Clause"])
+        m["ids"] = [i for i in re.split(r"[,;\s]+", m.get("Indicator IDs") or "") if i]
+        m["all"] = str(m.get("Applies") or "All").strip() == "All"
+        cmap.append(m)
+    return {"indicators": inds, "rules": rules, "terms": terms, "standards": stds, "map": cmap}
 
 
 # ======================================================================= text
@@ -1045,21 +1093,27 @@ KEY_GAPS = {"E-CL-07": "Medium", "E-CL-08": "Medium", "G-RP-03": "Medium", "G-GV
             "E-CL-11": "Low", "G-RP-02": "Low", "E-CL-09": "Low"}
 
 
-def gap_issues(cov, L, zh):
+LENS = ("IFC", "RATER")
+
+
+def gap_issues(cov, L, zh, scope=None):
+    """scope: indicator ID -> [(standard, clause)] for the selected standards (None = old behaviour: exchange guideline)."""
     out = []
     for r in cov:
         key = r["ID"] in KEY_GAPS
         partly_key = key and r["Status"] == "Partly" and r["Quant"] == "Y"
-        if not (r["Status"] == "Missing" and (key or r["Guideline"] == "Y")) and not partly_key:
+        refs = scope.get(r["ID"], []) if scope is not None else ([("CN", "")] if r["Guideline"] == "Y" else [])
+        if not (r["Status"] == "Missing" and (key or refs)) and not partly_key:
             continue
-        sev = KEY_GAPS.get(r["ID"], "Low")
+        sev = KEY_GAPS.get(r["ID"]) or ("Low" if any(k not in LENS for k, _ in refs) else "Info")
         if partly_key:
             sev = "Low" if sev == "Medium" else "Info"
         name = r["Indicator"] if zh else (r["Indicator EN"] or r["Indicator"])
         out.append({"sev": sev, "type": "Gap", "rule": r["ID"], "title": L["gap_title"].format(i=name),
                     "pages": [r["First page"]] if r["First page"] else [], "found": "",
                     "evidence": L["gap_partly"] if r["Status"] == "Partly" else L["gap_note"],
-                    "note": r["References"], "why": L["gap_why"], "fix": L["gap_fix"]})
+                    "note": L["gap_req"].format(r=" · ".join(f"{k} {c}".strip() for k, c in refs[:6])) if scope is not None and refs else r["References"],
+                    "why": L["gap_why"], "fix": L["gap_fix"]})
     return out
 
 
@@ -1114,18 +1168,218 @@ def yoy(cur, prev, L, zh):
 
 
 # ======================================================================= the read
+# ======================================================================= standards
+SHORT = {"CN": ("exchange guideline", "交易所指引"), "GRI": ("GRI", "GRI"), "ISSB": ("ISSB", "ISSB"), "HKEX": ("HKEX", "港交所守则"),
+         "IFC": ("IFC PS", "IFC 绩效标准"), "RATER": ("rater key issues", "评级关键议题"), "TCFD": ("TCFD", "TCFD"), "SASB": ("SASB", "SASB")}
+REFVERB = re.compile(r"参照|参考|依据|遵循|按照|根据|结合|对标|符合|采用|编制|in accordance|with reference|prepared|aligned?|follow|according|reference", re.I)
+
+
+def short_name(code, zh):
+    return SHORT.get(code, (code, code))[1 if zh else 0]
+
+
+def detect_standards(cfg, pages, has_index):
+    """Standards the report says it follows: a mention near 'prepared with reference to / 参照 / 依据' etc."""
+    found = {}
+    for st in cfg.get("standards", []):
+        rx = st["re_detect"]
+        if not rx:
+            continue
+        for pno, txt in enumerate(pages, 1):
+            for m in rx.finditer(txt):
+                if REFVERB.search(txt[max(0, m.start() - 80):m.end() + 40]):
+                    found.setdefault(st["Code"], []).append(pno)
+                    break
+    if has_index:
+        found.setdefault("GRI", [])
+    return {k: sorted(set(v))[:10] for k, v in found.items()}
+
+
+def choose_standards(cfg, detected, wanted):
+    """wanted: None/[] = auto; may contain 'auto' plus explicit codes."""
+    ok = [x["Code"] for x in cfg.get("standards", []) if x["checked"]]
+    wanted = [w for w in (wanted or ["auto"]) if w == "auto" or w in ok]
+    sel = [w for w in wanted if w != "auto"]
+    defaulted = False
+    if "auto" in wanted:
+        auto = [c for c in ok if c in detected]
+        if not auto:
+            auto = [x["Code"] for x in cfg["standards"] if x["checked"] and x["default"]]
+            defaulted = True
+        sel = [c for c in ok if c in sel or c in auto]
+    return sel, defaulted
+
+
+def std_coverage(cov, cfg, selected, detected, zh):
+    pts = {"Disclosed": 1, "Partly": 0.5, "Missing": 0}
+    by = {r["ID"]: r for r in cov}
+    summary, rows, scope = [], [], {}
+    for st in cfg.get("standards", []):
+        if not st["checked"]:
+            continue
+        code = st["Code"]
+        tot = cnt = 0
+        n = {"Disclosed": 0, "Partly": 0, "Missing": 0}
+        for c in [m for m in cfg["map"] if m["Standard"] == code]:
+            linked = [by[i] for i in c["ids"] if i in by]
+            if linked:
+                v = sum(pts[r["Status"]] for r in linked) / len(linked)
+                status = "Disclosed" if v >= 0.75 else "Partly" if v >= 0.25 else "Missing"
+            else:
+                v, status = None, "n/a"
+            if c["all"] and linked:
+                tot += v
+                cnt += 1
+                n[status] += 1
+            if code in selected:
+                if c["all"]:
+                    for i in c["ids"]:
+                        scope.setdefault(i, []).append((code, c["Clause"]))
+                pg = sorted({int(r["First page"]) for r in linked if str(r.get("First page") or "").isdigit()})
+                rows.append({"Standard": code, "Clause": c["Clause"], "Requirement": c.get("Requirement (CN)" if zh else "Requirement (EN)") or "",
+                             "Level": c.get("Level") or "", "Scored": "Y" if c["all"] and linked else "N", "Status": status,
+                             "Indicators": ", ".join(c["ids"]), "Pages": ", ".join(map(str, pg[:6])),
+                             "Number found": next((r["Number found"] for r in linked if r.get("Number found")), "")})
+        summary.append({"code": code, "name": st.get("Name (CN)" if zh else "Name (EN)") or code, "short": short_name(code, zh),
+                        "kind": st.get("Kind") or "", "note": st.get("Note (CN)" if zh else "Note (EN)") or "",
+                        "score": round(tot / cnt * 100) if cnt else None, "n": cnt, "counts": n,
+                        "selected": code in selected, "detected": code in detected, "detected_pages": detected.get(code, [])})
+    return summary, rows, scope
+
+
+GRI_CODE = re.compile(r"^(?:GRI\s*)?((?:2|3)-\d{1,2}|(?:20[1-7]|30[1-8]|40[1-9]|41[0-8]|101)-\d{1,2})(?!\d|-[a-zA-Z0-9])")
+PAGE_CELL = re.compile(r"^(?:P|p\.?|第|页码[:：]?)?\s*\d{1,3}(?:\s*(?:[-–~、,，/]|至)\s*(?:P|p\.?)?\s*\d{1,3})*\s*页?$")
+OMIT = re.compile(r"从略|不适用|未披露|不涉及|未涉及|没有|无此|无法(完整)?(披露|统计)|暂不(予)?(对外)?(披露|报告)|不予(披露|报告)|保密|"
+                  r"信息(欠缺|不完整)|(统计|数据).{0,4}不完善|详见.{0,12}(年报|年度报告|官网|网站)|annual report|confidential|"
+                  r"N/?A\b|not applicable|omi(tted|ssion)|not (available|reported)", re.I)
+IDX_HEAD = re.compile(r"内容索引|Content Index|GRI.{0,8}索引|指标索引|索引表", re.I)
+
+
+def _page_nums(t):
+    out = []
+    for a, b in re.findall(r"(\d{1,3})(?:\s*(?:[-–~]|至)\s*(?:P|p\.?)?\s*(\d{1,3}))?", t):
+        a = int(a)
+        b = int(b) if b else a
+        if b < a or b - a > 12:
+            b = a
+        out += list(range(a, b + 1))
+    return out
+
+
+def gri_index(doc, pages, cfg, L):
+    """Read the GRI content index and check it against the report. Returns (issues, summary)."""
+    n = len(pages)
+    entries, idx_pages, prev_ok = {}, [], False
+    for pno, pg in enumerate(doc["pages"], 1):
+        rows = rows_of(pg.get("words") or [])
+        codes = sum(1 for r in rows for c in r["cells"] if GRI_CODE.match(c["t"]))
+        ok = codes >= 5 and (prev_ok or bool(IDX_HEAD.search(pages[pno - 1])))
+        prev_ok = ok
+        if not ok:
+            continue
+        idx_pages.append(pno)
+        active = []
+        for r in rows:
+            for c in r["cells"]:
+                m = GRI_CODE.match(c["t"])
+                if m:
+                    e = entries.setdefault(m.group(1), {"code": m.group(1), "page": pno, "texts": []})
+                    rest = c["t"][m.end():].strip()
+                    if rest:
+                        e["texts"].append(rest)
+                    active = sorted([a for a in active if abs(a[0] - c["x0"]) > 25] + [(c["x0"], e)], key=lambda a: a[0])
+                elif active:
+                    owner = None
+                    for x, e in active:
+                        if x <= c["x0"] + 5:
+                            owner = e
+                    if owner is not None:
+                        owner["texts"].append(c["t"])
+    if len(entries) < 5:
+        return [], None
+
+    gmap = {}
+    for m in cfg["map"]:
+        if m["Standard"] == "GRI":
+            for k in re.split(r"\s*/\s*", m["Clause"]):
+                gmap[k] = m
+    inds = {d["ID"]: d for d in cfg["indicators"]}
+    hitcache = {}
+    idx = set(idx_pages)
+
+    def hits(i):
+        if i not in hitcache:
+            d = inds.get(i)
+            hitcache[i] = set() if not d else {p for p in range(1, n + 1) if p not in idx and any(
+                rx and rx.search(pages[p - 1]) for rx in (d["re_cn"], d["re_en"]))}
+        return hitcache[i]
+
+    issues, pairs, omitted, linked = [], [], 0, 0
+    for code, e in entries.items():
+        m = gmap.get(code) or gmap.get(code.split("-")[0])
+        texts = [t for t in e["texts"] if t.strip()]
+        nums = [x for t in texts if PAGE_CELL.match(t.strip()) for x in _page_nums(t) if 0 < x <= 2 * n + 10]
+        if any(OMIT.search(t) for t in texts):  # full or partial omission stated in the index: not checked
+            omitted += 1
+            continue
+        if not m or not texts:
+            continue
+        linked += 1
+        h = set().union(*[hits(i) for i in m["ids"]]) if m["ids"] else set()
+        title = m.get("Requirement (CN)" if L is TXT["zh"] else "Requirement (EN)") or ""
+        if not h:
+            loc = ", ".join(str(x) for x in nums[:4]) if nums else short(" ".join(t for t in texts if not PAGE_CELL.match(t.strip()))[-40:], 40)
+            strong = any(i in KEY_GAPS or (inds.get(i) or {}).get("quant") for i in m["ids"])
+            issues.append({"sev": "Medium" if strong else "Low", "type": "Consistency", "rule": "IDX-01", "title": L["i_missing"].format(c=code, t=title),
+                           "pages": [e["page"]], "found": f"GRI {code}", "evidence": L["i_missing_d"].format(loc=loc, c=code),
+                           "note": "", "why": L["i_why"], "fix": L["i_fix"]})
+        elif nums:
+            pairs.append((code, title, e["page"], nums, h))
+    summary = {"pages": idx_pages, "entries": len(entries), "linked": linked, "omitted": omitted, "mode": "sections", "checked": 0, "ok": 0}
+    if len(pairs) >= 5:
+        best = None
+        for kind in ("single", "spread"):
+            for o in range(-40, 41):
+                f = (lambda p, o=o: p + o) if kind == "single" else (lambda p, o=o: p // 2 + o)
+                sc = sum(1 for _, _, _, ns, h in pairs if any(f(x) in h for x in ns))
+                key = (sc, kind == "single", -abs(o))
+                if best is None or key > best[0]:
+                    best = (key, kind, o, f)
+        (sc, _, _), kind, o, f = best
+        if sc >= 0.4 * len(pairs):
+            summary.update(mode="pages", checked=len(pairs), ok=len(pairs), offset=o, layout=kind)
+            for code, title, ip, ns, h in pairs:
+                mapped = [f(x) for x in ns]
+                # index entries often cite the start of a section: the page before or after counts as a match
+                if not any(x + d in h for x in mapped for d in (-1, 0, 1)):
+                    summary["ok"] -= 1
+                    issues.append({"sev": "Low", "type": "Consistency", "rule": "IDX-02", "title": L["i_page"].format(c=code, t=title),
+                                   "pages": [ip], "found": f"GRI {code}",
+                                   "evidence": L["i_page_d"].format(pp=", ".join(map(str, ns[:3])), pdf=", ".join(map(str, mapped[:3])),
+                                                                    where=", ".join(map(str, sorted(h)[:4]))),
+                                   "note": "", "why": L["i_why"], "fix": L["i_fix"]})
+    return issues, summary
+
+
 def the_read(res, L, prev=None):
     cov = {r["ID"]: r for r in res["coverage"]}
     st = lambda i: cov.get(i, {}).get("Status", "Missing")  # noqa: E731
     g, a = res["score_guide"], res["score_all"]
     iss = res["issues"]
-    cons = [i for i in iss if i["type"] == "Consistency" and i["sev"] != "Info"]
+    cons = [i for i in iss if i["type"] == "Consistency" and i["sev"] != "Info" and not i["rule"].startswith("IDX")]
     hc = [i for i in iss if i["type"] == "Claim" and i["sev"] == "High"]
     mc = [i for i in iss if i["type"] == "Claim" and i["sev"] == "Medium"]
     kg = [i for i in iss if i["type"] == "Gap" and i["rule"] in KEY_GAPS and i["sev"] in ("Medium", "Low") and i["rule"] != "E-CL-09"]
     strengths, weak, limits = [], [], []
-    if g >= 75:
-        strengths.append(L["s_cov"].format(g=g))
+    zh = L is TXT["zh"]
+    sel = [x for x in res.get("standards", []) if x["selected"] and x["score"] is not None]
+    sep = "、" if zh else ", "
+    stds = sep.join(f'{x["short"]} {x["score"]}%' + (L["std_stated"] if x["detected"] else "") for x in sel) or f"{g}%"
+    covs = [x["score"] for x in sel if x["code"] not in LENS] or [g]
+    cov_avg = sum(covs) / len(covs)
+    lst = sep.join(f'{x["short"]} {x["score"]}%' for x in sel if x["code"] not in LENS) or f"{g}%"
+    if cov_avg >= 75:
+        strengths.append(L["s_cov"].format(l=lst))
     if st("E-CL-07") == st("E-CL-08") == "Disclosed":
         strengths.append(L["s_scope123"] if st("E-CL-09") == "Disclosed" else L["s_scope12"])
     if st("G-RP-03") != "Missing":
@@ -1154,8 +1408,17 @@ def the_read(res, L, prev=None):
     if kg:
         names = [L["key_gaps"].get(i["rule"], i["rule"]) for i in kg]
         weak.append(L["w_gaps"].format(e=", ".join(names) if L is TXT["en"] else "、".join(names)))
-    if g < 60:
-        weak.append(L["w_cov"].format(g=g))
+    if cov_avg < 60:
+        weak.append(L["w_cov"].format(l=lst))
+    gi = res.get("gri_index") or {}
+    i1 = [i for i in iss if i["rule"] == "IDX-01"]
+    i2 = [i for i in iss if i["rule"] == "IDX-02"]
+    if i1:
+        weak.append(L["w_index"].format(n=len(i1), e=sep.join(i["found"].replace("GRI ", "") for i in i1[:4])))
+    if i2:
+        weak.append(L["w_index_p"].format(n=len(i2)))
+    if gi.get("mode") == "pages" and gi["checked"] and gi["ok"] >= 0.8 * gi["checked"]:
+        strengths.append(L["s_index"].format(ok=gi["ok"], n=gi["checked"]))
     if vague >= 3:
         weak.append(L["w_vague"].format(d=round(vague, 1)))
     pb = next((i for i in iss if i["rule"] == "GW-15"), None)
@@ -1174,8 +1437,16 @@ def the_read(res, L, prev=None):
         limits.append(L["l_few"].format(n=len(res["kpis"])))
     if res["scanned"]:
         limits.append(L["l_scan"].format(n=len(res["scanned"])))
+    if res.get("std_defaulted"):
+        limits.append(L["l_std_default"].format(stds=sep.join(x["short"] for x in sel)))
+    if res.get("std_other"):
+        limits.append(L["l_std_other"].format(x=sep.join(res["std_other"])))
+    if gi.get("mode") == "sections":
+        limits.append(L["l_index_sections"])
+    if gi.get("omitted"):
+        limits.append(L["i_omit"].format(n=gi["omitted"]))
     limits.append(L["l_keyword"])
-    headline = L["headline"].format(g=g, a=a, n=len(res["coverage"]),
+    headline = L["headline"].format(stds=stds,
                                     issues=L["issues_line"].format(c=len(cons), h=len(hc), m=len(mc), k=len(kg)))
     return {"headline": headline, "strengths": strengths[:7], "weaknesses": weak[:7], "limits": limits}
 
@@ -1185,7 +1456,8 @@ RATE_TXT = {
     "en": {
         "dims": {"coverage": "Coverage", "data": "Data depth", "accuracy": "Numbers add up", "claims": "Claims are supported",
                  "targets": "Targets", "verify": "Verifiable"},
-        "r_cov": "{g}% of exchange-guideline indicators addressed (E {e}% · S {s}% · G {gv}%).",
+        "r_cov": "Selected standards: {l} (in-scope indicators E {e}% · S {s}% · G {gv}%).",
+        "r_idx": " GRI index: {a} item(s) not found, {b} wrong page(s).",
         "r_data": "{d} of {n} quantitative indicators have a figure; {k} table values over {y} year(s).{drop}",
         "r_drop": " {n} item(s) dropped since last year.",
         "r_acc": "{p} arithmetic check(s) passed, {h} problem(s) at High/Medium, {l} at Low.{rest}",
@@ -1201,7 +1473,8 @@ RATE_TXT = {
     "zh": {
         "dims": {"coverage": "覆盖面", "data": "数据深度", "accuracy": "数字一致", "claims": "表述有依据",
                  "targets": "目标质量", "verify": "可验证性"},
-        "r_cov": "交易所指引相关指标覆盖 {g}%（环境 {e}% · 社会 {s}% · 治理 {gv}%）。",
+        "r_cov": "所选标准：{l}（范围内指标：环境 {e}% · 社会 {s}% · 治理 {gv}%）。",
+        "r_idx": "GRI 索引：{a} 项找不到内容，{b} 处页码错误。",
         "r_data": "{n} 项定量指标中 {d} 项有数据；数据表共 {k} 个数值，覆盖 {y} 个年度。{drop}",
         "r_drop": "去年披露的 {n} 项今年未见。",
         "r_acc": "通过 {p} 项算术核对；高/中问题 {h} 项，低 {l} 项。{rest}",
@@ -1241,12 +1514,17 @@ def rating(res, lang, prev=None):
     clamp = lambda x: max(0, min(100, round(x)))  # noqa: E731
     dims = {}
 
-    def pil(p):
-        rows = [r for r in cov if r["Pillar"] == p and r["Guideline"] == "Y"]
-        return score(rows) if rows else "-"
-    dims["coverage"] = (res["score_guide"], R["r_cov"].format(g=res["score_guide"], e=pil("E"), s=pil("S"), gv=pil("G")))
+    scope = res.get("scope") or {r["ID"]: 1 for r in cov if r["Guideline"] == "Y"}
+    sel = [x for x in res.get("standards", []) if x["selected"] and x["score"] is not None and x["code"] not in LENS]
+    sep = "、" if lang == "zh" else ", "
 
-    quant = [r for r in cov if r["Quant"] == "Y"]
+    def pil(p):
+        rows = [r for r in cov if r["Pillar"] == p and r["ID"] in scope]
+        return score(rows) if rows else "-"
+    cs = round(sum(x["score"] for x in sel) / len(sel)) if sel else res["score_guide"]
+    dims["coverage"] = (cs, R["r_cov"].format(l=sep.join(f'{x["short"]} {x["score"]}%' for x in sel) or f'{cs}%', e=pil("E"), s=pil("S"), gv=pil("G")))
+
+    quant = [r for r in cov if r["Quant"] == "Y" and r["ID"] in scope]
     qd = sum(r["Status"] == "Disclosed" for r in quant)
     yrs = {k["year"] for k in res["kpis"]}
     dropped = [i for i in iss if i["rule"] in ("YOY-01", "YOY-02")] if prev is not None else []
@@ -1255,15 +1533,19 @@ def rating(res, lang, prev=None):
     dims["data"] = (clamp(s), R["r_data"].format(d=qd, n=len(quant), k=len(res["kpis"]), y=len(yrs),
                                                  drop=R["r_drop"].format(n=len(dropped)) if dropped else ""))
 
-    cons = [i for i in iss if i["type"] == "Consistency" and i["sev"] != "Info"]
+    i1 = sum(i["rule"] == "IDX-01" for i in iss)
+    i2 = sum(i["rule"] == "IDX-02" for i in iss)
+    gi = res.get("gri_index") or {}
+    cons = [i for i in iss if i["type"] == "Consistency" and i["sev"] != "Info" and not i["rule"].startswith("IDX")]
     hm = sum(i["sev"] in ("High", "Medium") for i in cons)
     lo = sum(i["sev"] == "Low" for i in cons)
     rest = [i for i in iss if i["rule"] == "YOY-03" and i["sev"] == "Medium"] if prev is not None else []
-    if res["checks_passed"] + len(cons) < 3:
+    idx_txt = R["r_idx"].format(a=i1, b=i2) if (i1 or i2) else ""
+    if res["checks_passed"] + len(cons) + gi.get("checked", 0) + gi.get("linked", 0) < 3:
         dims["accuracy"] = (None, R["r_acc_na"])
     else:
-        dims["accuracy"] = (clamp(100 - 20 * hm - 7 * lo - 10 * len(rest)),
-                            R["r_acc"].format(p=res["checks_passed"], h=hm, l=lo, rest=R["r_rest"].format(n=len(rest)) if rest else ""))
+        dims["accuracy"] = (clamp(100 - 20 * hm - 7 * lo - 10 * len(rest) - min(30, 6 * i1 + 3 * i2)),
+                            R["r_acc"].format(p=res["checks_passed"], h=hm, l=lo, rest=R["r_rest"].format(n=len(rest)) if rest else "") + idx_txt)
 
     cl = [i for i in iss if i["type"] == "Claim" and i["rule"] not in TARGET_RULES]
     ch, cm, cl_ = (sum(i["sev"] == x for i in cl) for x in ("High", "Medium", "Low"))
@@ -1290,7 +1572,7 @@ def rating(res, lang, prev=None):
 
 
 # ======================================================================= main entry
-def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
+def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False, standards=None):
     """doc -> result dict. cfg = compile_config(...) output."""
     raw = [normalise(p.get("text") or "") for p in doc["pages"]]
     pages = strip_repeats(raw)
@@ -1309,7 +1591,18 @@ def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
         return res
     cl, dens = claims(cfg["rules"], cfg["terms"], us, pages, L)
     nc, passed = number_checks(kpis, pages, L)
-    issues = nc + cl + gap_issues(cov, L, zh)
+    idx_issues, gi = gri_index(doc, pages, cfg, L)
+    detected = detect_standards(cfg, pages, bool(gi))
+    if cfg.get("standards"):
+        sel, defaulted = choose_standards(cfg, detected, standards)
+        summ, srows, scope = std_coverage(cov, cfg, sel, detected, zh)
+        checked = {x["Code"] for x in cfg["standards"] if x["checked"]}
+        res.update(standards=summ, std_rows=srows, scope=scope, std_defaulted=defaulted,
+                   std_other=[short_name(c, zh) for c in detected if c not in checked])
+    else:
+        scope = None
+    res["gri_index"] = gi
+    issues = nc + idx_issues + cl + gap_issues(cov, L, zh, scope)
     prev = None
     if prev_doc:
         prev = analyse(prev_doc, cfg, lang, _is_prev=True)
@@ -1329,7 +1622,7 @@ def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False):
 def public(res):
     """JSON-safe subset for the web page."""
     keep = ("file", "prev_file", "core", "lang", "report_lang", "n_pages", "score_all", "score_guide", "issues", "read", "counts",
-            "checks_passed", "density", "scanned", "rating")
+            "checks_passed", "density", "scanned", "rating", "standards", "std_rows", "gri_index", "std_defaulted", "std_other")
     out = {k: res[k] for k in keep if k in res}
     out["coverage"] = [{k: r[k] for k in ("ID", "Pillar", "Topic", "Indicator", "Indicator EN", "Guideline", "Status", "Pages", "Number found")}
                        for r in res["coverage"]]
@@ -1345,7 +1638,9 @@ XL = {
            "good": "What is good", "bad": "What needs work", "limits": "Limits of this check", "vague": "Vague-language density (per 10,000 characters)",
            "h_issues": ["No", "Severity", "Type", "Rule", "Issue", "Pages", "Found", "Evidence / detail", "Note", "Why it matters", "What good looks like"],
            "h_data": ["Page", "Table", "Section", "Label", "Unit", "Year", "Value", "Check group"],
-           "rating": "Content rating", "weight": "weight",
+           "rating": "Content rating", "weight": "weight", "std": "Standards", "stdline": "Standards checked",
+           "h_std": ["Standard", "Clause", "Requirement", "Level", "Scored", "Status", "Indicators", "Pages", "Figure found"],
+           "h_sum": ["Standard", "Kind", "Selected", "Stated in report", "Score", "Clauses scored", "Disclosed", "Partly", "Missing", "Note"],
            "disclaimer": "Automated screening. Flags are prompts for a reviewer, not verdicts. Check every page reference before quoting."},
     "zh": {"read": "解读", "issues": "问题清单", "cov": "覆盖", "data": "数据表", "title": "ESG 报告透镜",
            "report": "报告", "prev": "对比报告", "pages": "页数", "lang": "报告语言", "sg": "交易所指引覆盖得分",
@@ -1353,7 +1648,9 @@ XL = {
            "good": "做得好的", "bad": "需要改进的", "limits": "本检查的局限", "vague": "模糊用语密度（每万字）",
            "h_issues": ["序号", "严重程度", "类型", "规则", "问题", "页码", "匹配内容", "证据 / 详情", "备注", "为什么重要", "更好的做法"],
            "h_data": ["页码", "表", "栏目", "指标", "单位", "年份", "数值", "核对分组"],
-           "rating": "内容评级", "weight": "权重",
+           "rating": "内容评级", "weight": "权重", "std": "标准", "stdline": "对照的标准",
+           "h_std": ["标准", "条款", "要求", "级别", "计分", "状态", "指标", "页码", "找到的数据"],
+           "h_sum": ["标准", "类型", "已选择", "报告声明采用", "得分", "计分条款数", "已披露", "部分", "缺失", "说明"],
            "disclaimer": "自动筛查结果。标记只是提示审阅人关注，并非结论。引用前请逐一核对页码。"},
 }
 
@@ -1381,6 +1678,8 @@ def write_xlsx(res, path_or_buffer, when=""):
     info = [(X["report"], res["file"])]
     if res.get("prev_file"):
         info.append((X["prev"], res["prev_file"]))
+    if res.get("standards"):
+        info.append((X["stdline"], ", ".join(f'{x["short"]} {x["score"]}/100' for x in res["standards"] if x["selected"])))
     info += [(X["pages"], res["n_pages"]), (X["lang"], res["report_lang"]), (X["sg"], f'{res["score_guide"]} / 100'),
              (X["sa"], f'{res["score_all"]} / 100'), (X["counts"], " / ".join(str(res["counts"][s]) for s in SEV)),
              (X["run"], when), (X["ver"], res["core"])]
@@ -1424,6 +1723,27 @@ def write_xlsx(res, path_or_buffer, when=""):
         ws.set_column(c, c, w)
     ws.freeze_panes(1, 0)
     ws.autofilter(0, 0, max(len(res["issues"]), 1), len(X["h_issues"]) - 1)
+
+    if res.get("standards"):
+        ws = wb.add_worksheet(X["std"])
+        ws.write_row(0, 0, X["h_sum"], H)
+        yn = lambda b: "Y" if b else ""  # noqa: E731
+        r = 1
+        for x in res["standards"]:
+            ws.write_row(r, 0, [x["name"], x["kind"], yn(x["selected"]), yn(x["detected"]), "" if x["score"] is None else x["score"], x["n"],
+                                x["counts"]["Disclosed"], x["counts"]["Partly"], x["counts"]["Missing"], x["note"]], C)
+            r += 1
+        r += 1
+        ws.write_row(r, 0, X["h_std"], H)
+        top = r
+        for row in res["std_rows"]:
+            r += 1
+            vals = [row["Standard"], row["Clause"], row["Requirement"], row["Level"], row["Scored"], row["Status"], row["Indicators"], row["Pages"], row["Number found"]]
+            for c, v in enumerate(vals):
+                ws.write(r, c, v, SEVF.get(v, C) if c == 5 else C)
+        for c, w in enumerate([30, 22, 50, 16, 8, 10, 22, 14, 22, 50]):
+            ws.set_column(c, c, w)
+        ws.autofilter(top, 0, r, 8)
 
     ws = wb.add_worksheet(X["cov"])
     cols = ["ID", "Pillar", "Topic", "Indicator", "Indicator EN", "Guideline", "Quant", "Status", "Mentions", "Pages", "Number found", "Evidence", "References"]

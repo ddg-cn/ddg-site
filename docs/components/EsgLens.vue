@@ -27,6 +27,22 @@ const T = {
     rating: 'Content rating',
     na: 'n/a',
     allScore: 'All {n} indicators: {a}/100',
+    stdTitle: 'Standards to check against',
+    stdAuto: 'As stated in the report',
+    stdAutoHint: 'Uses the standards the report says it follows. If it names none: exchange guideline + GRI.',
+    lens: 'lens',
+    standardsH: 'Coverage by standard',
+    stated: 'stated in report',
+    notStated: 'not stated in report',
+    stdCounts: '{d} disclosed · {p} partly · {m} missing',
+    changeStd: 'Check against other standards',
+    recheck: 'Check again',
+    idxPages: 'GRI content index (p.{p}): {ok} of {n} page references point to matching content; {o} omission(s) stated in the index.',
+    idxSections: 'GRI content index (p.{p}): entries cite sections, not page numbers; each was checked for matching content anywhere in the report; {o} omission(s) stated in the index.',
+    otherStd: 'Also referenced in the report (not checked): {x}',
+    covShow: 'Show',
+    covInd: 'All indicators',
+    clause: 'Clause', req: 'Requirement',
     clear: 'Remove',
     privacy: 'The PDF is read in your browser and not stored anywhere. Links are fetched through a scdd.pro relay only because report sites block direct downloads.',
     runtime: 'Loading the checker (first time about 20 s, cached afterwards)…',
@@ -62,7 +78,7 @@ const T = {
     more: 'Show {n} more',
     coverage: 'Indicator coverage ({n})',
     covAll: 'All', ind: 'Indicator', status: 'Status', num: 'Figure found',
-    stName: { Disclosed: 'Disclosed', Partly: 'Partly', Missing: 'Missing' },
+    stName: { Disclosed: 'Disclosed', Partly: 'Partly', Missing: 'Missing', 'n/a': 'n/a' },
     sevName: { High: 'High', Medium: 'Medium', Low: 'Low', Info: 'Info' },
     typeName: { Consistency: 'Numbers', Claim: 'Claim', Gap: 'Gap', Change: 'Year on year' },
     disclaimer: 'Automated screening: flags are prompts for a reviewer, not verdicts. Open the page before quoting any result.'
@@ -87,6 +103,22 @@ const T = {
     rating: '内容评级',
     na: '不评分',
     allScore: '全部 {n} 项指标：{a}/100',
+    stdTitle: '对照的标准',
+    stdAuto: '按报告声明采用的标准',
+    stdAutoHint: '使用报告中声明采用的标准；如未声明，则对照交易所指引与 GRI。',
+    lens: '参考视角',
+    standardsH: '按标准的覆盖情况',
+    stated: '报告声明采用',
+    notStated: '报告未声明',
+    stdCounts: '已披露 {d} · 部分 {p} · 缺失 {m}',
+    changeStd: '对照其他标准',
+    recheck: '重新检查',
+    idxPages: 'GRI 内容索引（第 {p} 页）：{n} 个页码引用中 {ok} 个指向相符内容；索引中说明从略 {o} 项。',
+    idxSections: 'GRI 内容索引（第 {p} 页）：条目引用章节名称而非页码，已逐项检查报告中是否有相应内容；索引中说明从略 {o} 项。',
+    otherStd: '报告还提到（未检查）：{x}',
+    covShow: '显示',
+    covInd: '全部指标',
+    clause: '条款', req: '要求',
     clear: '移除',
     privacy: 'PDF 在您的浏览器中读取，不会被保存。报告网站禁止跨站直接下载，因此链接通过 scdd.pro 中转获取。',
     runtime: '正在加载检查程序（首次约 20 秒，之后会缓存）……',
@@ -122,13 +154,21 @@ const T = {
     more: '再显示 {n} 条',
     coverage: '指标覆盖（{n} 项）',
     covAll: '全部', ind: '指标', status: '状态', num: '找到的数据',
-    stName: { Disclosed: '已披露', Partly: '部分', Missing: '缺失' },
+    stName: { Disclosed: '已披露', Partly: '部分', Missing: '缺失', 'n/a': '不适用' },
     sevName: { High: '高', Medium: '中', Low: '低', Info: '提示' },
     typeName: { Consistency: '数据', Claim: '表述', Gap: '缺失', Change: '跨年' },
     disclaimer: '自动筛查：标记只是提示审阅人关注，并非结论。引用任何结果前请打开原页核对。'
   }
 }
 const t = computed(() => T[props.lang] || T.en)
+const STDS = [
+  { code: 'CN', en: 'Exchange guideline (2024)', zh: '交易所《可持续发展报告指引》（2024）' },
+  { code: 'GRI', en: 'GRI Standards', zh: 'GRI 标准' },
+  { code: 'ISSB', en: 'ISSB (IFRS S1 / S2)', zh: 'ISSB（IFRS S1 / S2）' },
+  { code: 'HKEX', en: 'HKEX ESG Reporting Code (C2)', zh: '港交所 ESG 报告守则（附录 C2）' },
+  { code: 'IFC', en: 'IFC Performance Standards', zh: 'IFC 绩效标准', lens: true },
+  { code: 'RATER', en: 'Rater key issues (public lists, e.g. MSCI)', zh: '评级机构关键议题（公开清单，如 MSCI）', lens: true }
+]
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k])
 
 const state = ref('idle')            // idle | busy | done | failed
@@ -144,6 +184,14 @@ const link = ref('')
 const cur = ref(null)                // { file } | { url }
 const lastSrc = ref(null)
 const prevSrc = ref(null)            // { file } | { url }
+const lastPrev = ref(null)
+const stdAuto = ref(true)
+const stdOn = ref(Object.fromEntries(STDS.map(x => [x.code, false])))
+const stdList = computed(() => {
+  const l = [...(stdAuto.value ? ['auto'] : []), ...STDS.filter(x => stdOn.value[x.code]).map(x => x.code)]
+  return l.length ? l : ['auto']
+})
+const covStd = ref('')
 const prevLink = ref('')
 const sevOn = ref({ High: true, Medium: true, Low: true, Info: false })
 const typeSel = ref('')
@@ -172,12 +220,12 @@ function getWorker() {
   return worker
 }
 function warm() { if (!worker) getWorker().postMessage({ type: 'init' }) }
-function analyseInWorker(doc, prev) {
+function analyseInWorker(doc, prev, standards) {
   return new Promise((resolve, reject) => {
     pending = { resolve, reject }
     const d = new Date()
     const when = d.toISOString().slice(0, 16).replace('T', ' ')
-    getWorker().postMessage({ type: 'analyse', doc, prev, lang: props.lang === 'zh' ? 'zh' : 'en', when })
+    getWorker().postMessage({ type: 'analyse', doc, prev, standards, lang: props.lang === 'zh' ? 'zh' : 'en', when })
   })
 }
 
@@ -277,6 +325,7 @@ function stopTimer() { if (timer) clearInterval(timer); timer = null }
 async function run(src, prevS) {
   if (!src || (!src.file && !src.url)) return
   lastSrc.value = src
+  lastPrev.value = prevS || null
   fail.value = null; result.value = null; open.value = {}
   typeSel.value = ''; query.value = ''; limit.value = 100; covSel.value = 'Missing'
   sevOn.value = { High: true, Medium: true, Low: true, Info: false }
@@ -287,8 +336,9 @@ async function run(src, prevS) {
     const doc = await load(src)
     const prev = prevS ? await load(prevS) : null
     stage.value = { key: 'analysing', o: {} }
-    const m = await analyseInWorker(doc, prev)
+    const m = await analyseInWorker(doc, prev, stdList.value)
     result.value = m.result
+    covStd.value = (m.result.standards || []).find(x => x.selected)?.code || ''
     if (reportUrl.value) URL.revokeObjectURL(reportUrl.value)
     reportUrl.value = URL.createObjectURL(new Blob([m.report], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet' }))
     reportName.value = `${doc.file.replace(/\.pdf$/i, '')} - ESG Lens.xlsx`
@@ -309,6 +359,15 @@ function onDrop(e) { dragging.value = false; const f = e.dataTransfer.files[0]; 
 function onPrevPick(e) { const f = e.target.files[0]; if (f) { prevSrc.value = { file: f }; prevLink.value = '' } e.target.value = '' }
 function startRun() { run(curSrc.value, prevReady.value) }
 function compareNow() { if (prevReady.value) run(lastSrc.value, prevReady.value) }
+function recheck() { run(lastSrc.value, lastPrev.value) }
+const stdName = (c) => { const x = STDS.find(s => s.code === c); return x ? x[props.lang === 'zh' ? 'zh' : 'en'] : c }
+const idxLine = computed(() => {
+  const g = result.value?.gri_index
+  if (!g) return ''
+  const p = g.pages.length > 1 ? `${g.pages[0]}–${g.pages[g.pages.length - 1]}` : g.pages[0]
+  return g.mode === 'pages' ? fmt(t.value.idxPages, { p, ok: g.ok, n: g.checked, o: g.omitted }) : fmt(t.value.idxSections, { p, o: g.omitted })
+})
+const stdRows = computed(() => (result.value?.std_rows || []).filter(r => r.Standard === covStd.value && (!covSel.value || r.Status === covSel.value)))
 function reset() { state.value = 'idle'; result.value = null; fail.value = null; cur.value = null; link.value = ''; prevSrc.value = null; prevLink.value = '' }
 const barClass = (v) => v == null ? 'na' : v >= 70 ? 'hi' : v >= 50 ? 'mid' : 'lo'
 
@@ -384,6 +443,14 @@ onBeforeUnmount(() => {
         </div>
       </div>
 
+      <div class="step">
+        <div class="step-h"><span class="num">3</span><b>{{ t.stdTitle }}</b></div>
+        <div class="stdpick">
+          <label class="auto"><input v-model="stdAuto" type="checkbox"> {{ t.stdAuto }}<span class="fine"> — {{ t.stdAutoHint }}</span></label>
+          <label v-for="x in STDS" :key="x.code"><input v-model="stdOn[x.code]" type="checkbox"> {{ lang === 'zh' ? x.zh : x.en }}<span v-if="x.lens" class="tag opt">{{ t.lens }}</span></label>
+        </div>
+      </div>
+
       <div class="runrow">
         <button class="btn primary big" :disabled="!curSrc" @click="startRun">▶ {{ prevReady ? t.runCompare : t.run }}</button>
       </div>
@@ -429,6 +496,29 @@ onBeforeUnmount(() => {
             </div>
           </div>
         </div>
+      </section>
+
+      <section v-if="result.standards" class="stds">
+        <h3>{{ t.standardsH }}</h3>
+        <div class="dims">
+          <div v-for="x in result.standards.filter(s => s.selected)" :key="x.code" class="dim">
+            <div class="dim-h"><span>{{ x.name }}</span><b>{{ x.score == null ? t.na : x.score }}</b></div>
+            <div class="bar"><i :class="barClass(x.score)" :style="{ width: (x.score || 0) + '%' }"></i></div>
+            <div class="fine"><span class="tag" :class="{ opt: !x.detected }">{{ x.detected ? t.stated : t.notStated }}</span>
+              {{ fmt(t.stdCounts, { d: x.counts.Disclosed, p: x.counts.Partly, m: x.counts.Missing }) }}</div>
+            <div v-if="/lens/i.test(x.kind)" class="fine">{{ x.note }}</div>
+          </div>
+        </div>
+        <p v-if="idxLine" class="fine">📑 {{ idxLine }}</p>
+        <p v-if="result.std_other && result.std_other.length" class="fine">{{ fmt(t.otherStd, { x: result.std_other.join(', ') }) }}</p>
+        <details class="chg">
+          <summary>{{ t.changeStd }}</summary>
+          <div class="stdpick">
+            <label class="auto"><input v-model="stdAuto" type="checkbox"> {{ t.stdAuto }}</label>
+            <label v-for="x in STDS" :key="x.code"><input v-model="stdOn[x.code]" type="checkbox"> {{ lang === 'zh' ? x.zh : x.en }}<span v-if="x.lens" class="tag opt">{{ t.lens }}</span></label>
+          </div>
+          <button class="btn primary" @click="recheck">{{ t.recheck }}</button>
+        </details>
       </section>
 
       <section class="read">
@@ -507,14 +597,32 @@ onBeforeUnmount(() => {
       <p v-else class="clean">✅ {{ t.clean }}</p>
 
       <details class="cov">
-        <summary>{{ fmt(t.coverage, { n: result.coverage.length }) }}</summary>
+        <summary>{{ fmt(t.coverage, { n: covStd ? stdRows.length : result.coverage.length }) }}</summary>
         <div class="filters">
+          <select v-model="covStd" :aria-label="t.covShow">
+            <option v-for="x in (result.standards || []).filter(s => s.selected)" :key="x.code" :value="x.code">{{ x.name }}</option>
+            <option value="">{{ t.covInd }}</option>
+          </select>
           <select v-model="covSel">
             <option value="">{{ t.covAll }}</option>
             <option v-for="s in ['Missing', 'Partly', 'Disclosed']" :key="s" :value="s">{{ t.stName[s] }}</option>
           </select>
         </div>
-        <div class="tablewrap">
+        <div v-if="covStd" class="tablewrap">
+          <table>
+            <thead><tr><th>{{ t.clause }}</th><th>{{ t.req }}</th><th>{{ t.status }}</th><th>{{ t.page }}</th><th>{{ t.num }}</th></tr></thead>
+            <tbody>
+              <tr v-for="(r, k) in stdRows" :key="k">
+                <td class="mono">{{ r.Clause }}<div class="fine">{{ r.Level }}</div></td>
+                <td>{{ r.Requirement }}<div class="fine mono">{{ r.Indicators }}</div></td>
+                <td><span class="st" :class="r.Status === 'n/a' ? 'na' : r.Status.toLowerCase()">{{ t.stName[r.Status] }}</span></td>
+                <td class="mono">{{ r.Pages }}</td>
+                <td class="fine">{{ r['Number found'] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <div v-else class="tablewrap">
           <table>
             <thead><tr><th>ID</th><th>{{ t.ind }}</th><th>{{ t.status }}</th><th>{{ t.page }}</th><th>{{ t.num }}</th></tr></thead>
             <tbody>
@@ -557,6 +665,17 @@ onBeforeUnmount(() => {
 .addprev { margin: 0 0 16px; padding: 12px 16px; border-radius: 12px; border: 1px dashed var(--vp-c-divider); }
 .addprev summary { cursor: pointer; color: var(--vp-c-brand-1); font-weight: 500; }
 .addprev .fine { margin: 8px 0; }
+.stdpick { display: flex; flex-direction: column; gap: 6px; padding: 10px 14px; border-radius: 10px; background: var(--vp-c-bg-soft); }
+.stdpick label { display: flex; gap: 8px; align-items: baseline; cursor: pointer; font-size: .93em; }
+.stdpick label.auto { font-weight: 500; }
+.stdpick .tag { margin-left: 4px; }
+.stds { margin: 16px 0; padding: 16px; border-radius: 12px; border: 1px solid var(--vp-c-divider); }
+.stds h3 { margin: 0 0 10px; padding: 0; border: 0; font-size: 1.1em; }
+.stds > .fine { margin: 10px 0 0; }
+.chg { margin-top: 12px; }
+.chg summary { cursor: pointer; color: var(--vp-c-brand-1); font-size: .92em; }
+.chg .stdpick { margin: 8px 0; }
+.st.na { background: var(--vp-c-default-soft); color: var(--vp-c-text-2); }
 .rating { display: flex; gap: 20px; margin: 16px 0; padding: 16px; border-radius: 12px; border: 1px solid var(--vp-c-divider); }
 .grade { flex: none; width: 92px; height: 92px; border-radius: 14px; display: flex; flex-direction: column; align-items: center; justify-content: center; color: var(--vp-c-white); }
 .grade b { font-size: 2.6em; line-height: 1; }
