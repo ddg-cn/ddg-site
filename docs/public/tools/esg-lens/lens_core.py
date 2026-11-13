@@ -1514,7 +1514,7 @@ def rating(res, lang, prev=None):
     clamp = lambda x: max(0, min(100, round(x)))  # noqa: E731
     dims = {}
 
-    scope = res.get("scope") or {r["ID"]: 1 for r in cov if r["Guideline"] == "Y"}
+    scope = {i for i, refs in (res.get("scope") or {}).items() if any(k not in LENS for k, _ in refs)}         or {r["ID"] for r in cov if r["Guideline"] == "Y"}  # the two lenses are shown but never move the rating
     sel = [x for x in res.get("standards", []) if x["selected"] and x["score"] is not None and x["code"] not in LENS]
     sep = "、" if lang == "zh" else ", "
 
