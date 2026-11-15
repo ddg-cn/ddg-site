@@ -1,0 +1,27 @@
+---
+title: Social Compliance Programs at a Glance
+description: Audit volumes and reach of the main social compliance and assessment programs (SLCP, SMETA, amfori BSCI, RBA, SA8000, ICS, WRAP, ICTI/iETP), from their own published reports
+head:
+  - - meta
+    - name: robots
+      content: noindex
+---
+
+<script setup>
+import PeerPrograms from '../components/PeerPrograms.vue'
+</script>
+
+# Social Compliance Programs at a Glance <Badge type="warning" text="preview" />
+
+How many audits or assessments each major social compliance program reports per year, and how far it reaches: members, countries, facilities and workers covered. Every figure comes from the program's own annual report or public filing. The figures are updated each quarter when new reports come out.
+
+<ClientOnly>
+  <PeerPrograms lang="en" />
+</ClientOnly>
+
+## Reading the numbers
+
+- **Each program counts its own unit.** SLCP counts verified assessments, RBA counts Validated Assessment Program (VAP) audits, and SA8000 counts certified facilities. The others count audits.
+- **"Members" is not comparable across programs.** It means signatories for SLCP, member companies for amfori and RBA, and all Sedex members (buyers and suppliers) for SMETA.
+- **Only reported figures are shown.** Years a program did not report are left as gaps; nothing is estimated.
+- Hover a point on the chart for its value. The source column links to the latest report used.
