@@ -1,11 +1,109 @@
 {
   "redirects": [
-    { "source": "/", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/zh/tools/esg-lens.html", "permanent": false },
-    { "source": "/en", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/en/esg-lens.html", "permanent": false },
-    { "source": "/zh", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "destination": "/zh/tools/esg-lens.html", "permanent": false }
+    {
+      "source": "/",
+      "has": [
+        {
+          "type": "host",
+          "value": "lens.scdd.pro"
+        }
+      ],
+      "destination": "/zh/tools/esg-lens.html",
+      "permanent": false
+    },
+    {
+      "source": "/en",
+      "has": [
+        {
+          "type": "host",
+          "value": "lens.scdd.pro"
+        }
+      ],
+      "destination": "/en/esg-lens.html",
+      "permanent": false
+    },
+    {
+      "source": "/zh",
+      "has": [
+        {
+          "type": "host",
+          "value": "lens.scdd.pro"
+        }
+      ],
+      "destination": "/zh/tools/esg-lens.html",
+      "permanent": false
+    },
+    {
+      "source": "/en/tools",
+      "destination": "/en/tools.html",
+      "permanent": false
+    },
+    {
+      "source": "/en/tools/",
+      "destination": "/en/tools.html",
+      "permanent": false
+    }
   ],
   "headers": [
-    { "source": "/(.*)", "has": [{ "type": "host", "value": "lens.scdd.pro" }], "headers": [{ "key": "X-Robots-Tag", "value": "noindex" }] },
-    { "source": "/exams/(.*)", "headers": [{ "key": "X-Robots-Tag", "value": "noindex, nofollow" }] }
+    {
+      "source": "/(.*)",
+      "has": [
+        {
+          "type": "host",
+          "value": "lens.scdd.pro"
+        }
+      ],
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex"
+        }
+      ]
+    },
+    {
+      "source": "/exams/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/en/slcp-qc(.html)?",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/zh/tools/slcp-qc(.html)?",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/tools/slcp-qc/(.*)",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    },
+    {
+      "source": "/en/tools(.html)?",
+      "headers": [
+        {
+          "key": "X-Robots-Tag",
+          "value": "noindex, nofollow"
+        }
+      ]
+    }
   ]
 }

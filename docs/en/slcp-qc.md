@@ -1,6 +1,10 @@
 ---
 title: SLCP Verifier Tool Online QC
 description: Check a filled offline SLCP Verifier Tool in your browser - nothing is uploaded - and see every finding on the page or download an Excel report
+head:
+  - - meta
+    - name: robots
+      content: noindex, nofollow
 ---
 
 <script setup>

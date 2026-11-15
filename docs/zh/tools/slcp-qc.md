@@ -1,6 +1,10 @@
 ---
 title: SLCP 核查工具在线质检
 description: 在浏览器中检查已填写的 SLCP 离线核查工具，文件不上传，直接在页面上查看问题清单并下载 Excel 报告
+head:
+  - - meta
+    - name: robots
+      content: noindex, nofollow
 ---
 
 <script setup>
