@@ -1,0 +1,806 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex, nofollow"><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>高考数学 · 分块突破 · 精讲精练</title>
+<style>
+  :root{
+    --paper:#E7E9ED; --surface:#FBFBFC; --surface-2:#F1F2F5; --panel:#EFF1F6;
+    --ink:#191E29; --muted:#5B6371; --hair:#D4D8DF;
+    --indigo:#2E4374; --indigo-soft:#5A6E9E;
+    --cinnabar:#BC3327; --jade:#2A7461; --amber:#96650F;
+    --shadow:0 1px 2px rgba(25,30,41,.05), 0 8px 24px -16px rgba(25,30,41,.25);
+    --serif:Georgia,"Songti SC","STSongti","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",-apple-system,system-ui,"Segoe UI",sans-serif;
+    --mono:"SFMono-Regular",Menlo,Consolas,"Liberation Mono",monospace;
+    --maxw:900px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#12151C; --surface:#1B2029; --surface-2:#232935; --panel:#1E2530;
+      --ink:#E6E9EF; --muted:#98A1B0; --hair:#2C3340;
+      --indigo:#8299CE; --indigo-soft:#6E82B3;
+      --cinnabar:#E86F62; --jade:#5DB49B; --amber:#D6A34A;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#E7E9ED; --surface:#FBFBFC; --surface-2:#F1F2F5; --panel:#EFF1F6;
+    --ink:#191E29; --muted:#5B6371; --hair:#D4D8DF; --indigo:#2E4374; --indigo-soft:#5A6E9E;
+    --cinnabar:#BC3327; --jade:#2A7461; --amber:#96650F;
+    --shadow:0 1px 2px rgba(25,30,41,.05), 0 8px 24px -16px rgba(25,30,41,.25);
+  }
+  :root[data-theme="dark"]{
+    --paper:#12151C; --surface:#1B2029; --surface-2:#232935; --panel:#1E2530;
+    --ink:#E6E9EF; --muted:#98A1B0; --hair:#2C3340; --indigo:#8299CE; --indigo-soft:#6E82B3;
+    --cinnabar:#E86F62; --jade:#5DB49B; --amber:#D6A34A;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);line-height:1.7;
+    -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+  b{font-weight:600;}
+  em{font-style:normal;color:var(--indigo);font-weight:600;}
+  .m{font-family:var(--serif);font-style:italic;letter-spacing:.01em;}
+  .frac{display:inline-flex;flex-direction:column;vertical-align:middle;text-align:center;
+    font-size:.86em;line-height:1.05;margin:0 .18em;}
+  .frac .num{border-bottom:1.4px solid currentColor;padding:0 .35em;}
+  .frac .den{padding:0 .35em;}
+
+  header{padding:52px 0 22px;}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--indigo);font-weight:700;margin:0 0 13px;}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(28px,5vw,42px);line-height:1.12;margin:0;letter-spacing:-.01em;text-wrap:balance;}
+  h1 .sub{display:block;font-family:var(--sans);font-size:clamp(14px,2.1vw,17px);font-weight:400;color:var(--muted);margin-top:12px;}
+  .howto{margin:22px 0 0;padding:16px 20px;background:var(--surface);border:1px solid var(--hair);border-radius:12px;
+    font-size:14px;color:var(--muted);box-shadow:var(--shadow);}
+  .howto b{color:var(--ink);}
+  .howto ol{margin:8px 0 0;padding-left:20px;}
+
+  /* progress tracker */
+  .track{margin:26px 0 0;display:flex;flex-wrap:wrap;gap:7px;}
+  .track a,.track span{font-size:12.5px;font-weight:600;padding:5px 11px;border-radius:8px;text-decoration:none;
+    border:1px solid var(--hair);white-space:nowrap;}
+  .track a{color:var(--ink);background:var(--surface);}
+  .track a.done{color:var(--indigo);border-color:color-mix(in srgb,var(--indigo) 40%,var(--hair));
+    background:color-mix(in srgb,var(--indigo) 8%,var(--surface));}
+  .track span.todo{color:var(--muted);opacity:.55;background:transparent;}
+  .track .n{font-family:var(--serif);margin-right:5px;}
+
+  main{padding:12px 0 40px;}
+  .chapter{margin:38px 0 0;}
+  .ch-head{display:flex;align-items:center;gap:16px;padding:0 2px 14px;border-bottom:2px solid var(--indigo);}
+  .ch-num{font-family:var(--serif);font-size:38px;line-height:.9;color:var(--indigo);font-weight:700;opacity:.9;}
+  .ch-head h2{margin:0;font-family:var(--serif);font-size:24px;font-weight:700;}
+  .ch-head .en{color:var(--muted);font-size:12.5px;letter-spacing:.05em;text-transform:uppercase;margin-top:2px;}
+
+  /* basics panel */
+  .basics{margin:20px 0 0;padding:22px 24px;background:var(--panel);border:1px solid var(--hair);
+    border-radius:13px;border-left:4px solid var(--indigo);}
+  .basics h3{margin:0 0 12px;font-size:13px;letter-spacing:.14em;text-transform:uppercase;color:var(--indigo);font-weight:700;}
+  .basics dl{margin:0;display:grid;gap:13px;}
+  .basics dt{font-weight:700;font-size:14.5px;margin-bottom:2px;}
+  .basics dd{margin:0;font-size:14px;color:var(--muted);line-height:1.6;}
+  .basics dd b{color:var(--ink);}
+  .kbd{font-family:var(--mono);background:var(--surface-2);border:1px solid var(--hair);border-radius:5px;
+    padding:.5px 6px;font-size:.9em;color:var(--ink);}
+
+  /* example cards */
+  .ex{margin:16px 0 0;background:var(--surface);border:1px solid var(--hair);border-radius:13px;
+    overflow:hidden;box-shadow:var(--shadow);}
+  .ex-top{display:flex;align-items:center;gap:12px;padding:14px 20px;border-bottom:1px solid var(--hair);
+    background:var(--surface-2);}
+  .diff{font-size:12px;font-weight:800;letter-spacing:.05em;padding:3px 12px;border-radius:999px;white-space:nowrap;}
+  .diff.d1{color:var(--jade);background:color-mix(in srgb,var(--jade) 14%,transparent);border:1px solid color-mix(in srgb,var(--jade) 36%,transparent);}
+  .diff.d2{color:var(--amber);background:color-mix(in srgb,var(--amber) 15%,transparent);border:1px solid color-mix(in srgb,var(--amber) 40%,transparent);}
+  .diff.d3{color:var(--cinnabar);background:color-mix(in srgb,var(--cinnabar) 13%,transparent);border:1px solid color-mix(in srgb,var(--cinnabar) 40%,transparent);}
+  .ex-top .topic{font-weight:600;font-size:14.5px;}
+  .ex-top .kaodian{margin-left:auto;font-size:12px;color:var(--muted);}
+  .ex-body{padding:18px 22px 22px;}
+  .q{font-size:15px;margin:0 0 4px;}
+  .q .lbl,.sol .lbl{display:inline-block;font-weight:700;color:var(--indigo);margin-right:8px;font-family:var(--serif);}
+  .sol{margin:16px 0 0;padding:16px 18px;background:var(--panel);border-radius:10px;font-size:14px;}
+  .sol ol{margin:8px 0 0;padding-left:20px;display:flex;flex-direction:column;gap:9px;}
+  .sol li{padding-left:4px;}
+  .sol .ans{margin:12px 0 0;padding:9px 14px;background:color-mix(in srgb,var(--jade) 12%,transparent);
+    border-radius:8px;font-weight:600;border:1px solid color-mix(in srgb,var(--jade) 30%,transparent);}
+  .tip{margin:12px 0 0;padding:11px 16px;border-left:3px solid var(--amber);
+    background:color-mix(in srgb,var(--amber) 8%,transparent);border-radius:0 8px 8px 0;font-size:13.5px;color:var(--muted);}
+  .tip b{color:var(--ink);}
+
+  .nextbar{margin:40px 0 0;padding:20px 24px;text-align:center;border:1px dashed var(--hair);border-radius:13px;color:var(--muted);font-size:14px;}
+  .nextbar b{color:var(--ink);}
+  footer{border-top:1px solid var(--hair);padding:26px 0 60px;color:var(--muted);font-size:12.5px;margin-top:36px;}
+
+  @media (max-width:520px){.ex-top{flex-wrap:wrap;}.ex-top .kaodian{margin-left:0;width:100%;}}
+</style>
+
+<header class="wrap">
+  <p class="eyebrow">Gaokao Math · Block-by-Block Mastery</p>
+  <h1>高考数学 · 分块突破 · 精讲精练
+    <span class="sub">每个知识块：基础知识梳理 + 三道例题（易 → 中 → 难），逐步吃透 · Basics + 3 graded worked examples per block</span>
+  </h1>
+  <div class="howto">
+    <b>用法建议 · How to use</b>
+    <ol>
+      <li>先合上答案，<b>默写一遍基础知识</b>，写不出的就是漏洞。</li>
+      <li>限时做三道例题：<em>易</em>题 ≤3 分钟、<em>中</em>题 ≤6 分钟、<em>难</em>题 ≤12 分钟。</li>
+      <li>对照解答，重点看<b>点拨</b>里的通法与易错点，而非只对答案。</li>
+    </ol>
+  </div>
+
+  <div class="track">
+    <a class="done" href="#c1"><span class="n">一</span>集合逻辑</a>
+    <a class="done" href="#c2"><span class="n">二</span>函数</a>
+    <a class="done" href="#c3"><span class="n">三</span>导数</a>
+    <a class="done" href="#c4"><span class="n">四</span>三角</a>
+    <a class="done" href="#c5"><span class="n">五</span>向量复数</a>
+    <a class="done" href="#c6"><span class="n">六</span>数列</a>
+    <a class="done" href="#c7"><span class="n">七</span>不等式</a>
+    <a class="done" href="#c8"><span class="n">八</span>立体几何</a>
+    <a class="done" href="#c9"><span class="n">九</span>解析几何</a>
+    <a class="done" href="#c10"><span class="n">十</span>概率统计</a>
+    <a class="done" href="#c11"><span class="n">十一</span>计数原理</a>
+  </div>
+</header>
+
+<main class="wrap">
+
+  <section class="chapter" id="c1">
+    <div class="ch-head">
+      <div class="ch-num">一</div>
+      <div>
+        <h2>集合与常用逻辑用语</h2>
+        <div class="en">Sets &amp; Logic</div>
+      </div>
+    </div>
+
+    <div class="basics">
+      <h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div>
+          <dt>集合的三性与表示</dt>
+          <dd><b>确定性 · 互异性 · 无序性</b>（互异性最常设陷阱：求出参数后必须回代检验元素不重复）。
+            常用数集：<span class="kbd">N</span> 自然数、<span class="kbd">N*</span> 正整数、<span class="kbd">Z</span> 整数、<span class="kbd">Q</span> 有理数、<span class="kbd">R</span> 实数。</dd>
+        </div>
+        <div>
+          <dt>关系与子集个数</dt>
+          <dd>∈ / ∉、⊆ / ⊊、=。<b>∅ 是任何集合的子集</b>，是任何非空集合的真子集。
+            含 <span class="m">n</span> 个元素的集合有 <b>2<sup>n</sup></b> 个子集、<b>2<sup>n</sup>−1</b> 个真子集、<b>2<sup>n</sup>−1</b> 个非空子集、<b>2<sup>n</sup>−2</b> 个非空真子集。</dd>
+        </div>
+        <div>
+          <dt>三种运算 + 德摩根律</dt>
+          <dd>交 <span class="m">A</span>∩<span class="m">B</span>、并 <span class="m">A</span>∪<span class="m">B</span>、补 ∁<sub>U</sub><span class="m">A</span>。
+            <b>德摩根律：</b>∁<sub>U</sub>(<span class="m">A</span>∩<span class="m">B</span>) = (∁<sub>U</sub><span class="m">A</span>)∪(∁<sub>U</sub><span class="m">B</span>)，∁<sub>U</sub>(<span class="m">A</span>∪<span class="m">B</span>) = (∁<sub>U</sub><span class="m">A</span>)∩(∁<sub>U</sub><span class="m">B</span>)。
+            处理数集时<b>务必画数轴</b>，注意端点开闭。</dd>
+        </div>
+        <div>
+          <dt>充分条件与必要条件</dt>
+          <dd>若 <span class="m">p</span> ⇒ <span class="m">q</span>，则 <span class="m">p</span> 是 <span class="m">q</span> 的<b>充分</b>条件、<span class="m">q</span> 是 <span class="m">p</span> 的<b>必要</b>条件。
+            <b>集合观点：</b>记 <span class="m">p</span>、<span class="m">q</span> 对应集合 <span class="m">A</span>、<span class="m">B</span>，则 <span class="m">A</span>⊆<span class="m">B</span> ⇔ <span class="m">p</span> 是 <span class="m">q</span> 的充分条件；<span class="m">A</span>⊊<span class="m">B</span> ⇔ 充分不必要。<b>“小范围 ⇒ 大范围”</b>。</dd>
+        </div>
+        <div>
+          <dt>全称量词与存在量词的否定</dt>
+          <dd>“∀<span class="m">x</span>∈M, <span class="m">p</span>(<span class="m">x</span>)” 的否定是 “∃<span class="m">x</span>∈M, ¬<span class="m">p</span>(<span class="m">x</span>)”；反之 ∃ 的否定为 ∀。<b>改量词、否结论</b>。
+            全称命题常转化为<b>最值</b>（恒成立），存在命题常转化为<b>能取到</b>。</dd>
+        </div>
+      </dl>
+    </div>
+
+    <!-- Easy -->
+    <div class="ex">
+      <div class="ex-top">
+        <span class="diff d1">易 · Easy</span>
+        <span class="topic">集合的交并运算</span>
+        <span class="kaodian">考点：数轴 + 端点开闭</span>
+      </div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知集合 <span class="m">A</span> = {<span class="m">x</span> | −1 &lt; <span class="m">x</span> &lt; 3}，<span class="m">B</span> = {<span class="m">x</span> | <span class="m">x</span><sup>2</sup> ≤ 4}。求 <span class="m">A</span>∩<span class="m">B</span> 与 <span class="m">A</span>∪<span class="m">B</span>。</p>
+        <div class="sol">
+          <span class="lbl">解</span>
+          <ol>
+            <li>先解 <span class="m">B</span>：<span class="m">x</span><sup>2</sup> ≤ 4 ⇔ −2 ≤ <span class="m">x</span> ≤ 2，即 <span class="m">B</span> = [−2, 2]。</li>
+            <li>而 <span class="m">A</span> = (−1, 3)。在数轴上画出两段。</li>
+            <li>取公共部分（交）：左端取较大者 −1（开），右端取较小者 2（闭）⇒ <span class="m">A</span>∩<span class="m">B</span> = (−1, 2]。</li>
+            <li>取合并部分（并）：左端 −2（闭），右端 3（开）⇒ <span class="m">A</span>∪<span class="m">B</span> = [−2, 3)。</li>
+          </ol>
+          <div class="ans">答：<span class="m">A</span>∩<span class="m">B</span> = (−1, 2]，<span class="m">A</span>∪<span class="m">B</span> = [−2, 3)。</div>
+        </div>
+        <div class="tip"><b>点拨：</b>数集运算一律<b>画数轴</b>。端点开闭跟随原不等式：<span class="m">x</span><sup>2</sup>≤4 含等号 ⇒ 闭；−1&lt;<span class="m">x</span> 不含 ⇒ 开。交并端点的开闭由“取到该点的那个集合”决定。</div>
+      </div>
+    </div>
+
+    <!-- Medium -->
+    <div class="ex">
+      <div class="ex-top">
+        <span class="diff d2">中 · Medium</span>
+        <span class="topic">含参子集问题</span>
+        <span class="kaodian">考点：分类讨论 + 空集 / 互异性</span>
+      </div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">A</span> = {<span class="m">x</span> | <span class="m">x</span><sup>2</sup> − 3<span class="m">x</span> + 2 = 0}，<span class="m">B</span> = {<span class="m">x</span> | <span class="m">x</span><sup>2</sup> − (<span class="m">a</span>+1)<span class="m">x</span> + <span class="m">a</span> = 0}。若 <span class="m">B</span> ⊆ <span class="m">A</span>，求实数 <span class="m">a</span> 的所有取值。</p>
+        <div class="sol">
+          <span class="lbl">解</span>
+          <ol>
+            <li>先求 <span class="m">A</span>：<span class="m">x</span><sup>2</sup>−3<span class="m">x</span>+2 = (<span class="m">x</span>−1)(<span class="m">x</span>−2) = 0 ⇒ <span class="m">A</span> = {1, 2}。</li>
+            <li><span class="m">B</span> 的方程因式分解：<span class="m">x</span><sup>2</sup>−(<span class="m">a</span>+1)<span class="m">x</span>+<span class="m">a</span> = (<span class="m">x</span>−1)(<span class="m">x</span>−<span class="m">a</span>) = 0 ⇒ 根为 <span class="m">x</span> = 1 与 <span class="m">x</span> = <span class="m">a</span>。</li>
+            <li><b>讨论：</b>若 <span class="m">a</span> = 1，两根相同，<span class="m">B</span> = {1} ⊆ <span class="m">A</span> ✔。</li>
+            <li>若 <span class="m">a</span> ≠ 1，<span class="m">B</span> = {1, <span class="m">a</span>}。要 <span class="m">B</span> ⊆ <span class="m">A</span> = {1,2}，需 <span class="m">a</span> ∈ {2}（<span class="m">a</span> 不能取 1 已排除）⇒ <span class="m">a</span> = 2，此时 <span class="m">B</span> = {1,2} ✔。</li>
+          </ol>
+          <div class="ans">答：<span class="m">a</span> = 1 或 <span class="m">a</span> = 2。</div>
+        </div>
+        <div class="tip"><b>点拨：</b>“<span class="m">B</span>⊆<span class="m">A</span>”类问题必须考虑 <span class="m">B</span> 退化的情形——本题是重根 <span class="m">a</span>=1 使 <span class="m">B</span> 变独点集；若 <span class="m">B</span> 由不等式给出，还要单独讨论 <span class="m">B</span>=∅。漏掉退化情形是最常见丢分点。</div>
+      </div>
+    </div>
+
+    <!-- Hard -->
+    <div class="ex">
+      <div class="ex-top">
+        <span class="diff d3">难 · Difficult</span>
+        <span class="topic">量词 + 复合命题求参数范围</span>
+        <span class="kaodian">考点：恒成立→最值、存在→判别式、p∧q</span>
+      </div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知命题 <span class="m">p</span>：∀<span class="m">x</span>∈[1, 2]，<span class="m">x</span><sup>2</sup> − <span class="m">a</span> ≥ 0；命题 <span class="m">q</span>：∃<span class="m">x</span>∈R，<span class="m">x</span><sup>2</sup> + 2<span class="m">a</span><span class="m">x</span> + 2 − <span class="m">a</span> = 0。若 <span class="m">p</span> ∧ <span class="m">q</span> 为真，求 <span class="m">a</span> 的取值范围。</p>
+        <div class="sol">
+          <span class="lbl">解</span>
+          <ol>
+            <li><b>解 <span class="m">p</span>（全称→最小值）：</b>∀<span class="m">x</span>∈[1,2] 有 <span class="m">a</span> ≤ <span class="m">x</span><sup>2</sup>，等价于 <span class="m">a</span> ≤ (<span class="m">x</span><sup>2</sup>)<sub>min</sub>。<span class="m">x</span><sup>2</sup> 在 [1,2] 上最小值为 1<sup>2</sup> = 1 ⇒ <b><span class="m">p</span> 真 ⇔ <span class="m">a</span> ≤ 1</b>。</li>
+            <li><b>解 <span class="m">q</span>（存在实根→判别式）：</b>关于 <span class="m">x</span> 的方程有实根 ⇔ Δ ≥ 0：(2<span class="m">a</span>)<sup>2</sup> − 4(2 − <span class="m">a</span>) ≥ 0 ⇒ 4<span class="m">a</span><sup>2</sup> + 4<span class="m">a</span> − 8 ≥ 0 ⇒ <span class="m">a</span><sup>2</sup> + <span class="m">a</span> − 2 ≥ 0 ⇒ (<span class="m">a</span>+2)(<span class="m">a</span>−1) ≥ 0 ⇒ <b><span class="m">q</span> 真 ⇔ <span class="m">a</span> ≤ −2 或 <span class="m">a</span> ≥ 1</b>。</li>
+            <li><b><span class="m">p</span>∧<span class="m">q</span> 为真</b> ⇒ 两者同时成立，取交集：{<span class="m">a</span> ≤ 1} ∩ {<span class="m">a</span> ≤ −2 或 <span class="m">a</span> ≥ 1}。</li>
+            <li>分支一：<span class="m">a</span> ≤ 1 且 <span class="m">a</span> ≤ −2 ⇒ <span class="m">a</span> ≤ −2。分支二：<span class="m">a</span> ≤ 1 且 <span class="m">a</span> ≥ 1 ⇒ <span class="m">a</span> = 1。合并。</li>
+          </ol>
+          <div class="ans">答：<span class="m">a</span> ≤ −2 或 <span class="m">a</span> = 1，即 <span class="m">a</span> ∈ (−∞, −2] ∪ {1}。</div>
+        </div>
+        <div class="tip"><b>点拨：</b>两条黄金转化——<b>全称恒成立</b> <span class="m">a</span>≤<span class="m">f</span>(<span class="m">x</span>) 恒成立 ⇔ <span class="m">a</span>≤<span class="m">f</span>(<span class="m">x</span>)<sub>min</sub>；<b>存在成立</b> ⇔ 与最值反向或用判别式。最后 <span class="m">p</span>∧<span class="m">q</span> 取<b>交集</b>、<span class="m">p</span>∨<span class="m">q</span> 取并集。别忘了孤立点 <span class="m">a</span>=1 也是解，它恰好是两区间的“接触点”，极易漏写。</div>
+      </div>
+    </div>
+
+  </section>
+
+  <!-- ===================== 2 函数 ===================== -->
+  <section class="chapter" id="c2">
+    <div class="ch-head">
+      <div class="ch-num">二</div>
+      <div><h2>函数与基本初等函数</h2><div class="en">Functions</div></div>
+    </div>
+    <div class="basics">
+      <h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>三要素与定义域优先</dt>
+          <dd>定义域、对应关系、值域。<b>一切函数问题先看定义域</b>：根号内 ≥0、分母 ≠0、对数真数 &gt;0。求解析式常用<b>待定系数、换元、配凑</b>。</dd></div>
+        <div><dt>四大性质</dt>
+          <dd><b>单调性</b>（定义法或 <span class="m">f</span>′ 符号）、<b>奇偶性</b>（定义域须关于原点对称，再看 <span class="m">f</span>(−<span class="m">x</span>) = ±<span class="m">f</span>(<span class="m">x</span>)）、<b>周期性</b>（<span class="m">f</span>(<span class="m">x</span>+<span class="m">T</span>)=<span class="m">f</span>(<span class="m">x</span>)）、<b>对称性</b>（轴对称 <span class="m">f</span>(<span class="m">a</span>+<span class="m">x</span>)=<span class="m">f</span>(<span class="m">a</span>−<span class="m">x</span>)）。偶函数 ⇔ 图象关于 <span class="m">y</span> 轴对称 ⇔ <span class="m">f</span>(<span class="m">x</span>)=<span class="m">f</span>(|<span class="m">x</span>|)。</dd></div>
+        <div><dt>基本初等函数</dt>
+          <dd>指数 <span class="m">y</span>=<span class="m">a</span><sup><span class="m">x</span></sup>、对数 <span class="m">y</span>=log<sub><span class="m">a</span></sub><span class="m">x</span>（互为反函数）、幂函数。<b>比较大小</b>：找中间量 0 或 1，或借助函数单调性。</dd></div>
+        <div><dt>零点与图象变换</dt>
+          <dd><b>零点存在定理：</b><span class="m">f</span> 连续且 <span class="m">f</span>(<span class="m">a</span>)·<span class="m">f</span>(<span class="m">b</span>)&lt;0 ⇒ (<span class="m">a</span>,<span class="m">b</span>) 内有零点。零点个数常转化为<b>两图象交点个数</b>。图象变换：平移、伸缩、翻折（|·|）。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">定义域</span><span class="kaodian">考点：多约束取交集</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>求函数 <span class="m">f</span>(<span class="m">x</span>) = lg(2 − <span class="m">x</span>) + √(<span class="m">x</span> + 1) 的定义域。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>对数真数 &gt; 0：2 − <span class="m">x</span> &gt; 0 ⇒ <span class="m">x</span> &lt; 2。</li>
+            <li>根号内 ≥ 0：<span class="m">x</span> + 1 ≥ 0 ⇒ <span class="m">x</span> ≥ −1。</li>
+            <li>两约束取交集：−1 ≤ <span class="m">x</span> &lt; 2。</li>
+          </ol>
+          <div class="ans">答：定义域为 [−1, 2)。</div></div>
+        <div class="tip"><b>点拨：</b>定义域是若干条件的<b>交集</b>，逐条列不等式再取公共部分；根号取闭、真数/分母取开，端点开闭别混。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">偶函数 + 单调性解不等式</span><span class="kaodian">考点：偶函数化 |x|</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">f</span>(<span class="m">x</span>) 是定义在 R 上的<b>偶函数</b>，且在 [0, +∞) 上单调递增。解不等式 <span class="m">f</span>(2<span class="m">x</span> − 1) &lt; <span class="m">f</span>(3)。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>偶函数在 [0,∞) 递增 ⇒ <span class="m">f</span> 的大小只由<b>自变量绝对值</b>决定：<span class="m">f</span>(<span class="m">u</span>) = <span class="m">f</span>(|<span class="m">u</span>|)，且 |<span class="m">u</span>| 越大 <span class="m">f</span> 越大。</li>
+            <li>故 <span class="m">f</span>(2<span class="m">x</span>−1) &lt; <span class="m">f</span>(3) ⇔ |2<span class="m">x</span> − 1| &lt; 3。</li>
+            <li>解：−3 &lt; 2<span class="m">x</span> − 1 &lt; 3 ⇒ −2 &lt; 2<span class="m">x</span> &lt; 4 ⇒ −1 &lt; <span class="m">x</span> &lt; 2。</li>
+          </ol>
+          <div class="ans">答：解集为 (−1, 2)。</div></div>
+        <div class="tip"><b>点拨：</b>见“偶函数 + 单调”立刻把两边都套上绝对值：<span class="m">f</span>(A)&lt;<span class="m">f</span>(B) ⇔ |A|&lt;|B|（在递增侧）。这是把抽象函数不等式转成普通不等式的关键一步。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">奇函数 + 抽象周期</span><span class="kaodian">考点：函数方程→周期与对称</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>设 <span class="m">f</span>(<span class="m">x</span>) 是 R 上的<b>奇函数</b>，满足 <span class="m">f</span>(<span class="m">x</span> + 2) = −<span class="m">f</span>(<span class="m">x</span>)，当 0 ≤ <span class="m">x</span> ≤ 1 时 <span class="m">f</span>(<span class="m">x</span>) = <span class="m">x</span>。<br>(1) 求证 <span class="m">f</span> 是周期函数并求周期；(2) 求 <span class="m">f</span> 在 [1, 2] 上的解析式；(3) 求 <span class="m">f</span>(2025.5)。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><b>(1)</b> 由 <span class="m">f</span>(<span class="m">x</span>+2)=−<span class="m">f</span>(<span class="m">x</span>) 得 <span class="m">f</span>(<span class="m">x</span>+4)=−<span class="m">f</span>(<span class="m">x</span>+2)=<span class="m">f</span>(<span class="m">x</span>) ⇒ 周期 <span class="m">T</span> = 4。</li>
+            <li><b>(2)</b> 又 <span class="m">f</span> 为奇：<span class="m">f</span>(<span class="m">x</span>+2)=−<span class="m">f</span>(<span class="m">x</span>)=<span class="m">f</span>(−<span class="m">x</span>)，即图象关于 <span class="m">x</span>=1 对称：<span class="m">f</span>(1+<span class="m">t</span>)=<span class="m">f</span>(1−<span class="m">t</span>)。设 <span class="m">x</span>∈[1,2]，令 <span class="m">t</span>=<span class="m">x</span>−1∈[0,1]，则 <span class="m">f</span>(<span class="m">x</span>)=<span class="m">f</span>(1+<span class="m">t</span>)=<span class="m">f</span>(1−<span class="m">t</span>)=1−<span class="m">t</span>=2−<span class="m">x</span>。</li>
+            <li><b>(3)</b> 用周期 4：2025.5 = 4×506 + 1.5，故 <span class="m">f</span>(2025.5)=<span class="m">f</span>(1.5)。由 (2)，<span class="m">f</span>(1.5)=2−1.5=0.5。</li>
+          </ol>
+          <div class="ans">答：(1) 周期 4；(2) <span class="m">f</span>(<span class="m">x</span>)=2−<span class="m">x</span>，<span class="m">x</span>∈[1,2]；(3) <span class="m">f</span>(2025.5)=0.5。</div></div>
+        <div class="tip"><b>点拨：</b>“<span class="m">f</span>(<span class="m">x</span>+2)=−<span class="m">f</span>(<span class="m">x</span>)”这类关系先<b>迭代求周期</b>（再套一次得 +4 还原）。奇偶性 + 平移关系常隐藏<b>对称轴</b>；求大自变量的值就用周期把它<b>约化到已知区间</b>。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 3 导数 ===================== -->
+  <section class="chapter" id="c3">
+    <div class="ch-head"><div class="ch-num">三</div><div><h2>导数及其应用</h2><div class="en">Derivatives</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>几何意义与切线</dt>
+          <dd><span class="m">f</span>′(<span class="m">x</span><sub>0</sub>) = 曲线在 <span class="m">x</span><sub>0</sub> 处切线斜率。切线方程 <span class="m">y</span> − <span class="m">f</span>(<span class="m">x</span><sub>0</sub>) = <span class="m">f</span>′(<span class="m">x</span><sub>0</sub>)(<span class="m">x</span> − <span class="m">x</span><sub>0</sub>)。“<b>过</b>某点”的切线要设切点，不一定在曲线上。</dd></div>
+        <div><dt>求导公式与法则</dt>
+          <dd>(<span class="m">x</span><sup><span class="m">n</span></sup>)′=<span class="m">n</span><span class="m">x</span><sup><span class="m">n</span>−1</sup>，(e<sup><span class="m">x</span></sup>)′=e<sup><span class="m">x</span></sup>，(ln<span class="m">x</span>)′=<span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span></span></span>，(sin<span class="m">x</span>)′=cos<span class="m">x</span>。积 (<span class="m">uv</span>)′=<span class="m">u</span>′<span class="m">v</span>+<span class="m">uv</span>′；商 (<span class="frac"><span class="num"><span class="m">u</span></span><span class="den"><span class="m">v</span></span></span>)′=<span class="frac"><span class="num"><span class="m">u</span>′<span class="m">v</span>−<span class="m">uv</span>′</span><span class="den"><span class="m">v</span><sup>2</sup></span></span>；复合逐层相乘。</dd></div>
+        <div><dt>单调性 · 极值 · 最值</dt>
+          <dd><span class="m">f</span>′&gt;0 增、<span class="m">f</span>′&lt;0 减；<span class="m">f</span>′<b>变号</b>处取极值。闭区间最值 = 比较<b>极值与端点值</b>。<b>含参先求 <span class="m">f</span>′ 的零点并按零点位置分类讨论</b>。</dd></div>
+        <div><dt>证明不等式 / 恒成立</dt>
+          <dd>常法：<b>分离参数</b> <span class="m">a</span>≥<span class="m">g</span>(<span class="m">x</span>) 恒成立 ⇔ <span class="m">a</span>≥<span class="m">g</span>(<span class="m">x</span>)<sub>max</sub>；或<b>构造函数</b>求最小值 ≥0。常用放缩 e<sup><span class="m">x</span></sup> ≥ <span class="m">x</span>+1、ln<span class="m">x</span> ≤ <span class="m">x</span>−1。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">求切线方程</span><span class="kaodian">考点：f′(x₀) 即斜率</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>求曲线 <span class="m">f</span>(<span class="m">x</span>) = <span class="m">x</span><sup>3</sup> − 2<span class="m">x</span> 在点 <span class="m">x</span> = 1 处的切线方程。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>切点纵坐标：<span class="m">f</span>(1) = 1 − 2 = −1，切点 (1, −1)。</li>
+            <li>求导：<span class="m">f</span>′(<span class="m">x</span>) = 3<span class="m">x</span><sup>2</sup> − 2，斜率 <span class="m">f</span>′(1) = 3 − 2 = 1。</li>
+            <li>点斜式：<span class="m">y</span> − (−1) = 1·(<span class="m">x</span> − 1) ⇒ <span class="m">y</span> = <span class="m">x</span> − 2。</li>
+          </ol>
+          <div class="ans">答：切线方程为 <span class="m">y</span> = <span class="m">x</span> − 2。</div></div>
+        <div class="tip"><b>点拨：</b>“在 <span class="m">x</span><sub>0</sub> 处”三步走：求 <span class="m">f</span>(<span class="m">x</span><sub>0</sub>) 定切点、求 <span class="m">f</span>′(<span class="m">x</span><sub>0</sub>) 定斜率、点斜式。若题目说“<b>过</b>点 P”，P 未必是切点，需另设切点 (<span class="m">t</span>, <span class="m">f</span>(<span class="m">t</span>)) 列方程。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">单调区间、极值与闭区间最值</span><span class="kaodian">考点：f′ 列表判号</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">f</span>(<span class="m">x</span>) = <span class="m">x</span><sup>3</sup> − 3<span class="m">x</span><sup>2</sup> + 2。求其单调区间与极值，并求在 [−1, 3] 上的最大、最小值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><span class="m">f</span>′(<span class="m">x</span>) = 3<span class="m">x</span><sup>2</sup> − 6<span class="m">x</span> = 3<span class="m">x</span>(<span class="m">x</span> − 2)，零点 <span class="m">x</span> = 0, 2。</li>
+            <li>判号：<span class="m">x</span>&lt;0 或 <span class="m">x</span>&gt;2 时 <span class="m">f</span>′&gt;0（增）；0&lt;<span class="m">x</span>&lt;2 时 <span class="m">f</span>′&lt;0（减）。</li>
+            <li>极大值 <span class="m">f</span>(0) = 2；极小值 <span class="m">f</span>(2) = 8 − 12 + 2 = −2。</li>
+            <li>端点：<span class="m">f</span>(−1) = −1 − 3 + 2 = −2，<span class="m">f</span>(3) = 27 − 27 + 2 = 2。</li>
+            <li>比较 {<span class="m">f</span>(−1), <span class="m">f</span>(0), <span class="m">f</span>(2), <span class="m">f</span>(3)} = {−2, 2, −2, 2}。</li>
+          </ol>
+          <div class="ans">答：增区间 (−∞,0)、(2,+∞)，减区间 (0,2)；极大 2、极小 −2；[−1,3] 上最大值 2、最小值 −2。</div></div>
+        <div class="tip"><b>点拨：</b>闭区间最值只可能在<b>极值点或端点</b>取得，把这几个候选值全算出来比较即可，不要漏端点。列 <span class="m">f</span>′ 符号表能避免判号出错。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">含参讨论 + 导数证不等式</span><span class="kaodian">考点：分类讨论、最小值≥0</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">f</span>(<span class="m">x</span>) = e<sup><span class="m">x</span></sup> − <span class="m">a</span><span class="m">x</span> − 1（<span class="m">a</span> ∈ R）。<br>(1) 讨论 <span class="m">f</span>(<span class="m">x</span>) 的单调性；(2) 当 <span class="m">a</span> = 1 时，证明 <span class="m">f</span>(<span class="m">x</span>) ≥ 0。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><b>(1)</b> <span class="m">f</span>′(<span class="m">x</span>) = e<sup><span class="m">x</span></sup> − <span class="m">a</span>。</li>
+            <li>若 <span class="m">a</span> ≤ 0：e<sup><span class="m">x</span></sup> &gt; 0 ≥ <span class="m">a</span>，<span class="m">f</span>′&gt;0 恒成立，<span class="m">f</span> 在 R 上<b>单调递增</b>。</li>
+            <li>若 <span class="m">a</span> &gt; 0：<span class="m">f</span>′=0 ⇒ <span class="m">x</span>=ln<span class="m">a</span>。<span class="m">x</span>&lt;ln<span class="m">a</span> 时 <span class="m">f</span>′&lt;0（减），<span class="m">x</span>&gt;ln<span class="m">a</span> 时 <span class="m">f</span>′&gt;0（增）。</li>
+            <li><b>(2)</b> <span class="m">a</span>=1：<span class="m">f</span>(<span class="m">x</span>)=e<sup><span class="m">x</span></sup>−<span class="m">x</span>−1，<span class="m">f</span>′(<span class="m">x</span>)=e<sup><span class="m">x</span></sup>−1。由 (1) 知 <span class="m">x</span>=ln1=0 为唯一极小值点。</li>
+            <li>最小值 <span class="m">f</span>(0)=e<sup>0</sup>−0−1=0，故对一切 <span class="m">x</span>，<span class="m">f</span>(<span class="m">x</span>) ≥ <span class="m">f</span>(0)=0，即 e<sup><span class="m">x</span></sup> ≥ <span class="m">x</span>+1。</li>
+          </ol>
+          <div class="ans">答：(1) <span class="m">a</span>≤0 时 R 上递增；<span class="m">a</span>&gt;0 时 (−∞,ln<span class="m">a</span>) 减、(ln<span class="m">a</span>,+∞) 增。(2) 得证。</div></div>
+        <div class="tip"><b>点拨：</b>含参单调性的分界就是 <span class="m">f</span>′ <b>能否变号</b>——<span class="m">a</span>≤0 时 e<sup><span class="m">x</span></sup>−<span class="m">a</span> 恒正故不讨论。证不等式 <span class="m">f</span>≥0 的通法：求 <span class="m">f</span> 的<b>最小值</b>并证其 ≥0。e<sup><span class="m">x</span></sup>≥<span class="m">x</span>+1 与 ln<span class="m">x</span>≤<span class="m">x</span>−1 是压轴放缩的两把钥匙。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 4 三角 ===================== -->
+  <section class="chapter" id="c4">
+    <div class="ch-head"><div class="ch-num">四</div><div><h2>三角函数与解三角形</h2><div class="en">Trigonometry</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>同角关系与诱导公式</dt>
+          <dd>sin<sup>2</sup><span class="m">α</span>+cos<sup>2</sup><span class="m">α</span>=1，tan<span class="m">α</span>=<span class="frac"><span class="num">sin<span class="m">α</span></span><span class="den">cos<span class="m">α</span></span></span>。诱导公式口诀“<b>奇变偶不变，符号看象限</b>”。</dd></div>
+        <div><dt>和差角、二倍角、辅助角</dt>
+          <dd>sin2<span class="m">α</span>=2sin<span class="m">α</span>cos<span class="m">α</span>，cos2<span class="m">α</span>=2cos<sup>2</sup><span class="m">α</span>−1=1−2sin<sup>2</sup><span class="m">α</span>。<b>辅助角</b>：<span class="m">a</span>sin<span class="m">x</span>+<span class="m">b</span>cos<span class="m">x</span>=√(<span class="m">a</span><sup>2</sup>+<span class="m">b</span><sup>2</sup>) sin(<span class="m">x</span>+<span class="m">φ</span>)。</dd></div>
+        <div><dt>y = A sin(ωx + φ)</dt>
+          <dd>周期 <span class="m">T</span> = <span class="frac"><span class="num">2π</span><span class="den"><span class="m">ω</span></span></span>；单调、对称轴由整体 <span class="m">ω</span><span class="m">x</span>+<span class="m">φ</span> 代入正弦的相应区间求解；图象平移“<b>左加右减</b>”。</dd></div>
+        <div><dt>解三角形</dt>
+          <dd>正弦定理 <span class="frac"><span class="num"><span class="m">a</span></span><span class="den">sin<span class="m">A</span></span></span>=2<span class="m">R</span>；余弦定理 <span class="m">a</span><sup>2</sup>=<span class="m">b</span><sup>2</sup>+<span class="m">c</span><sup>2</sup>−2<span class="m">bc</span>cos<span class="m">A</span>；面积 <span class="m">S</span>=½<span class="m">ab</span>sin<span class="m">C</span>。投影公式 <span class="m">a</span>=<span class="m">b</span>cos<span class="m">C</span>+<span class="m">c</span>cos<span class="m">B</span>。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">同角关系求值</span><span class="kaodian">考点：象限定号 + 二倍角</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 sin<span class="m">α</span> = <span class="frac"><span class="num">3</span><span class="den">5</span></span>，<span class="m">α</span> ∈ (<span class="frac"><span class="num">π</span><span class="den">2</span></span>, π)。求 cos<span class="m">α</span>、tan<span class="m">α</span> 与 sin2<span class="m">α</span>。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><span class="m">α</span> 在第二象限，cos<span class="m">α</span> &lt; 0：cos<span class="m">α</span> = −√(1 − sin<sup>2</sup><span class="m">α</span>) = −√(1 − <span class="frac"><span class="num">9</span><span class="den">25</span></span>) = −<span class="frac"><span class="num">4</span><span class="den">5</span></span>。</li>
+            <li>tan<span class="m">α</span> = <span class="frac"><span class="num">sin<span class="m">α</span></span><span class="den">cos<span class="m">α</span></span></span> = <span class="frac"><span class="num">3/5</span><span class="den">−4/5</span></span> = −<span class="frac"><span class="num">3</span><span class="den">4</span></span>。</li>
+            <li>sin2<span class="m">α</span> = 2sin<span class="m">α</span>cos<span class="m">α</span> = 2·<span class="frac"><span class="num">3</span><span class="den">5</span></span>·(−<span class="frac"><span class="num">4</span><span class="den">5</span></span>) = −<span class="frac"><span class="num">24</span><span class="den">25</span></span>。</li>
+          </ol>
+          <div class="ans">答：cos<span class="m">α</span> = −4/5，tan<span class="m">α</span> = −3/4，sin2<span class="m">α</span> = −24/25。</div></div>
+        <div class="tip"><b>点拨：</b>用 sin<sup>2</sup>+cos<sup>2</sup>=1 开方时，<b>符号由象限决定</b>——这是最易错处。第二象限 sin&gt;0、cos&lt;0、tan&lt;0。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">化一个角 + 周期与单调</span><span class="kaodian">考点：降幂 + 辅助角</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">f</span>(<span class="m">x</span>) = sin<sup>2</sup><span class="m">x</span> + √3 sin<span class="m">x</span> cos<span class="m">x</span>。求 <span class="m">f</span>(<span class="m">x</span>) 的最小正周期与单调递增区间。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>降幂：sin<sup>2</sup><span class="m">x</span> = <span class="frac"><span class="num">1−cos2<span class="m">x</span></span><span class="den">2</span></span>；倍角：√3 sin<span class="m">x</span>cos<span class="m">x</span> = <span class="frac"><span class="num">√3</span><span class="den">2</span></span> sin2<span class="m">x</span>。</li>
+            <li><span class="m">f</span>(<span class="m">x</span>) = <span class="frac"><span class="num">1</span><span class="den">2</span></span> + (<span class="frac"><span class="num">√3</span><span class="den">2</span></span> sin2<span class="m">x</span> − <span class="frac"><span class="num">1</span><span class="den">2</span></span> cos2<span class="m">x</span>) = <span class="frac"><span class="num">1</span><span class="den">2</span></span> + sin(2<span class="m">x</span> − <span class="frac"><span class="num">π</span><span class="den">6</span></span>)。</li>
+            <li>周期 <span class="m">T</span> = <span class="frac"><span class="num">2π</span><span class="den">2</span></span> = π。</li>
+            <li>递增：−<span class="frac"><span class="num">π</span><span class="den">2</span></span>+2<span class="m">k</span>π ≤ 2<span class="m">x</span>−<span class="frac"><span class="num">π</span><span class="den">6</span></span> ≤ <span class="frac"><span class="num">π</span><span class="den">2</span></span>+2<span class="m">k</span>π ⇒ −<span class="frac"><span class="num">π</span><span class="den">6</span></span>+<span class="m">k</span>π ≤ <span class="m">x</span> ≤ <span class="frac"><span class="num">π</span><span class="den">3</span></span>+<span class="m">k</span>π。</li>
+          </ol>
+          <div class="ans">答：最小正周期 π；单调递增区间 [−<span class="frac"><span class="num">π</span><span class="den">6</span></span>+<span class="m">k</span>π, <span class="frac"><span class="num">π</span><span class="den">3</span></span>+<span class="m">k</span>π]（<span class="m">k</span>∈Z）。</div></div>
+        <div class="tip"><b>点拨：</b>三角化简目标永远是<b>“化成一个 A sin(ωx+φ)+B”</b>：先降幂去平方、再用辅助角合并。求单调区间时把 (ωx+φ) 看成整体代入 sin 的增区间 [−π/2+2kπ, π/2+2kπ]。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">解三角形 + 周长范围</span><span class="kaodian">考点：投影公式、边化角求范围</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>在 △<span class="m">ABC</span> 中，角 <span class="m">A</span>,<span class="m">B</span>,<span class="m">C</span> 的对边为 <span class="m">a</span>,<span class="m">b</span>,<span class="m">c</span>，且 (2<span class="m">a</span> − <span class="m">c</span>)cos<span class="m">B</span> = <span class="m">b</span>cos<span class="m">C</span>。<br>(1) 求 <span class="m">B</span>；(2) 若 <span class="m">b</span> = √3，求 △<span class="m">ABC</span> 周长的取值范围。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><b>(1)</b> 展开：2<span class="m">a</span>cos<span class="m">B</span> = <span class="m">c</span>cos<span class="m">B</span> + <span class="m">b</span>cos<span class="m">C</span>。由投影公式 <span class="m">c</span>cos<span class="m">B</span>+<span class="m">b</span>cos<span class="m">C</span> = <span class="m">a</span>，故 2<span class="m">a</span>cos<span class="m">B</span> = <span class="m">a</span> ⇒ cos<span class="m">B</span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span> ⇒ <span class="m">B</span> = <span class="frac"><span class="num">π</span><span class="den">3</span></span>。</li>
+            <li><b>(2)</b> 由正弦定理 <span class="frac"><span class="num"><span class="m">b</span></span><span class="den">sin<span class="m">B</span></span></span> = <span class="frac"><span class="num">√3</span><span class="den">√3/2</span></span> = 2，故 <span class="m">a</span> = 2sin<span class="m">A</span>，<span class="m">c</span> = 2sin<span class="m">C</span>，且 <span class="m">A</span>+<span class="m">C</span> = <span class="frac"><span class="num">2π</span><span class="den">3</span></span>。</li>
+            <li><span class="m">a</span>+<span class="m">c</span> = 2[sin<span class="m">A</span> + sin(<span class="frac"><span class="num">2π</span><span class="den">3</span></span>−<span class="m">A</span>)] = 2[<span class="frac"><span class="num">3</span><span class="den">2</span></span>sin<span class="m">A</span> + <span class="frac"><span class="num">√3</span><span class="den">2</span></span>cos<span class="m">A</span>] = 2√3 sin(<span class="m">A</span> + <span class="frac"><span class="num">π</span><span class="den">6</span></span>)。</li>
+            <li><span class="m">A</span> ∈ (0, <span class="frac"><span class="num">2π</span><span class="den">3</span></span>) ⇒ <span class="m">A</span>+<span class="frac"><span class="num">π</span><span class="den">6</span></span> ∈ (<span class="frac"><span class="num">π</span><span class="den">6</span></span>, <span class="frac"><span class="num">5π</span><span class="den">6</span></span>) ⇒ sin(<span class="m">A</span>+<span class="frac"><span class="num">π</span><span class="den">6</span></span>) ∈ (<span class="frac"><span class="num">1</span><span class="den">2</span></span>, 1]。</li>
+            <li>故 <span class="m">a</span>+<span class="m">c</span> ∈ (√3, 2√3]，周长 = <span class="m">a</span>+<span class="m">c</span>+√3 ∈ (2√3, 3√3]。</li>
+          </ol>
+          <div class="ans">答：(1) <span class="m">B</span> = π/3；(2) 周长范围 (2√3, 3√3]（等边时取最大 3√3）。</div></div>
+        <div class="tip"><b>点拨：</b>“边·cos + 边·cos”形式优先想<b>投影公式</b>或正弦定理边化角。求周长/面积范围：把目标<b>用一个角表示</b>，化成 R sin(A+φ)，再由 A 的定义域推 sin 的范围。注意 A 的开区间导致范围<b>左开右闭</b>。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 5 向量复数 ===================== -->
+  <section class="chapter" id="c5">
+    <div class="ch-head"><div class="ch-num">五</div><div><h2>平面向量与复数</h2><div class="en">Vectors &amp; Complex Numbers</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>坐标运算</dt>
+          <dd>设 <b>a</b>=(<span class="m">x</span><sub>1</sub>,<span class="m">y</span><sub>1</sub>)，<b>b</b>=(<span class="m">x</span><sub>2</sub>,<span class="m">y</span><sub>2</sub>)。<b>a</b>·<b>b</b>=<span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub>+<span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub>，|<b>a</b>|=√(<span class="m">x</span><sub>1</sub><sup>2</sup>+<span class="m">y</span><sub>1</sub><sup>2</sup>)。</dd></div>
+        <div><dt>平行、垂直、夹角</dt>
+          <dd><b>a</b>∥<b>b</b> ⇔ <span class="m">x</span><sub>1</sub><span class="m">y</span><sub>2</sub>−<span class="m">x</span><sub>2</sub><span class="m">y</span><sub>1</sub>=0；<b>a</b>⊥<b>b</b> ⇔ <b>a</b>·<b>b</b>=0；cos<span class="m">θ</span>=<span class="frac"><span class="num"><b>a</b>·<b>b</b></span><span class="den">|<b>a</b>||<b>b</b>|</span></span>。<b>模长平方：</b>|<b>a</b>±<b>b</b>|<sup>2</sup>=|<b>a</b>|<sup>2</sup>±2<b>a</b>·<b>b</b>+|<b>b</b>|<sup>2</sup>。</dd></div>
+        <div><dt>复数</dt>
+          <dd><span class="m">z</span>=<span class="m">a</span>+<span class="m">b</span>i，共轭 <span style="text-decoration:overline"><span class="m">z</span></span>=<span class="m">a</span>−<span class="m">b</span>i，|<span class="m">z</span>|=√(<span class="m">a</span><sup>2</sup>+<span class="m">b</span><sup>2</sup>)，i<sup>2</sup>=−1。<b>除法</b>：分子分母同乘分母的共轭以实数化。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">复数除法</span><span class="kaodian">考点：分母实数化</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>计算 <span class="frac"><span class="num">1+2i</span><span class="den">1−i</span></span>，并写出其虚部。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>分子分母同乘 (1+i)：<span class="frac"><span class="num">(1+2i)(1+i)</span><span class="den">(1−i)(1+i)</span></span>。</li>
+            <li>分母 (1−i)(1+i) = 1 − i<sup>2</sup> = 2。分子 = 1 + i + 2i + 2i<sup>2</sup> = 1 + 3i − 2 = −1 + 3i。</li>
+            <li>故原式 = <span class="frac"><span class="num">−1+3i</span><span class="den">2</span></span> = −<span class="frac"><span class="num">1</span><span class="den">2</span></span> + <span class="frac"><span class="num">3</span><span class="den">2</span></span> i。</li>
+          </ol>
+          <div class="ans">答：原式 = −½ + (3/2)i，虚部为 3/2。</div></div>
+        <div class="tip"><b>点拨：</b>复数除法固定套路——<b>分母乘共轭</b>把分母变实数。注意“虚部”指系数 3/2，<b>不含 i</b>；别把 (3/2)i 当虚部。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">平行条件与夹角</span><span class="kaodian">考点：坐标法</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知向量 <b>a</b> = (1, 2)，<b>b</b> = (−2, <span class="m">k</span>)。(1) 若 <b>a</b> ∥ <b>b</b>，求 <span class="m">k</span>；(2) 若 <span class="m">k</span> = 3，求 <b>a</b> 与 <b>b</b> 夹角的余弦值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><b>(1)</b> <b>a</b>∥<b>b</b> ⇔ 1·<span class="m">k</span> − 2·(−2) = 0 ⇒ <span class="m">k</span> + 4 = 0 ⇒ <span class="m">k</span> = −4。</li>
+            <li><b>(2)</b> <span class="m">k</span>=3 时 <b>b</b>=(−2,3)。<b>a</b>·<b>b</b> = 1·(−2)+2·3 = 4。</li>
+            <li>|<b>a</b>| = √5，|<b>b</b>| = √13。cos<span class="m">θ</span> = <span class="frac"><span class="num">4</span><span class="den">√5·√13</span></span> = <span class="frac"><span class="num">4</span><span class="den">√65</span></span> = <span class="frac"><span class="num">4√65</span><span class="den">65</span></span>。</li>
+          </ol>
+          <div class="ans">答：(1) <span class="m">k</span> = −4；(2) cos<span class="m">θ</span> = 4√65 / 65。</div></div>
+        <div class="tip"><b>点拨：</b>平行用<b>叉乘式</b> <span class="m">x</span><sub>1</sub><span class="m">y</span><sub>2</sub>−<span class="m">x</span><sub>2</sub><span class="m">y</span><sub>1</sub>=0（不要写成对应成比例再讨论分母为零）；垂直用<b>点乘</b>=0。夹角余弦最后记得<b>分母有理化</b>。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">含参模长最值</span><span class="kaodian">考点：|c|²展开成 t 的二次</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 |<b>a</b>| = 2，|<b>b</b>| = 1，<b>a</b> 与 <b>b</b> 的夹角为 60°。设 <b>c</b> = <b>a</b> + <span class="m">t</span><b>b</b>（<span class="m">t</span> ∈ R），求 |<b>c</b>| 的最小值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>先求数量积：<b>a</b>·<b>b</b> = |<b>a</b>||<b>b</b>|cos60° = 2·1·<span class="frac"><span class="num">1</span><span class="den">2</span></span> = 1。</li>
+            <li>|<b>c</b>|<sup>2</sup> = |<b>a</b> + <span class="m">t</span><b>b</b>|<sup>2</sup> = |<b>a</b>|<sup>2</sup> + 2<span class="m">t</span>(<b>a</b>·<b>b</b>) + <span class="m">t</span><sup>2</sup>|<b>b</b>|<sup>2</sup> = 4 + 2<span class="m">t</span> + <span class="m">t</span><sup>2</sup>。</li>
+            <li>关于 <span class="m">t</span> 的二次函数 <span class="m">t</span><sup>2</sup>+2<span class="m">t</span>+4 = (<span class="m">t</span>+1)<sup>2</sup>+3，在 <span class="m">t</span> = −1 处取最小值 3。</li>
+            <li>故 |<b>c</b>|<sub>min</sub> = √3。</li>
+          </ol>
+          <div class="ans">答：|<b>c</b>| 的最小值为 √3（当 <span class="m">t</span> = −1 时取得）。</div></div>
+        <div class="tip"><b>点拨：</b>向量模的最值，先<b>平方转成数量积</b>再化为参数的二次函数配方。核心一步是把 |·|<sup>2</sup> 展开——凡遇“求模/证垂直/求夹角”，几乎都靠 |<b>a</b>±<b>b</b>|<sup>2</sup> 这条恒等式。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 6 数列 ===================== -->
+  <section class="chapter" id="c6">
+    <div class="ch-head"><div class="ch-num">六</div><div><h2>数列</h2><div class="en">Sequences &amp; Series</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>两种基本数列</dt>
+          <dd>等差 <span class="m">a</span><sub><span class="m">n</span></sub>=<span class="m">a</span><sub>1</sub>+(<span class="m">n</span>−1)<span class="m">d</span>，<span class="m">S</span><sub><span class="m">n</span></sub>=<span class="frac"><span class="num"><span class="m">n</span>(<span class="m">a</span><sub>1</sub>+<span class="m">a</span><sub><span class="m">n</span></sub>)</span><span class="den">2</span></span>；等比 <span class="m">a</span><sub><span class="m">n</span></sub>=<span class="m">a</span><sub>1</sub><span class="m">q</span><sup><span class="m">n</span>−1</sup>，<span class="m">S</span><sub><span class="m">n</span></sub>=<span class="frac"><span class="num"><span class="m">a</span><sub>1</sub>(1−<span class="m">q</span><sup><span class="m">n</span></sup>)</span><span class="den">1−<span class="m">q</span></span></span>（<span class="m">q</span>≠1）。</dd></div>
+        <div><dt>a_n 与 S_n 的关系</dt>
+          <dd><span class="m">a</span><sub><span class="m">n</span></sub> = <span class="m">S</span><sub><span class="m">n</span></sub> − <span class="m">S</span><sub><span class="m">n</span>−1</sub>（<span class="m">n</span>≥2），<span class="m">a</span><sub>1</sub>=<span class="m">S</span><sub>1</sub>。<b>务必单独验证 n=1</b> 是否符合通式。</dd></div>
+        <div><dt>求通项三法</dt>
+          <dd><b>累加</b>（<span class="m">a</span><sub><span class="m">n</span>+1</sub>−<span class="m">a</span><sub><span class="m">n</span></sub>=<span class="m">f</span>(<span class="m">n</span>)）、<b>累乘</b>（比值 = <span class="m">f</span>(<span class="m">n</span>)）、<b>构造</b>（<span class="m">a</span><sub><span class="m">n</span>+1</sub>=<span class="m">p</span><span class="m">a</span><sub><span class="m">n</span></sub>+<span class="m">q</span> 型 → 加常数配成等比）。</dd></div>
+        <div><dt>求和四法</dt>
+          <dd><b>公式法、错位相减</b>（等差×等比）、<b>裂项相消</b>、<b>分组求和</b>。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">等差基本量</span><span class="kaodian">考点：求 d, a₁, Sₙ</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>等差数列 {<span class="m">a</span><sub><span class="m">n</span></sub>} 中，<span class="m">a</span><sub>2</sub> = 3，<span class="m">a</span><sub>5</sub> = 9。求通项 <span class="m">a</span><sub><span class="m">n</span></sub> 与前 10 项和 <span class="m">S</span><sub>10</sub>。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><span class="m">d</span> = <span class="frac"><span class="num"><span class="m">a</span><sub>5</sub>−<span class="m">a</span><sub>2</sub></span><span class="den">5−2</span></span> = <span class="frac"><span class="num">9−3</span><span class="den">3</span></span> = 2，<span class="m">a</span><sub>1</sub> = <span class="m">a</span><sub>2</sub> − <span class="m">d</span> = 1。</li>
+            <li><span class="m">a</span><sub><span class="m">n</span></sub> = 1 + (<span class="m">n</span>−1)·2 = 2<span class="m">n</span> − 1。</li>
+            <li><span class="m">S</span><sub>10</sub> = <span class="frac"><span class="num">10(<span class="m">a</span><sub>1</sub>+<span class="m">a</span><sub>10</sub>)</span><span class="den">2</span></span> = 5·(1 + 19) = 100。</li>
+          </ol>
+          <div class="ans">答：<span class="m">a</span><sub><span class="m">n</span></sub> = 2<span class="m">n</span> − 1，<span class="m">S</span><sub>10</sub> = 100。</div></div>
+        <div class="tip"><b>点拨：</b>等差“知二求一”：任意两项差 = 项数差 × <span class="m">d</span>。求和优先用 <span class="m">S</span><sub><span class="m">n</span></sub>=<span class="m">n</span>×(首+末)/2，比代 <span class="m">n</span><span class="m">a</span><sub>1</sub>+... 更省。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">裂项相消求和</span><span class="kaodian">考点：拆成差的形式</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">a</span><sub><span class="m">n</span></sub> = 2<span class="m">n</span> − 1。求数列 { <span class="frac"><span class="num">1</span><span class="den"><span class="m">a</span><sub><span class="m">n</span></sub><span class="m">a</span><sub><span class="m">n</span>+1</sub></span></span> } 的前 <span class="m">n</span> 项和 <span class="m">T</span><sub><span class="m">n</span></sub>。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>通项 = <span class="frac"><span class="num">1</span><span class="den">(2<span class="m">n</span>−1)(2<span class="m">n</span>+1)</span></span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(<span class="frac"><span class="num">1</span><span class="den">2<span class="m">n</span>−1</span></span> − <span class="frac"><span class="num">1</span><span class="den">2<span class="m">n</span>+1</span></span>)。</li>
+            <li>累加相消：<span class="m">T</span><sub><span class="m">n</span></sub> = <span class="frac"><span class="num">1</span><span class="den">2</span></span>[(1−<span class="frac"><span class="num">1</span><span class="den">3</span></span>) + (<span class="frac"><span class="num">1</span><span class="den">3</span></span>−<span class="frac"><span class="num">1</span><span class="den">5</span></span>) + … + (<span class="frac"><span class="num">1</span><span class="den">2<span class="m">n</span>−1</span></span>−<span class="frac"><span class="num">1</span><span class="den">2<span class="m">n</span>+1</span></span>)]。</li>
+            <li>中间项全抵消，剩首尾：<span class="m">T</span><sub><span class="m">n</span></sub> = <span class="frac"><span class="num">1</span><span class="den">2</span></span>(1 − <span class="frac"><span class="num">1</span><span class="den">2<span class="m">n</span>+1</span></span>) = <span class="frac"><span class="num"><span class="m">n</span></span><span class="den">2<span class="m">n</span>+1</span></span>。</li>
+          </ol>
+          <div class="ans">答：<span class="m">T</span><sub><span class="m">n</span></sub> = <span class="m">n</span> / (2<span class="m">n</span> + 1)。</div></div>
+        <div class="tip"><b>点拨：</b>分母是<b>两个等差项相乘</b>时想裂项：<span class="frac"><span class="num">1</span><span class="den"><span class="m">a</span><sub><span class="m">n</span></sub><span class="m">a</span><sub><span class="m">n</span>+1</sub></span></span>=<span class="frac"><span class="num">1</span><span class="den"><span class="m">d</span></span></span>(<span class="frac"><span class="num">1</span><span class="den"><span class="m">a</span><sub><span class="m">n</span></sub></span></span>−<span class="frac"><span class="num">1</span><span class="den"><span class="m">a</span><sub><span class="m">n</span>+1</sub></span></span>)。别忘前面的系数 1/<span class="m">d</span>（这里 <span class="m">d</span>=2）。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">构造等比 + 错位相减</span><span class="kaodian">考点：aₙ₊₁=paₙ+q、n·2ⁿ 求和</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>数列 {<span class="m">a</span><sub><span class="m">n</span></sub>} 满足 <span class="m">a</span><sub>1</sub> = 1，<span class="m">a</span><sub><span class="m">n</span>+1</sub> = 2<span class="m">a</span><sub><span class="m">n</span></sub> + 1。<br>(1) 证明 {<span class="m">a</span><sub><span class="m">n</span></sub> + 1} 为等比数列并求 <span class="m">a</span><sub><span class="m">n</span></sub>；(2) 求 <span class="m">T</span><sub><span class="m">n</span></sub> = Σ<sub><span class="m">k</span>=1</sub><sup><span class="m">n</span></sup> <span class="m">k</span>·<span class="m">a</span><sub><span class="m">k</span></sub>。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><b>(1)</b> 两边加 1：<span class="m">a</span><sub><span class="m">n</span>+1</sub>+1 = 2<span class="m">a</span><sub><span class="m">n</span></sub>+2 = 2(<span class="m">a</span><sub><span class="m">n</span></sub>+1)。又 <span class="m">a</span><sub>1</sub>+1 = 2，故 {<span class="m">a</span><sub><span class="m">n</span></sub>+1} 是首项 2、公比 2 的等比数列 ⇒ <span class="m">a</span><sub><span class="m">n</span></sub>+1 = 2<sup><span class="m">n</span></sup>，即 <span class="m">a</span><sub><span class="m">n</span></sub> = 2<sup><span class="m">n</span></sup> − 1。</li>
+            <li><b>(2)</b> <span class="m">k</span><span class="m">a</span><sub><span class="m">k</span></sub> = <span class="m">k</span>(2<sup><span class="m">k</span></sup>−1) = <span class="m">k</span>·2<sup><span class="m">k</span></sup> − <span class="m">k</span>，分组：<span class="m">T</span><sub><span class="m">n</span></sub> = <b>P</b> − Σ<span class="m">k</span>，其中 <b>P</b> = Σ<sub><span class="m">k</span>=1</sub><sup><span class="m">n</span></sup> <span class="m">k</span>·2<sup><span class="m">k</span></sup>。</li>
+            <li><b>错位相减求 P：</b> <b>P</b> = 1·2 + 2·2<sup>2</sup> + … + <span class="m">n</span>·2<sup><span class="m">n</span></sup>；2<b>P</b> = 1·2<sup>2</sup> + … + <span class="m">n</span>·2<sup><span class="m">n</span>+1</sup>。相减：−<b>P</b> = (2+2<sup>2</sup>+…+2<sup><span class="m">n</span></sup>) − <span class="m">n</span>·2<sup><span class="m">n</span>+1</sup> = (2<sup><span class="m">n</span>+1</sup>−2) − <span class="m">n</span>·2<sup><span class="m">n</span>+1</sup>。</li>
+            <li>故 <b>P</b> = (<span class="m">n</span>−1)·2<sup><span class="m">n</span>+1</sup> + 2。而 Σ<span class="m">k</span> = <span class="frac"><span class="num"><span class="m">n</span>(<span class="m">n</span>+1)</span><span class="den">2</span></span>。</li>
+            <li><span class="m">T</span><sub><span class="m">n</span></sub> = (<span class="m">n</span>−1)·2<sup><span class="m">n</span>+1</sup> + 2 − <span class="frac"><span class="num"><span class="m">n</span>(<span class="m">n</span>+1)</span><span class="den">2</span></span>。（验 <span class="m">n</span>=1：0+2−1 = 1 = 1·<span class="m">a</span><sub>1</sub> ✔）</li>
+          </ol>
+          <div class="ans">答：(1) <span class="m">a</span><sub><span class="m">n</span></sub> = 2<sup><span class="m">n</span></sup> − 1；(2) <span class="m">T</span><sub><span class="m">n</span></sub> = (<span class="m">n</span>−1)·2<sup><span class="m">n</span>+1</sup> + 2 − <span class="frac"><span class="num"><span class="m">n</span>(<span class="m">n</span>+1)</span><span class="den">2</span></span>。</div></div>
+        <div class="tip"><b>点拨：</b>“<span class="m">a</span><sub><span class="m">n</span>+1</sub>=<span class="m">p</span><span class="m">a</span><sub><span class="m">n</span></sub>+<span class="m">q</span>”型加常数 <span class="frac"><span class="num"><span class="m">q</span></span><span class="den"><span class="m">p</span>−1</span></span> 配成等比（此处加 1）。求 Σ<span class="m">k</span>·<span class="m">q</span><sup><span class="m">k</span></sup> 一律<b>错位相减</b>：乘公比、错位、相减，中间成等比数列。最后<b>代 n=1 验算</b>是自查利器。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 7 不等式 ===================== -->
+  <section class="chapter" id="c7">
+    <div class="ch-head"><div class="ch-num">七</div><div><h2>不等式</h2><div class="en">Inequalities</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>一元二次不等式</dt>
+          <dd>先化 &gt;0 标准形、求根、看开口。<span class="m">a</span>&gt;0 时 “大于取两边、小于取中间”。</dd></div>
+        <div><dt>基本（均值）不等式</dt>
+          <dd><span class="m">a</span>,<span class="m">b</span> &gt; 0 时 <span class="m">a</span>+<span class="m">b</span> ≥ 2√(<span class="m">ab</span>)，等号 ⇔ <span class="m">a</span>=<span class="m">b</span>。使用口诀“<b>一正、二定、三相等</b>”：各项为正、和或积为定值、能取等。</dd></div>
+        <div><dt>两大技巧</dt>
+          <dd><b>配凑</b>（凑出定值乘积）与 <b>“1”的代换</b>（把已知的“= 1”乘进目标式再展开用均值）。<span style="color:var(--muted)">注：线性规划已退出新高考。</span></dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">一元二次不等式</span><span class="kaodian">考点：因式分解定解集</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>解不等式 <span class="m">x</span><sup>2</sup> − <span class="m">x</span> − 6 ≤ 0。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>因式分解：<span class="m">x</span><sup>2</sup> − <span class="m">x</span> − 6 = (<span class="m">x</span> − 3)(<span class="m">x</span> + 2)。</li>
+            <li>开口向上、取 ≤0（中间部分），根为 −2 与 3。</li>
+            <li>解集：−2 ≤ <span class="m">x</span> ≤ 3。</li>
+          </ol>
+          <div class="ans">答：解集为 [−2, 3]。</div></div>
+        <div class="tip"><b>点拨：</b>开口向上（<span class="m">a</span>&gt;0）时，“≤0 取两根之间、≥0 取两根之外”。含等号则端点取闭。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">配凑用均值求最小值</span><span class="kaodian">考点：凑出定积 + 验等号</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">x</span> &gt; 1，求 <span class="m">y</span> = <span class="m">x</span> + <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span>−1</span></span> 的最小值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>配凑出可用均值的两项：<span class="m">y</span> = (<span class="m">x</span> − 1) + <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span>−1</span></span> + 1。</li>
+            <li>因 <span class="m">x</span> &gt; 1，(<span class="m">x</span>−1) &gt; 0，由均值 (<span class="m">x</span>−1) + <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span>−1</span></span> ≥ 2√1 = 2。</li>
+            <li>故 <span class="m">y</span> ≥ 2 + 1 = 3，等号 ⇔ <span class="m">x</span>−1 = <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span>−1</span></span> ⇒ <span class="m">x</span> = 2。</li>
+          </ol>
+          <div class="ans">答：最小值为 3（当 <span class="m">x</span> = 2 时取得）。</div></div>
+        <div class="tip"><b>点拨：</b>见 <span class="m">x</span>−1 作分母就<b>把 <span class="m">x</span> 拆成 (<span class="m">x</span>−1)+1</b>，凑出乘积为定值的两项。<b>一定要验证等号能取到</b>，否则最小值不成立。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">“1”的代换</span><span class="kaodian">考点：约束条件整体乘入</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>已知 <span class="m">x</span> &gt; 0，<span class="m">y</span> &gt; 0，且 <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span></span></span> + <span class="frac"><span class="num">9</span><span class="den"><span class="m">y</span></span></span> = 1，求 <span class="m">x</span> + <span class="m">y</span> 的最小值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>把目标乘以等于 1 的约束：<span class="m">x</span> + <span class="m">y</span> = (<span class="m">x</span> + <span class="m">y</span>)(<span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span></span></span> + <span class="frac"><span class="num">9</span><span class="den"><span class="m">y</span></span></span>)。</li>
+            <li>展开：= 1 + <span class="frac"><span class="num">9<span class="m">x</span></span><span class="den"><span class="m">y</span></span></span> + <span class="frac"><span class="num"><span class="m">y</span></span><span class="den"><span class="m">x</span></span></span> + 9 = 10 + (<span class="frac"><span class="num">9<span class="m">x</span></span><span class="den"><span class="m">y</span></span></span> + <span class="frac"><span class="num"><span class="m">y</span></span><span class="den"><span class="m">x</span></span></span>)。</li>
+            <li>由均值 <span class="frac"><span class="num">9<span class="m">x</span></span><span class="den"><span class="m">y</span></span></span> + <span class="frac"><span class="num"><span class="m">y</span></span><span class="den"><span class="m">x</span></span></span> ≥ 2√9 = 6，故 <span class="m">x</span>+<span class="m">y</span> ≥ 16。</li>
+            <li>等号 ⇔ <span class="frac"><span class="num">9<span class="m">x</span></span><span class="den"><span class="m">y</span></span></span> = <span class="frac"><span class="num"><span class="m">y</span></span><span class="den"><span class="m">x</span></span></span> ⇒ <span class="m">y</span> = 3<span class="m">x</span>；代回约束 <span class="frac"><span class="num">1</span><span class="den"><span class="m">x</span></span></span>+<span class="frac"><span class="num">3</span><span class="den"><span class="m">x</span></span></span>=1 ⇒ <span class="m">x</span> = 4，<span class="m">y</span> = 12。</li>
+          </ol>
+          <div class="ans">答：最小值为 16（当 <span class="m">x</span> = 4，<span class="m">y</span> = 12 时取得）。</div></div>
+        <div class="tip"><b>点拨：</b>凡给出“<span class="m">?</span> + <span class="m">?</span> = 1”这类约束求另一式最值，一律用<b>“1”的代换</b>：目标 ×（=1 的式子）再展开，交叉项用均值。<b>切勿分别取两项最小</b>——那样等号不能同时成立，会得到错误的更小值。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 8 立体几何 ===================== -->
+  <section class="chapter" id="c8">
+    <div class="ch-head"><div class="ch-num">八</div><div><h2>立体几何</h2><div class="en">Solid Geometry</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>面积与体积</dt>
+          <dd>柱 <span class="m">V</span>=<span class="m">Sh</span>，锥 <span class="m">V</span>=<span class="frac"><span class="num">1</span><span class="den">3</span></span><span class="m">Sh</span>，球 <span class="m">V</span>=<span class="frac"><span class="num">4</span><span class="den">3</span></span>π<span class="m">R</span><sup>3</sup>、<span class="m">S</span>=4π<span class="m">R</span><sup>2</sup>；圆锥侧面积 π<span class="m">rl</span>。</dd></div>
+        <div><dt>平行与垂直判定</dt>
+          <dd><b>线面平行：</b>面外一线平行于面内一线 ⇒ 线面平行。<b>线面垂直：</b>一线垂直于面内<b>两条相交</b>直线 ⇒ 线面垂直。证题<b>定理条件要写全</b>。</dd></div>
+        <div><dt>空间向量法</dt>
+          <dd>建系设坐标，求<b>法向量 n</b>。线面角 sin<span class="m">θ</span> = |cos⟨<b>l</b>,<b>n</b>⟩|；二面角 cos = ±cos⟨<b>n</b><sub>1</sub>,<b>n</b><sub>2</sub>⟩（正负<b>看图判定</b>）；点面距 <span class="m">d</span> = <span class="frac"><span class="num">|<b>AP</b>·<b>n</b>|</span><span class="den">|<b>n</b>|</span></span>。</dd></div>
+        <div><dt>外接球</dt>
+          <dd>球心到各顶点等距；常用“补形为长方体”，则 <span class="m">R</span> = ½√(长<sup>2</sup>+宽<sup>2</sup>+高<sup>2</sup>)。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">圆锥体积与侧面积</span><span class="kaodian">考点：勾股求高</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>圆锥底面半径 <span class="m">r</span> = 3，母线 <span class="m">l</span> = 5。求它的体积与侧面积。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>高 <span class="m">h</span> = √(<span class="m">l</span><sup>2</sup> − <span class="m">r</span><sup>2</sup>) = √(25 − 9) = 4。</li>
+            <li>体积 <span class="m">V</span> = <span class="frac"><span class="num">1</span><span class="den">3</span></span>π<span class="m">r</span><sup>2</sup><span class="m">h</span> = <span class="frac"><span class="num">1</span><span class="den">3</span></span>π·9·4 = 12π。</li>
+            <li>侧面积 <span class="m">S</span><sub>侧</sub> = π<span class="m">rl</span> = π·3·5 = 15π。</li>
+          </ol>
+          <div class="ans">答：体积 12π，侧面积 15π。</div></div>
+        <div class="tip"><b>点拨：</b>圆锥中 <b>母线<sup>2</sup> = 半径<sup>2</sup> + 高<sup>2</sup></b>（轴截面直角三角形）。别把母线当高代进体积。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">线面垂直证明</span><span class="kaodian">考点：两相交线垂直</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>在正方体 <span class="m">ABCD</span>-<span class="m">A</span><sub>1</sub><span class="m">B</span><sub>1</sub><span class="m">C</span><sub>1</sub><span class="m">D</span><sub>1</sub> 中，求证：<span class="m">BD</span> ⊥ 平面 <span class="m">ACC</span><sub>1</sub><span class="m">A</span><sub>1</sub>。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>底面 <span class="m">ABCD</span> 是正方形，对角线互相垂直：<span class="m">BD</span> ⊥ <span class="m">AC</span>。</li>
+            <li><span class="m">AA</span><sub>1</sub> ⊥ 底面 <span class="m">ABCD</span>，而 <span class="m">BD</span> ⊂ 底面，故 <span class="m">AA</span><sub>1</sub> ⊥ <span class="m">BD</span>。</li>
+            <li><span class="m">AC</span> 与 <span class="m">AA</span><sub>1</sub> 是平面 <span class="m">ACC</span><sub>1</sub><span class="m">A</span><sub>1</sub> 内<b>两条相交</b>直线（交于 <span class="m">A</span>），且都与 <span class="m">BD</span> 垂直。</li>
+            <li>由线面垂直判定定理，<span class="m">BD</span> ⊥ 平面 <span class="m">ACC</span><sub>1</sub><span class="m">A</span><sub>1</sub>。</li>
+          </ol>
+          <div class="ans">得证。</div></div>
+        <div class="tip"><b>点拨：</b>证“线⊥面”必须凑齐<b>面内两条相交直线</b>都与该线垂直——缺“相交”二字就扣分。一条来自底面对角线性质，一条来自侧棱⊥底面，是正方体里的黄金组合。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">空间向量求二面角</span><span class="kaodian">考点：建系 + 两法向量夹角</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>四棱锥 <span class="m">P</span>-<span class="m">ABCD</span> 中，底面 <span class="m">ABCD</span> 为正方形，边长 2，<span class="m">PD</span> ⊥ 底面 <span class="m">ABCD</span>，<span class="m">PD</span> = 2。求二面角 <span class="m">A</span>-<span class="m">PB</span>-<span class="m">C</span> 的余弦值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>以 <span class="m">D</span> 为原点，<span class="m">DA</span>、<span class="m">DC</span>、<span class="m">DP</span> 为 <span class="m">x</span>,<span class="m">y</span>,<span class="m">z</span> 轴建系：<span class="m">D</span>(0,0,0)，<span class="m">A</span>(2,0,0)，<span class="m">B</span>(2,2,0)，<span class="m">C</span>(0,2,0)，<span class="m">P</span>(0,0,2)。</li>
+            <li>平面 <span class="m">PBA</span> 的法向量 <b>n</b><sub>1</sub>：由 <b>PA</b>=(2,0,−2)、<b>PB</b>=(2,2,−2) 叉乘得 <b>n</b><sub>1</sub> = (4, 0, 4)（可取 (1,0,1)）。</li>
+            <li>平面 <span class="m">PBC</span> 的法向量 <b>n</b><sub>2</sub>：由 <b>PC</b>=(0,2,−2)、<b>PB</b>=(2,2,−2) 叉乘得 <b>n</b><sub>2</sub> = (0, −4, −4)（可取 (0,1,1)）。</li>
+            <li>cos⟨<b>n</b><sub>1</sub>,<b>n</b><sub>2</sub>⟩ = <span class="frac"><span class="num">1·0 + 0·1 + 1·1</span><span class="den">√2 · √2</span></span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span>。</li>
+            <li>观察图形，二面角 <span class="m">A</span>-<span class="m">PB</span>-<span class="m">C</span> 为钝角，故其余弦取负：−<span class="frac"><span class="num">1</span><span class="den">2</span></span>。</li>
+          </ol>
+          <div class="ans">答：二面角 <span class="m">A</span>-<span class="m">PB</span>-<span class="m">C</span> 的余弦值为 −½（即二面角为 120°）。</div></div>
+        <div class="tip"><b>点拨：</b>有一条棱垂直底面时<b>优先建系</b>，把几何问题变成算法向量。法向量夹角的余弦只给出“±”，<b>最终正负要结合图形判断二面角是锐还是钝</b>——这是最常见的失分点。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 9 解析几何 ===================== -->
+  <section class="chapter" id="c9">
+    <div class="ch-head"><div class="ch-num">九</div><div><h2>解析几何</h2><div class="en">Analytic Geometry</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>直线与圆</dt>
+          <dd>点到直线距离 <span class="m">d</span> = <span class="frac"><span class="num">|<span class="m">Ax</span><sub>0</sub>+<span class="m">By</span><sub>0</sub>+<span class="m">C</span>|</span><span class="den">√(<span class="m">A</span><sup>2</sup>+<span class="m">B</span><sup>2</sup>)</span></span>。直线与圆：比较<b>圆心到直线距离 <span class="m">d</span> 与半径 <span class="m">r</span></b>。</dd></div>
+        <div><dt>三种圆锥曲线</dt>
+          <dd>椭圆 <span class="frac"><span class="num"><span class="m">x</span><sup>2</sup></span><span class="den"><span class="m">a</span><sup>2</sup></span></span>+<span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den"><span class="m">b</span><sup>2</sup></span></span>=1，<span class="m">c</span><sup>2</sup>=<span class="m">a</span><sup>2</sup>−<span class="m">b</span><sup>2</sup>；双曲线 <span class="frac"><span class="num"><span class="m">x</span><sup>2</sup></span><span class="den"><span class="m">a</span><sup>2</sup></span></span>−<span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den"><span class="m">b</span><sup>2</sup></span></span>=1，<span class="m">c</span><sup>2</sup>=<span class="m">a</span><sup>2</sup>+<span class="m">b</span><sup>2</sup>，渐近线 <span class="m">y</span>=±<span class="frac"><span class="num"><span class="m">b</span></span><span class="den"><span class="m">a</span></span></span><span class="m">x</span>；抛物线 <span class="m">y</span><sup>2</sup>=2<span class="m">px</span>。离心率 <span class="m">e</span>=<span class="frac"><span class="num"><span class="m">c</span></span><span class="den"><span class="m">a</span></span></span>。</dd></div>
+        <div><dt>直线与圆锥曲线综合</dt>
+          <dd>联立消元 → <b>韦达定理</b>（<span class="m">x</span><sub>1</sub>+<span class="m">x</span><sub>2</sub>、<span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub>）→ 代入目标（弦长 |<span class="m">AB</span>|=√(1+<span class="m">k</span><sup>2</sup>)|<span class="m">x</span><sub>1</sub>−<span class="m">x</span><sub>2</sub>|、垂直 <span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub>+<span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub>=0、面积等）。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">椭圆离心率</span><span class="kaodian">考点：c²=a²−b²</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>求椭圆 <span class="frac"><span class="num"><span class="m">x</span><sup>2</sup></span><span class="den">9</span></span> + <span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den">5</span></span> = 1 的离心率。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li><span class="m">a</span><sup>2</sup> = 9，<span class="m">b</span><sup>2</sup> = 5，则 <span class="m">c</span><sup>2</sup> = <span class="m">a</span><sup>2</sup> − <span class="m">b</span><sup>2</sup> = 4，<span class="m">c</span> = 2，<span class="m">a</span> = 3。</li>
+            <li><span class="m">e</span> = <span class="frac"><span class="num"><span class="m">c</span></span><span class="den"><span class="m">a</span></span></span> = <span class="frac"><span class="num">2</span><span class="den">3</span></span>。</li>
+          </ol>
+          <div class="ans">答：离心率 <span class="m">e</span> = 2/3。</div></div>
+        <div class="tip"><b>点拨：</b>椭圆 <b><span class="m">c</span><sup>2</sup>=<span class="m">a</span><sup>2</sup>−<span class="m">b</span><sup>2</sup></b>（大减小），双曲线是 <b>+</b>。先辨清焦点在哪个轴（分母大的对应 <span class="m">a</span><sup>2</sup>）。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">由渐近线与过点定双曲线</span><span class="kaodian">考点：b/a 关系 + 代点</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>中心在原点、焦点在 <span class="m">x</span> 轴上的双曲线，渐近线为 <span class="m">y</span> = ±√3 <span class="m">x</span>，且过点 (2, 3)。求其标准方程。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>设方程 <span class="frac"><span class="num"><span class="m">x</span><sup>2</sup></span><span class="den"><span class="m">a</span><sup>2</sup></span></span> − <span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den"><span class="m">b</span><sup>2</sup></span></span> = 1。渐近线 <span class="m">y</span>=±<span class="frac"><span class="num"><span class="m">b</span></span><span class="den"><span class="m">a</span></span></span><span class="m">x</span> = ±√3<span class="m">x</span> ⇒ <span class="m">b</span><sup>2</sup> = 3<span class="m">a</span><sup>2</sup>。</li>
+            <li>过点 (2,3)：<span class="frac"><span class="num">4</span><span class="den"><span class="m">a</span><sup>2</sup></span></span> − <span class="frac"><span class="num">9</span><span class="den"><span class="m">b</span><sup>2</sup></span></span> = 1。代 <span class="m">b</span><sup>2</sup>=3<span class="m">a</span><sup>2</sup>：<span class="frac"><span class="num">4</span><span class="den"><span class="m">a</span><sup>2</sup></span></span> − <span class="frac"><span class="num">9</span><span class="den">3<span class="m">a</span><sup>2</sup></span></span> = <span class="frac"><span class="num">4</span><span class="den"><span class="m">a</span><sup>2</sup></span></span> − <span class="frac"><span class="num">3</span><span class="den"><span class="m">a</span><sup>2</sup></span></span> = <span class="frac"><span class="num">1</span><span class="den"><span class="m">a</span><sup>2</sup></span></span> = 1。</li>
+            <li>⇒ <span class="m">a</span><sup>2</sup> = 1，<span class="m">b</span><sup>2</sup> = 3。</li>
+          </ol>
+          <div class="ans">答：双曲线方程为 <span class="m">x</span><sup>2</sup> − <span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den">3</span></span> = 1。</div></div>
+        <div class="tip"><b>点拨：</b>已知渐近线的双曲线可设 <span class="m">x</span><sup>2</sup>−<span class="frac"><span class="num"><span class="m">y</span><sup>2</sup></span><span class="den">3</span></span>=<span class="m">λ</span>（<span class="m">λ</span>≠0），代点求 <span class="m">λ</span> 更快，能自动满足渐近线且免去焦点在哪轴的讨论。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">直线与椭圆：垂直 → 定值</span><span class="kaodian">考点：联立、韦达、点到线距</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>椭圆 <span class="m">C</span>：<span class="frac"><span class="num"><span class="m">x</span><sup>2</sup></span><span class="den">4</span></span> + <span class="m">y</span><sup>2</sup> = 1，直线 <span class="m">l</span>：<span class="m">y</span> = <span class="m">kx</span> + <span class="m">m</span> 交 <span class="m">C</span> 于 <span class="m">A</span>、<span class="m">B</span> 两点，且 <span class="m">OA</span> ⊥ <span class="m">OB</span>（<span class="m">O</span> 为原点）。求证：原点 <span class="m">O</span> 到直线 <span class="m">l</span> 的距离为定值。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>联立并整理（乘 4）：(1 + 4<span class="m">k</span><sup>2</sup>)<span class="m">x</span><sup>2</sup> + 8<span class="m">km</span><span class="m">x</span> + 4(<span class="m">m</span><sup>2</sup> − 1) = 0。</li>
+            <li>韦达：<span class="m">x</span><sub>1</sub>+<span class="m">x</span><sub>2</sub> = <span class="frac"><span class="num">−8<span class="m">km</span></span><span class="den">1+4<span class="m">k</span><sup>2</sup></span></span>，<span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub> = <span class="frac"><span class="num">4(<span class="m">m</span><sup>2</sup>−1)</span><span class="den">1+4<span class="m">k</span><sup>2</sup></span></span>。</li>
+            <li><span class="m">OA</span>⊥<span class="m">OB</span> ⇒ <span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub> + <span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub> = 0。又 <span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub> = (<span class="m">kx</span><sub>1</sub>+<span class="m">m</span>)(<span class="m">kx</span><sub>2</sub>+<span class="m">m</span>) = <span class="m">k</span><sup>2</sup><span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub> + <span class="m">km</span>(<span class="m">x</span><sub>1</sub>+<span class="m">x</span><sub>2</sub>) + <span class="m">m</span><sup>2</sup>。</li>
+            <li>代入 ⇒ (1+<span class="m">k</span><sup>2</sup>)<span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub> + <span class="m">km</span>(<span class="m">x</span><sub>1</sub>+<span class="m">x</span><sub>2</sub>) + <span class="m">m</span><sup>2</sup> = 0。乘 (1+4<span class="m">k</span><sup>2</sup>) 展开、化简得 <b>5<span class="m">m</span><sup>2</sup> = 4 + 4<span class="m">k</span><sup>2</sup></b>，即 <span class="m">m</span><sup>2</sup> = <span class="frac"><span class="num">4(1+<span class="m">k</span><sup>2</sup>)</span><span class="den">5</span></span>。</li>
+            <li>原点到 <span class="m">l</span>（<span class="m">kx</span>−<span class="m">y</span>+<span class="m">m</span>=0）距离 <span class="m">d</span> = <span class="frac"><span class="num">|<span class="m">m</span>|</span><span class="den">√(<span class="m">k</span><sup>2</sup>+1)</span></span> = <span class="frac"><span class="num">√(4(1+<span class="m">k</span><sup>2</sup>)/5)</span><span class="den">√(1+<span class="m">k</span><sup>2</sup>)</span></span> = √<span class="frac"><span class="num">4</span><span class="den">5</span></span> = <span class="frac"><span class="num">2√5</span><span class="den">5</span></span>。</li>
+          </ol>
+          <div class="ans">答：<span class="m">d</span> = 2√5 / 5，为定值（与 <span class="m">k</span>、<span class="m">m</span> 无关）。</div></div>
+        <div class="tip"><b>点拨：</b>解几压轴通法：<b>设线—联立—韦达—代条件</b>。“<span class="m">OA</span>⊥<span class="m">OB</span>”翻译成 <span class="m">x</span><sub>1</sub><span class="m">x</span><sub>2</sub>+<span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub>=0，再用韦达把 <span class="m">y</span><sub>1</sub><span class="m">y</span><sub>2</sub> 换成 <span class="m">x</span> 的对称式。定值/定点题的信号是<b>“证明与参数无关”</b>——算到最后参数应自动约掉。（另需说明直线斜率不存在的情形同样成立。）</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 10 概率统计 ===================== -->
+  <section class="chapter" id="c10">
+    <div class="ch-head"><div class="ch-num">十</div><div><h2>概率与统计</h2><div class="en">Probability &amp; Statistics</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>古典概型</dt>
+          <dd><span class="m">P</span>(A) = <span class="frac"><span class="num">A 含样本点数</span><span class="den">样本空间总数</span></span>，需<b>等可能</b>。计数常配合排列组合。</dd></div>
+        <div><dt>条件概率与全概率 <span class="tag" style="color:var(--jade);font-size:10px;font-weight:700;padding:1px 7px;border:1px solid var(--jade);border-radius:99px">新增</span></dt>
+          <dd>条件概率 <span class="m">P</span>(B|A) = <span class="frac"><span class="num"><span class="m">P</span>(AB)</span><span class="den"><span class="m">P</span>(A)</span></span>。全概率 <span class="m">P</span>(B) = Σ <span class="m">P</span>(A<sub><span class="m">i</span></sub>)<span class="m">P</span>(B|A<sub><span class="m">i</span></sub>)。贝叶斯 <span class="m">P</span>(A<sub><span class="m">i</span></sub>|B) = <span class="frac"><span class="num"><span class="m">P</span>(A<sub><span class="m">i</span></sub>)<span class="m">P</span>(B|A<sub><span class="m">i</span></sub>)</span><span class="den"><span class="m">P</span>(B)</span></span>。</dd></div>
+        <div><dt>随机变量的分布与期望</dt>
+          <dd><span class="m">E</span>(X)=Σ<span class="m">x</span><sub><span class="m">i</span></sub><span class="m">p</span><sub><span class="m">i</span></sub>。二项分布 X~B(<span class="m">n</span>,<span class="m">p</span>)：<span class="m">E</span>=<span class="m">np</span>，<span class="m">D</span>=<span class="m">np</span>(1−<span class="m">p</span>)。还有超几何分布、正态分布（关于 <span class="m">μ</span> 对称）。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">古典概型</span><span class="kaodian">考点：组合计数</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>袋中有 3 个红球、2 个白球，一次任取 2 个。求恰好取到 1 红 1 白的概率。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>总取法：C(5,2) = 10。</li>
+            <li>1 红 1 白：C(3,1)·C(2,1) = 3·2 = 6。</li>
+            <li><span class="m">P</span> = <span class="frac"><span class="num">6</span><span class="den">10</span></span> = <span class="frac"><span class="num">3</span><span class="den">5</span></span>。</li>
+          </ol>
+          <div class="ans">答：概率为 3/5。</div></div>
+        <div class="tip"><b>点拨：</b>“一次取多个、不讲顺序”用<b>组合 C</b>；分步取（有先后）才用排列或乘法。分类（红的选法 × 白的选法）用乘法原理。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">二项分布</span><span class="kaodian">考点：B(n,p) 的 P、E、D</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>某人射击命中率为 0.8，独立射击 3 次，记命中次数为 X。求 <span class="m">P</span>(X = 2) 及 <span class="m">E</span>(X)、<span class="m">D</span>(X)。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>各次独立、命中率相同 ⇒ X ~ B(3, 0.8)。</li>
+            <li><span class="m">P</span>(X=2) = C(3,2)·0.8<sup>2</sup>·0.2<sup>1</sup> = 3·0.64·0.2 = 0.384。</li>
+            <li><span class="m">E</span>(X) = <span class="m">np</span> = 3·0.8 = 2.4；<span class="m">D</span>(X) = <span class="m">np</span>(1−<span class="m">p</span>) = 3·0.8·0.2 = 0.48。</li>
+          </ol>
+          <div class="ans">答：<span class="m">P</span>(X=2) = 0.384，<span class="m">E</span>(X) = 2.4，<span class="m">D</span>(X) = 0.48。</div></div>
+        <div class="tip"><b>点拨：</b>识别二项分布三要素：<b>独立、重复、每次两种结果且概率不变</b>。记牢 <span class="m">E</span>=<span class="m">np</span>、<span class="m">D</span>=<span class="m">np</span>(1−<span class="m">p</span>)，能省去逐项算分布列。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">全概率公式 + 贝叶斯</span><span class="kaodian">考点：新增热点</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>某产品由甲、乙两条生产线生产，甲线占总产量 60%、次品率 2%，乙线占 40%、次品率 3%。<br>(1) 任取一件，求它是次品的概率；(2) 已知取到的是次品，求它来自甲线的概率。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>记事件 甲、乙 为来源，B 为“次品”。<span class="m">P</span>(甲)=0.6，<span class="m">P</span>(乙)=0.4，<span class="m">P</span>(B|甲)=0.02，<span class="m">P</span>(B|乙)=0.03。</li>
+            <li><b>(1) 全概率：</b><span class="m">P</span>(B) = <span class="m">P</span>(甲)<span class="m">P</span>(B|甲) + <span class="m">P</span>(乙)<span class="m">P</span>(B|乙) = 0.6·0.02 + 0.4·0.03 = 0.012 + 0.012 = 0.024。</li>
+            <li><b>(2) 贝叶斯：</b><span class="m">P</span>(甲|B) = <span class="frac"><span class="num"><span class="m">P</span>(甲)<span class="m">P</span>(B|甲)</span><span class="den"><span class="m">P</span>(B)</span></span> = <span class="frac"><span class="num">0.012</span><span class="den">0.024</span></span> = <span class="frac"><span class="num">1</span><span class="den">2</span></span>。</li>
+          </ol>
+          <div class="ans">答：(1) 次品概率 0.024；(2) 次品来自甲线的概率 1/2。</div></div>
+        <div class="tip"><b>点拨：</b>“先分几种来源、再求最终结果概率”是<b>全概率</b>（正着乘、按来源加）；“已知结果反推来源”是<b>贝叶斯</b>（分子是某一支、分母是全概率）。画树状图（0.6→0.02…）能防止把条件概率与联合概率搞混。这是新课标新增、近年大题的高频考法。</div>
+      </div></div>
+  </section>
+
+  <!-- ===================== 11 计数原理 ===================== -->
+  <section class="chapter" id="c11">
+    <div class="ch-head"><div class="ch-num">十一</div><div><h2>计数原理与创新题型</h2><div class="en">Counting &amp; New-Type Problems</div></div></div>
+    <div class="basics"><h3>基础知识 · Core knowledge</h3>
+      <dl>
+        <div><dt>两个计数原理</dt>
+          <dd><b>分类</b>用加法、<b>分步</b>用乘法。排列 A(<span class="m">n</span>,<span class="m">m</span>)（讲顺序）、组合 C(<span class="m">n</span>,<span class="m">m</span>)（不讲顺序）。相邻用<b>捆绑</b>、不相邻用<b>插空</b>。</dd></div>
+        <div><dt>二项式定理</dt>
+          <dd>(<span class="m">a</span>+<span class="m">b</span>)<sup><span class="m">n</span></sup> 通项 <span class="m">T</span><sub><span class="m">k</span>+1</sub> = C(<span class="m">n</span>,<span class="m">k</span>)<span class="m">a</span><sup><span class="m">n</span>−<span class="m">k</span></sup><span class="m">b</span><sup><span class="m">k</span></sup>。求系数和用<b>赋值法</b>（令 <span class="m">x</span>=1 或 −1）。</dd></div>
+        <div><dt>新定义 / 创新题 <span class="tag" style="color:var(--cinnabar);font-size:10px;font-weight:700;padding:1px 7px;border:1px solid var(--cinnabar);border-radius:99px">压轴</span></dt>
+          <dd>题目现场给出<b>新概念/新运算/新符号</b>，考的是<b>阅读理解 + 迁移应用</b>：先把定义翻译成熟悉的语言，代小值试验、找规律，再严格论证。</dd></div>
+      </dl>
+    </div>
+    <div class="ex"><div class="ex-top"><span class="diff d1">易 · Easy</span><span class="topic">二项式指定项系数</span><span class="kaodian">考点：通项定 k</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>求 (<span class="m">x</span> + 2)<sup>5</sup> 的展开式中 <span class="m">x</span><sup>3</sup> 的系数。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>通项 <span class="m">T</span><sub><span class="m">k</span>+1</sub> = C(5,<span class="m">k</span>)·<span class="m">x</span><sup>5−<span class="m">k</span></sup>·2<sup><span class="m">k</span></sup>。</li>
+            <li>令 <span class="m">x</span> 的幂 5 − <span class="m">k</span> = 3 ⇒ <span class="m">k</span> = 2。</li>
+            <li>系数 = C(5,2)·2<sup>2</sup> = 10·4 = 40。</li>
+          </ol>
+          <div class="ans">答：<span class="m">x</span><sup>3</sup> 的系数为 40。</div></div>
+        <div class="tip"><b>点拨：</b>先写<b>通项</b>，用“<span class="m">x</span> 的指数 = 目标”定出 <span class="m">k</span>，再算系数（<b>别漏常数项里的 2<sup>k</sup></b>）。“系数”含数字因子，“二项式系数”只指 C(<span class="m">n</span>,<span class="m">k</span>)。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d2">中 · Medium</span><span class="topic">排列组合：不相邻</span><span class="kaodian">考点：插空法</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>3 名男生、2 名女生排成一排，要求 2 名女生<b>不相邻</b>。求不同排法的种数。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>先排 3 名男生：A(3,3) = 6 种，形成 4 个“空档”（含两端）。</li>
+            <li>再把 2 名女生插入这 4 个空档且各占其一（自动保证不相邻）：A(4,2) = 12 种。</li>
+            <li>由分步乘法：6 × 12 = 72。</li>
+          </ol>
+          <div class="ans">答：共 72 种排法。</div></div>
+        <div class="tip"><b>点拨：</b><b>不相邻 → 插空</b>（先排其余元素，再往空里插）；<b>相邻 → 捆绑</b>（先把相邻的绑成一个整体，别忘内部还要排 A(2,2)）。两招是排列应用题的主力。</div>
+      </div></div>
+    <div class="ex"><div class="ex-top"><span class="diff d3">难 · Difficult</span><span class="topic">新定义：取整函数求和</span><span class="kaodian">考点：读定义 + 分段计数</span></div>
+      <div class="ex-body">
+        <p class="q"><span class="lbl">题</span>对实数 <span class="m">x</span>，记 [<span class="m">x</span>] 为不超过 <span class="m">x</span> 的最大整数（如 [2.3]=2，[3]=3）。设 <span class="m">f</span>(<span class="m">n</span>) = [log<sub>2</sub><span class="m">n</span>]（<span class="m">n</span>∈N*）。求 <span class="m">f</span>(1) + <span class="m">f</span>(2) + … + <span class="m">f</span>(15)。</p>
+        <div class="sol"><span class="lbl">解</span>
+          <ol>
+            <li>理解定义：<span class="m">f</span>(<span class="m">n</span>) = [log<sub>2</sub><span class="m">n</span>]，即“<span class="m">n</span> 落在 [2<sup><span class="m">m</span></sup>, 2<sup><span class="m">m</span>+1</sup>) 时 <span class="m">f</span>(<span class="m">n</span>)=<span class="m">m</span>”。</li>
+            <li>分段：<span class="m">n</span>=1 → <span class="m">f</span>=0（1 个）；<span class="m">n</span>=2,3 → <span class="m">f</span>=1（2 个）；<span class="m">n</span>=4,…,7 → <span class="m">f</span>=2（4 个）；<span class="m">n</span>=8,…,15 → <span class="m">f</span>=3（8 个）。</li>
+            <li>求和 = 0·1 + 1·2 + 2·4 + 3·8 = 0 + 2 + 8 + 24 = 34。</li>
+          </ol>
+          <div class="ans">答：<span class="m">f</span>(1)+…+<span class="m">f</span>(15) = 34。</div></div>
+        <div class="tip"><b>点拨：</b>新定义题第一步永远是<b>把定义读懂、代几个小值试探</b>（[log₂1]=0、[log₂4]=2…），发现“同值成段”的规律后<b>按段计数再乘以段内个数</b>。心态上别被陌生符号吓退——它一定是用你已会的知识包装出来的。</div>
+      </div></div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <b style="color:var(--ink)">全 11 块已完成 ✔</b>　共 11 组基础知识梳理 + 33 道例题（每块 易 / 中 / 难 各一）与详解点拨。<br>
+  例题均按新高考风格自编、逐步验算（非某份真卷原题），以便难度与考点精准对应知识块；如需<b>真题原题</b>可指定年份替换。<br>
+  建议练法：每天攻 1–2 块，先默写基础、再限时做三题、只看点拨里的通法与易错点。请以本省《课程标准》为准。
+</footer>
+
+</body></html>

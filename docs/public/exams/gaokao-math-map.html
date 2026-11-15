@@ -1,0 +1,560 @@
+<!doctype html><html><head><meta charset=utf8><meta name="robots" content="noindex, nofollow"><meta name=viewport content="width=device-width,initial-scale=1"><style>:root{color-scheme:light}body{margin:0;padding:0;font:14px -apple-system,BlinkMacSystemFont,sans-serif;background:#faf9f5;color:#141413}img{max-width:100%}</style></head><body>
+<title>高考数学 · 知识掌握全景图 (2017–2026)</title>
+<style>
+  :root{
+    --paper:#E7E9ED; --surface:#FBFBFC; --surface-2:#F1F2F5;
+    --ink:#191E29; --muted:#5B6371; --hair:#D4D8DF;
+    --indigo:#2E4374; --indigo-soft:#5A6E9E;
+    --cinnabar:#BC3327; --cinnabar-soft:#C1352B;
+    --jade:#2A7461; --amber:#9A6A16;
+    --faded:#98A0AD;
+    --shadow:0 1px 2px rgba(25,30,41,.05), 0 8px 24px -16px rgba(25,30,41,.25);
+    --serif:Georgia,"Songti SC","STSongti","Noto Serif SC","Source Han Serif SC","SimSun",serif;
+    --sans:"PingFang SC","Hiragino Sans GB","Microsoft YaHei","Noto Sans SC",-apple-system,system-ui,"Segoe UI",sans-serif;
+    --maxw:940px;
+  }
+  @media (prefers-color-scheme:dark){
+    :root{
+      --paper:#12151C; --surface:#1B2029; --surface-2:#232935;
+      --ink:#E6E9EF; --muted:#98A1B0; --hair:#2C3340;
+      --indigo:#8299CE; --indigo-soft:#6E82B3;
+      --cinnabar:#E86F62; --cinnabar-soft:#E86F62;
+      --jade:#5DB49B; --amber:#D6A34A;
+      --faded:#727A88;
+      --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+    }
+  }
+  :root[data-theme="light"]{
+    --paper:#E7E9ED; --surface:#FBFBFC; --surface-2:#F1F2F5;
+    --ink:#191E29; --muted:#5B6371; --hair:#D4D8DF;
+    --indigo:#2E4374; --indigo-soft:#5A6E9E;
+    --cinnabar:#BC3327; --cinnabar-soft:#C1352B;
+    --jade:#2A7461; --amber:#9A6A16; --faded:#98A0AD;
+    --shadow:0 1px 2px rgba(25,30,41,.05), 0 8px 24px -16px rgba(25,30,41,.25);
+  }
+  :root[data-theme="dark"]{
+    --paper:#12151C; --surface:#1B2029; --surface-2:#232935;
+    --ink:#E6E9EF; --muted:#98A1B0; --hair:#2C3340;
+    --indigo:#8299CE; --indigo-soft:#6E82B3;
+    --cinnabar:#E86F62; --cinnabar-soft:#E86F62;
+    --jade:#5DB49B; --amber:#D6A34A; --faded:#727A88;
+    --shadow:0 1px 2px rgba(0,0,0,.3), 0 10px 30px -18px rgba(0,0,0,.7);
+  }
+
+  *{box-sizing:border-box;}
+  body{margin:0;background:var(--paper);color:var(--ink);font-family:var(--sans);
+    line-height:1.65;-webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 22px;}
+
+  /* ---------- header ---------- */
+  header{padding:56px 0 26px;}
+  .eyebrow{font-size:12px;letter-spacing:.22em;text-transform:uppercase;color:var(--indigo);
+    font-weight:700;margin:0 0 14px;}
+  h1{font-family:var(--serif);font-weight:700;font-size:clamp(30px,5.4vw,46px);line-height:1.12;
+    margin:0;letter-spacing:-.01em;text-wrap:balance;}
+  h1 .sub{display:block;font-size:clamp(15px,2.2vw,19px);font-weight:400;color:var(--muted);
+    margin-top:12px;letter-spacing:.02em;font-family:var(--sans);}
+  .lede{color:var(--muted);max-width:64ch;margin:20px 0 0;font-size:15.5px;}
+  .lede b{color:var(--ink);font-weight:600;}
+
+  /* ---------- legend ---------- */
+  .legend{display:flex;flex-wrap:wrap;gap:10px 26px;margin:28px 0 0;padding:18px 20px;
+    background:var(--surface);border:1px solid var(--hair);border-radius:12px;box-shadow:var(--shadow);}
+  .legend h3{width:100%;margin:0 0 4px;font-size:11px;letter-spacing:.18em;text-transform:uppercase;
+    color:var(--muted);font-weight:700;}
+  .lg{display:flex;align-items:center;gap:8px;font-size:13px;color:var(--muted);}
+  .lg b{color:var(--ink);font-weight:600;}
+
+  .freq{display:inline-flex;gap:2px;align-items:center;}
+  .freq i{width:6px;height:12px;border-radius:1px;background:var(--hair);display:inline-block;}
+  .freq.f3 i{background:var(--cinnabar);} .freq.f2 i:nth-child(-n+2){background:var(--indigo);}
+  .freq.f1 i:nth-child(1){background:var(--indigo-soft);}
+
+  .tag{display:inline-flex;align-items:center;gap:5px;font-size:11.5px;font-weight:700;
+    padding:2px 9px;border-radius:999px;letter-spacing:.03em;white-space:nowrap;}
+  .tag.new{color:var(--jade);background:color-mix(in srgb,var(--jade) 15%,transparent);
+    border:1px solid color-mix(in srgb,var(--jade) 35%,transparent);}
+  .tag.core{color:var(--cinnabar);background:color-mix(in srgb,var(--cinnabar) 12%,transparent);
+    border:1px solid color-mix(in srgb,var(--cinnabar) 38%,transparent);}
+  .tag.gone{color:var(--faded);background:color-mix(in srgb,var(--faded) 14%,transparent);
+    border:1px solid color-mix(in srgb,var(--faded) 32%,transparent);}
+
+  /* ---------- strategy callout ---------- */
+  .strat{margin:26px 0 0;padding:26px 28px;border-radius:14px;position:relative;overflow:hidden;
+    background:linear-gradient(155deg,color-mix(in srgb,var(--cinnabar) 9%,var(--surface)),var(--surface));
+    border:1px solid color-mix(in srgb,var(--cinnabar) 30%,var(--hair));box-shadow:var(--shadow);}
+  .strat h2{font-family:var(--serif);font-size:22px;margin:0 0 6px;display:flex;align-items:baseline;gap:12px;}
+  .strat h2 .pct{color:var(--cinnabar);font-weight:800;}
+  .strat p{margin:0 0 16px;color:var(--muted);font-size:14.5px;max-width:66ch;}
+  .strat ul{margin:0;padding:0;list-style:none;display:grid;gap:10px;
+    grid-template-columns:repeat(auto-fit,minmax(240px,1fr));}
+  .strat li{display:flex;gap:10px;font-size:14px;line-height:1.5;}
+  .strat li::before{content:"";flex:0 0 7px;height:7px;margin-top:8px;border-radius:2px;
+    background:var(--cinnabar);transform:rotate(45deg);}
+  .strat li b{color:var(--ink);font-weight:600;}
+
+  /* ---------- sticky nav ---------- */
+  nav{position:sticky;top:0;z-index:20;margin:30px 0 0;padding:11px 0;
+    background:color-mix(in srgb,var(--paper) 88%,transparent);backdrop-filter:blur(10px);
+    border-top:1px solid var(--hair);border-bottom:1px solid var(--hair);}
+  nav .wrap{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;-ms-overflow-style:none;scrollbar-width:thin;}
+  nav a{flex:0 0 auto;text-decoration:none;font-size:12.5px;color:var(--muted);font-weight:600;
+    padding:5px 11px;border-radius:8px;border:1px solid transparent;transition:.15s;white-space:nowrap;}
+  nav a:hover{color:var(--ink);background:var(--surface-2);border-color:var(--hair);}
+  nav a .n{color:var(--indigo);font-family:var(--serif);margin-right:5px;}
+
+  /* ---------- chapters ---------- */
+  main{padding:14px 0 40px;}
+  .chapter{margin:34px 0 0;scroll-margin-top:64px;}
+  .ch-head{display:flex;align-items:flex-end;gap:16px;padding:0 4px 12px;border-bottom:2px solid var(--indigo);}
+  .ch-num{font-family:var(--serif);font-size:40px;line-height:.9;color:var(--indigo);font-weight:700;
+    flex:0 0 auto;opacity:.85;}
+  .ch-title{flex:1;}
+  .ch-title h2{margin:0;font-family:var(--serif);font-size:23px;font-weight:700;letter-spacing:.01em;}
+  .ch-title .en{color:var(--muted);font-size:13px;letter-spacing:.05em;text-transform:uppercase;margin-top:3px;}
+  .ch-weight{flex:0 0 auto;text-align:right;font-size:12px;color:var(--muted);line-height:1.4;}
+  .ch-weight b{display:block;font-size:19px;color:var(--ink);font-family:var(--sans);
+    font-variant-numeric:tabular-nums;font-weight:700;}
+
+  .rows{display:flex;flex-direction:column;}
+  .row{display:grid;grid-template-columns:1fr auto;gap:6px 18px;padding:15px 4px;
+    border-bottom:1px solid var(--hair);align-items:start;}
+  .row:last-child{border-bottom:none;}
+  .row.dim .kp,.row.dim .note{color:var(--faded);}
+  .row.dim .kp{text-decoration:line-through;text-decoration-color:color-mix(in srgb,var(--faded) 60%,transparent);}
+  .kp{font-weight:600;font-size:15.5px;display:flex;align-items:center;gap:9px;flex-wrap:wrap;}
+  .note{grid-column:1;color:var(--muted);font-size:13.5px;line-height:1.55;max-width:70ch;}
+  .note .en{color:var(--indigo-soft);font-style:normal;}
+  .meta{grid-column:2;grid-row:1 / span 2;display:flex;flex-direction:column;align-items:flex-end;gap:7px;
+    padding-top:3px;}
+  .flabel{font-size:11px;color:var(--muted);letter-spacing:.04em;white-space:nowrap;
+    display:flex;align-items:center;gap:6px;}
+
+  footer{border-top:1px solid var(--hair);padding:30px 0 60px;color:var(--muted);font-size:13px;}
+  footer h3{color:var(--ink);font-family:var(--serif);font-size:16px;margin:0 0 8px;}
+  footer p{margin:0 0 10px;max-width:74ch;}
+  footer a{color:var(--indigo);}
+  .src{font-size:12px;opacity:.85;}
+
+  @media (max-width:560px){
+    .ch-weight{display:none;}
+    .row{grid-template-columns:1fr;}
+    .meta{grid-row:auto;grid-column:1;flex-direction:row;align-items:center;flex-wrap:wrap;}
+  }
+</style>
+
+<header class="wrap">
+  <p class="eyebrow">Gaokao Mathematics · 2017 – 2026</p>
+  <h1>高考数学 · 知识掌握全景图
+    <span class="sub">要在每一板块拿到 99% 分数，你必须彻底掌握的知识点清单 · A mastery map for near-perfect scores</span>
+  </h1>
+  <p class="lede">依据 <b>2017–2026 全部试卷</b>（新高考 I / II、旧课标全国文/理、京津沪苏浙自主命题）归纳。
+    以现行 <b>新高考</b> 为主线，并标注近年被 <b>删除</b> 与 <b>新增</b> 的内容。要冲 99%，光会基础题不够——
+    真正拉开差距的是每份卷子最后的 <b>压轴题</b> 与 <b>新定义题</b>。</p>
+
+  <div class="legend">
+    <h3>图例 · Legend</h3>
+    <span class="lg"><span class="freq f3"><i></i><i></i><i></i></span> <b>每年必考</b> Every year</span>
+    <span class="lg"><span class="freq f2"><i></i><i></i><i></i></span> <b>高频</b> High</span>
+    <span class="lg"><span class="freq f1"><i></i><i></i><i></i></span> <b>中/低频</b> Occasional</span>
+    <span class="lg"><span class="tag core">压轴 CORE</span> 决定 99% 的难点</span>
+    <span class="lg"><span class="tag new">新增 NEW</span> 新课标新增</span>
+    <span class="lg"><span class="tag gone">已删除 REMOVED</span> 新高考不再考</span>
+  </div>
+</header>
+
+<section class="wrap">
+  <div class="strat">
+    <h2>冲刺 <span class="pct">99%</span> 的关键 · Where the last 10% actually lives</h2>
+    <p>90 分靠基础，145+ 靠压轴。以下六类是每年真正的“送命题”，也是 99% 与 90% 的分水岭——
+      基础板块必须做到<b>零失误、零计算错误</b>，然后把全部额外时间投在这里：</p>
+    <ul>
+      <li><b>导数压轴</b>：含参分类讨论、隐零点、极值点偏移、不等式放缩证明。</li>
+      <li><b>解析几何压轴</b>：直线与圆锥曲线的定点/定值、范围与最值、韦达定理硬算。</li>
+      <li><b>新定义 / 创新题</b>：<span style="color:var(--jade);font-weight:600">近年必出的最后一题</span>，考数学阅读与临场建模。</li>
+      <li><b>数列压轴</b>：构造、放缩、与不等式结合的证明。</li>
+      <li><b>概率统计大题</b>：条件概率 / 全概率、分布列期望、与统计推断结合。</li>
+      <li><b>立体几何 & 多选压轴</b>：动态/截面/外接球，多选“全对才满分”。</li>
+    </ul>
+  </div>
+</section>
+
+<nav>
+  <div class="wrap">
+    <a href="#c1"><span class="n">一</span>集合逻辑</a>
+    <a href="#c2"><span class="n">二</span>函数</a>
+    <a href="#c3"><span class="n">三</span>导数</a>
+    <a href="#c4"><span class="n">四</span>三角</a>
+    <a href="#c5"><span class="n">五</span>向量复数</a>
+    <a href="#c6"><span class="n">六</span>数列</a>
+    <a href="#c7"><span class="n">七</span>不等式</a>
+    <a href="#c8"><span class="n">八</span>立体几何</a>
+    <a href="#c9"><span class="n">九</span>解析几何</a>
+    <a href="#c10"><span class="n">十</span>概率统计</a>
+    <a href="#c11"><span class="n">十一</span>计数原理</a>
+  </div>
+</nav>
+
+<main class="wrap">
+
+  <!-- 1 -->
+  <section class="chapter" id="c1">
+    <div class="ch-head">
+      <div class="ch-num">一</div>
+      <div class="ch-title"><h2>集合与常用逻辑用语</h2><div class="en">Sets &amp; Logic</div></div>
+      <div class="ch-weight"><b>~5分</b>选择第1题</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">集合的运算与关系 <span class="tag core" style="visibility:hidden">·</span></div>
+        <div class="note">交、并、补，子集与元素判断。<span class="en">Almost always Q1 — 送分题，务必秒对。</span></div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">充分条件与必要条件</div>
+        <div class="note">充分/必要/充要的判断，常与函数、不等式结合命题。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">全称量词、存在量词与命题的否定</div>
+        <div class="note">含参真假判断、写出否定命题。</div>
+        <div class="meta"><span class="flabel">中频 <span class="freq f1"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">简单的逻辑联结词（且/或/非真值表）<span class="tag gone">已删除</span></div>
+        <div class="note">旧课标内容，新高考已弱化/不单独考。</div>
+        <div class="meta"><span class="flabel">旧课标</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 2 -->
+  <section class="chapter" id="c2">
+    <div class="ch-head">
+      <div class="ch-num">二</div>
+      <div class="ch-title"><h2>函数与基本初等函数</h2><div class="en">Functions</div></div>
+      <div class="ch-weight"><b>20+分</b>贯穿全卷</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">函数三要素：定义域、值域、解析式</div>
+        <div class="note">求定义域/值域、待定系数求解析式，是一切函数题的地基。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">单调性 · 奇偶性 · 周期性 · 对称性 <span class="tag core">压轴</span></div>
+        <div class="note">四大性质综合，常以<b>抽象函数</b>形式出现在多选/压轴填空，是拉分点。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">指数函数 · 对数函数 · 幂函数</div>
+        <div class="note">图象与性质、比较大小、指对互化。<span class="en">比较大小题几乎年年有。</span></div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">函数零点与方程根 · 零点存在定理</div>
+        <div class="note">零点个数、根的分布，常转化为图象交点问题。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">函数图象变换与识图 · 分段函数</div>
+        <div class="note">平移伸缩翻折、看图选式、分段函数求值与不等式。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 3 -->
+  <section class="chapter" id="c3">
+    <div class="ch-head">
+      <div class="ch-num">三</div>
+      <div class="ch-title"><h2>导数及其应用</h2><div class="en">Derivatives</div></div>
+      <div class="ch-weight"><b>17–22分</b>含压轴</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">导数的几何意义与切线方程</div>
+        <div class="note">求切线、公切线、切线条数。基本初等函数求导 + 四则/复合求导是必备工具。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">利用导数研究单调性、极值、最值</div>
+        <div class="note">解答题第一问的标配，务必写全定义域与讨论。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">含参讨论 · 隐零点 · 极值点偏移 <span class="tag core">压轴</span></div>
+        <div class="note"><b>导数压轴核心难点。</b>分类讨论的完整性、设而不求的隐零点技巧、极值点偏移的对称构造。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">导数证明不等式 · 恒成立 / 能成立 <span class="tag core">压轴</span></div>
+        <div class="note">分离参数、构造函数、放缩（常用 e^x≥x+1、ln x≤x−1）。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">定积分与微积分基本定理 <span class="tag gone">已删除</span></div>
+        <div class="note">旧理科内容，新高考已删除（求面积/物理应用不再考）。</div>
+        <div class="meta"><span class="flabel">旧理科</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 4 -->
+  <section class="chapter" id="c4">
+    <div class="ch-head">
+      <div class="ch-num">四</div>
+      <div class="ch-title"><h2>三角函数与解三角形</h2><div class="en">Trigonometry</div></div>
+      <div class="ch-weight"><b>17–22分</b>必有大题</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">同角关系 · 诱导公式 · 三角恒等变换</div>
+        <div class="note">和差角、二倍角、辅助角公式。<span class="en">是所有三角题的运算工具，必须熟到本能。</span></div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">三角函数图象与性质 y=A sin(ωx+φ)</div>
+        <div class="note">周期、单调、对称、值域，由图求解析式，图象变换。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">正弦定理 · 余弦定理 · 解三角形 <span class="tag core">压轴</span></div>
+        <div class="note">边角互化、面积公式、周长/面积的取值范围（含最值）是解答题常见难点。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 5 -->
+  <section class="chapter" id="c5">
+    <div class="ch-head">
+      <div class="ch-num">五</div>
+      <div class="ch-title"><h2>平面向量与复数</h2><div class="en">Vectors &amp; Complex Numbers</div></div>
+      <div class="ch-weight"><b>~10分</b>选填稳拿</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">向量线性运算 · 坐标运算 · 数量积</div>
+        <div class="note">夹角、模、垂直平行、投影。既独立命题，也是立几/解几的工具。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">复数的四则运算 · 模 · 共轭 · 几何意义</div>
+        <div class="note">几乎固定为选择第2题，<b>送分</b>，i 的周期与除法不能错。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 6 -->
+  <section class="chapter" id="c6">
+    <div class="ch-head">
+      <div class="ch-num">六</div>
+      <div class="ch-title"><h2>数列</h2><div class="en">Sequences &amp; Series</div></div>
+      <div class="ch-weight"><b>12–17分</b>含压轴</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">等差 · 等比数列：通项与求和</div>
+        <div class="note">基本量运算、性质。解答题第一问的常客。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">递推求通项（累加/累乘/构造）· 求和方法</div>
+        <div class="note">错位相减、裂项相消、分组求和——四种求和法必须条件反射。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">数列与不等式 · 放缩证明 <span class="tag core">压轴</span></div>
+        <div class="note">构造 + 放缩证明不等式，近年常作为压轴或与新定义结合。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">数学归纳法 <span class="tag gone">已删除</span></div>
+        <div class="note">旧理科内容，新高考不作要求（但归纳-猜想思想仍有用）。</div>
+        <div class="meta"><span class="flabel">旧理科</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 7 -->
+  <section class="chapter" id="c7">
+    <div class="ch-head">
+      <div class="ch-num">七</div>
+      <div class="ch-title"><h2>不等式</h2><div class="en">Inequalities</div></div>
+      <div class="ch-weight"><b>工具</b>贯穿全卷</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">不等式性质 · 一元二次不等式</div>
+        <div class="note">解不等式、比较大小，是导数/函数题的底层工具。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">基本（均值）不等式求最值</div>
+        <div class="note">“一正二定三相等”，注意配凑与等号成立条件，常设陷阱。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">线性规划（二元一次不等式组）<span class="tag gone">已删除</span></div>
+        <div class="note">旧课标内容，新高考已删除。</div>
+        <div class="meta"><span class="flabel">旧课标</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 8 -->
+  <section class="chapter" id="c8">
+    <div class="ch-head">
+      <div class="ch-num">八</div>
+      <div class="ch-title"><h2>立体几何</h2><div class="en">Solid Geometry</div></div>
+      <div class="ch-weight"><b>~17分</b>必有大题</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">空间几何体：表面积与体积</div>
+        <div class="note">柱锥台球的计算、组合体、截面。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">点线面位置关系 · 平行与垂直的证明</div>
+        <div class="note">解答题第一问，逻辑与书写规范（定理条件写全）不能丢分。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">空间向量法：线面角 · 二面角 · 距离</div>
+        <div class="note">建系设点、法向量硬算，第二问的标准解法，计算务必零失误。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">外接球 / 内切球 · 动态与截面问题 <span class="tag core">压轴</span></div>
+        <div class="note">球心定位、多选中的动态/翻折/最值问题，是选填拉分点。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">三视图 <span class="tag gone">已删除</span></div>
+        <div class="note">旧课标内容，新高考已删除（改为直观图/实物）。</div>
+        <div class="meta"><span class="flabel">旧课标</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 9 -->
+  <section class="chapter" id="c9">
+    <div class="ch-head">
+      <div class="ch-num">九</div>
+      <div class="ch-title"><h2>解析几何</h2><div class="en">Analytic Geometry</div></div>
+      <div class="ch-weight"><b>17–22分</b>含压轴</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">直线与圆</div>
+        <div class="note">直线方程、位置关系、距离公式、直线与圆——工具兼中档题。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">椭圆 · 双曲线 · 抛物线：定义与几何性质</div>
+        <div class="note">标准方程、渐近线、焦点弦、准线。三种曲线年年出现。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">离心率求值与取值范围</div>
+        <div class="note">选填中的经典难点，几何关系 → e 的方程/不等式。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">直线与圆锥曲线综合：定点/定值 · 范围/最值 <span class="tag core">压轴</span></div>
+        <div class="note"><b>解几压轴。</b>联立—韦达—弦长/面积的硬功夫，运算量大，得分靠速度与准度。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 10 -->
+  <section class="chapter" id="c10">
+    <div class="ch-head">
+      <div class="ch-num">十</div>
+      <div class="ch-title"><h2>概率与统计</h2><div class="en">Probability &amp; Statistics</div></div>
+      <div class="ch-weight"><b>~17分</b>必有大题</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">古典概型 · 样本空间</div>
+        <div class="note">列举与计数，概率大题的入口。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">条件概率 · 全概率公式 · 贝叶斯 <span class="tag new">新增</span></div>
+        <div class="note">新课标新增内容，近年成为解答题热点（2020全国I 为代表）。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">随机变量分布列 · 期望 · 方差</div>
+        <div class="note">二项分布、超几何分布、正态分布及其应用，解答题主体。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">统计推断：成对数据相关性 · 线性回归 · 独立性检验(χ²) <span class="tag new">新增</span></div>
+        <div class="note">新课标强化。相关系数、回归方程、卡方与临界值表的读用。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">抽样 · 频率分布直方图 · 数字特征</div>
+        <div class="note">平均数、中位数、方差、百分位数的计算与判断。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row dim">
+        <div class="kp">几何概型 <span class="tag gone">已删除</span></div>
+        <div class="note">旧课标内容，新高考已删除。</div>
+        <div class="meta"><span class="flabel">旧课标</span></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- 11 -->
+  <section class="chapter" id="c11">
+    <div class="ch-head">
+      <div class="ch-num">十一</div>
+      <div class="ch-title"><h2>计数原理与创新题型</h2><div class="en">Counting &amp; New-Type Problems</div></div>
+      <div class="ch-weight"><b>拉分</b>决定上限</div>
+    </div>
+    <div class="rows">
+      <div class="row">
+        <div class="kp">两个计数原理 · 排列与组合</div>
+        <div class="note">分类分步、捆绑/插空/隔板，与概率结合。</div>
+        <div class="meta"><span class="flabel">高频 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">二项式定理（通项、特定项系数）</div>
+        <div class="note">求指定项、系数和（赋值法）。</div>
+        <div class="meta"><span class="flabel">每年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">新定义 / 创新题（数学阅读与建模）<span class="tag new">新增</span><span class="tag core">压轴</span></div>
+        <div class="note"><b>近年新高考的最后一题</b>，给出新概念/新运算，考临场理解与迁移。冲 99% 必须专门训练。</div>
+        <div class="meta"><span class="flabel">近年必考 <span class="freq f3"><i></i><i></i><i></i></span></span></div>
+      </div>
+      <div class="row">
+        <div class="kp">多选题（部分分制）· 数学文化与建模应用 <span class="tag new">新增</span></div>
+        <div class="note">多选“全选对满分、错一个不得分/部分分”，容错率极低；文化/应用题重阅读理解。</div>
+        <div class="meta"><span class="flabel">题型 <span class="freq f2"><i></i><i></i><i></i></span></span></div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="wrap">
+  <h3>关于这份清单 · Method &amp; caveats</h3>
+  <p>覆盖 <b>2017–2026</b> 的全部命题区（新高考 I / II、旧课标全国文/理、北京/天津/上海/江苏/浙江自主命题），
+    以现行新高考为主线合并整理，并标注旧课标已删除与新课标新增的内容。频率标签为跨年份、跨卷种的综合归纳。</p>
+  <p><b>各省差异提示：</b>上海、北京卷难度结构与全国卷不同；江苏（旧）、浙江曾有更强的解几/数列压轴。
+    2024 年是多数旧课标省份文/理分卷的<b>最后一届</b>，之后统一为新高考结构。请以你所在省份当年的《考试说明/课程标准》为准。</p>
+  <p class="src">来源：试卷目录 <a href="https://github.com/deekur/gaokaomath/tree/main/普通高考">deekur/gaokaomath · 普通高考</a>；
+    课改增删依据 <a href="https://www.zhihu.com/question/336873762">知乎：2021高考数学删除内容</a>、
+    <a href="https://zhuanlan.zhihu.com/p/382150125">2022高考内容调整（数学）</a>、
+    <a href="https://gaokao.eol.cn/shiti/zhenti/202106/t20210608_2119930.shtml">2021新高考全国卷I试题评析</a>。</p>
+</footer>
+
+</body></html>
