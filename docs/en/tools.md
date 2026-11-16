@@ -19,6 +19,7 @@ Every checker runs in your browser: the file is read on your computer and is not
 | [🌍 CDP Response QC](/en/cdp-qc.html) | CDP questionnaire response export: missing core questions, unticked options, blank fields, emissions breakdowns vs totals, target and base-year dates | PDF | [中文](/zh/tools/cdp-qc.html) |
 | [🏭 RBA Audit Report QC](/en/rba-qc.html) | RBA VAP validated audit reports: results vs section summary vs NC list, executive summary, dates, data-point arithmetic, legal references | PDF (full and/or summary) | [中文](/zh/tools/rba-qc.html) |
 | [🌱 EcoVadis Questionnaire QC](/en/ecovadis-qc.html) | EcoVadis questionnaire export: incomplete questions, indicated pages, document names, KPI values and target years | PDF (Survey Full) | [中文](/zh/tools/ecovadis-qc.html) |
+| [📚 Policy Consistency Check](/en/policy-qc.html) <Badge type="warning" text="preview" /> | A set of policies, manuals, procedures and forms: the same rule with different numbers, wrong document names or codes in references, terms defined two ways, retention periods, PRC statutory minimums | .docx / PDF / .txt (several) | [中文](/zh/tools/policy-qc.html) |
 | [🧪 SLCP Verifier Tool QC](/en/slcp-qc.html) <Badge type="info" text="unlisted" /> | Filled offline SLCP Verifier Tool 1.7.x, including the SLCP platform's automated data quality checks | .xlsm | [中文](/zh/tools/slcp-qc.html) |
 
 ## Analysis and reference
