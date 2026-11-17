@@ -69,6 +69,7 @@ TXT = {
         "l_tables": "No machine-readable data table was found, so the number checks could not run (figures may be images).",
         "l_few": "Only {n} values could be read from data tables (much of the data may be in charts or images), so few number checks could run.",
         "l_scan": "{n} page(s) have no text layer (scanned images); they were not read.",
+        "l_trad": "Traditional Chinese report: converted character by character to Simplified Chinese before the checks, so quotes are shown in Simplified.",
         "l_keyword": "Coverage is keyword-based: it shows a topic is mentioned, not that the disclosure is good. Open the page before quoting.",
         "gap_title": "Not found: {i}",
         "gap_note": "No mention found in the report.",
@@ -159,6 +160,7 @@ TXT = {
         "l_tables": "未找到可读取的数据表，数字核对无法运行（数据可能是图片）。",
         "l_few": "仅从数据表中读取到 {n} 个数值（大部分数据可能是图表或图片），能运行的数字核对很少。",
         "l_scan": "{n} 页没有文字层（扫描图片），未能读取。",
+        "l_trad": "繁体中文报告：先逐字转换为简体中文再分析，因此引文以简体显示。",
         "l_keyword": "覆盖检查基于关键词：只说明报告提到了该议题，不代表披露质量好。引用前请打开原页核对。",
         "gap_title": "未找到：{i}",
         "gap_note": "报告中未找到相关内容。",
@@ -292,7 +294,9 @@ def compile_config(cfg):
         m["ids"] = [i for i in re.split(r"[,;\s]+", m.get("Indicator IDs") or "") if i]
         m["all"] = str(m.get("Applies") or "All").strip() == "All"
         cmap.append(m)
-    return {"indicators": inds, "rules": rules, "terms": terms, "standards": stds, "map": cmap}
+    ts = cfg.get("ts") or ""
+    ts_table = str.maketrans(ts[0::2], ts[1::2]) if len(ts) >= 2 else None
+    return {"indicators": inds, "rules": rules, "terms": terms, "standards": stds, "map": cmap, "ts": ts_table}
 
 
 # ======================================================================= text
@@ -478,7 +482,8 @@ def claims(rules, terms, unit_list, pages, L):
             rx = compile_or_none(r["evidence"].replace("{m}", re.escape(re.sub(r"\s+", "", g["found"]))), re.I)
             ev = next((p for p, t in alltext if rx and rx.search(t)), None)
             if ev:
-                sev = lower(sev)
+                to = (r.get("Evidence lowers to") or "").strip().capitalize()
+                sev = to if to in SEV_ORDER and SEV_ORDER[to] > SEV_ORDER[sev] else lower(sev)
                 notes.append(L["evidence"].format(p=ev))
         if g["blob"]:
             notes.append(L["blob"])
@@ -597,7 +602,7 @@ def _join(a, b):
     return a + b
 
 
-SUBROW = re.compile(r"^\s*(?:[-–—·•▪]+\s*|of\s+which\s*[:：]?\s*|including\s*[:：]\s*|其中\s*[:：]?\s*)(?=\S)", re.I)
+SUBROW = re.compile(r"^\s*\d?\s*(?:[-–—·•▪]+\s*|of\s+which\s*[:：,]?\s*|including\s*[:：]\s*|其中\s*[:：，,、]?\s*)(?=\S)", re.I)
 
 
 def qualify_subrows(recs, carry=None):
@@ -639,7 +644,7 @@ def _split_unit_num(cells):
     out = []
     for c in cells:
         m = UNIT_NUM.match(c["t"].strip())
-        if m and UNITTOK.match(m.group(1).strip()):
+        if m and UNITTOK.match(m.group(1).strip()) and not re.search(r"(RMB|CNY|USD|HKD|EUR|/)\s*$", m.group(1)):
             n = len(c["t"])
             cut = c["x0"] + (c["x1"] - c["x0"]) * len(m.group(1)) / max(n, 1)
             out.append({"x0": c["x0"], "x1": cut, "t": m.group(1).strip()})
@@ -746,6 +751,14 @@ def tables_from_page(pno, words):
                 before = [c["x1"] for c in r["cells"] if c["x1"] < hx - 2 and c["x0"] > lo]
                 if before:
                     lo = max(before) + 4  # another table's cells share this row
+                # numbers left of this table's label header belong to a table beside it (often a repeated
+                # header halfway down one column of a two-table page)
+                # (real figures only: footnote marks '1' '2' printed beside labels are not a table)
+                nums_left = [c["x1"] for rr in rows[i + 1:i + 40] for c in rr["cells"]
+                             if lo < c["x0"] and c["x1"] < hx - 2 and NUMTOK.match(c["t"].replace(" ", ""))
+                             and (len(c["t"].strip()) >= 3 or re.search(r"[.,%]", c["t"]))]
+                if len(nums_left) >= 3:
+                    lo = max(lo, max(nums_left) + 4)
             segs.append({"cols": g, "tol": tol, "lo": lo, "hi": g[-1][2] + tol * 1.5, "left": g[0][1] - tol * 0.5,
                          "unit_x": next((u for u in unit_xs if lo < u < g[0][1]), None)})
         for g_i in range(len(segs) - 1):
@@ -757,10 +770,18 @@ def tables_from_page(pno, words):
             row = rows[j]
             if row["y"] - last_y > 8 * max(row["h"], r["h"]):
                 break
-            if any(lo_all <= y_[0] <= hi_all for g in _header_groups(row["cells"]) for y_ in g):
-                break  # a new header in this table's columns
+            hdr_x = [y_[0] for g in _header_groups(row["cells"]) for y_ in g]
+            if hdr_x:
+                # a new header ends only the table(s) in whose columns it sits; a table beside it carries on
+                for s_i, sg in enumerate(segs):
+                    if any(sg["lo"] <= x <= sg["hi"] for x in hdr_x):
+                        state[s_i]["dead"] = True
+                if all(st_.get("dead") for st_ in state):
+                    break
             any_vals = False
             for s_i, sg in enumerate(segs):
+                if state[s_i].get("dead"):
+                    continue
                 st = state[s_i]
                 cells = [c for c in row["cells"] if sg["lo"] <= (c["x0"] + c["x1"]) / 2 < sg["hi"]]
                 if not cells:
@@ -788,6 +809,11 @@ def tables_from_page(pno, words):
                     if not label:
                         continue
                     lr = st["last"]
+                    # numbers printed beside the first line of a label that wraps onto the lines below
+                    if lr is not None and lr.get("await") and row["y"] - lr["y_last"] < 1.6 * row["h"]:
+                        lr["label"] = _join(lr["label"], label)
+                        lr["y_last"] = row["y"]
+                        continue
                     if lr is not None and lr.get("wrapped") and row["y"] - lr["y"] < 1.6 * row["h"]:
                         lr["label"] = _join(lr["label"], label)
                         lr["wrapped"] = False
@@ -798,6 +824,10 @@ def tables_from_page(pno, words):
                     continue
                 any_vals = True
                 wrapped = False
+                if st["pending"] and UNIT_TAIL.fullmatch(st["pending"][0].strip()):
+                    st["pending"] = None  # the previous row's unit wrapped onto its own line
+                if st["pending"] and label and re.search(r"[)）]$", st["pending"][0].strip()) and re.search(r"[)）]$", label):
+                    st["pending"] = None  # two complete labels ('营业收入(亿元)' and 'xx（亿元）'): separate rows
                 if st["pending"]:
                     p_lab, p_y = st["pending"]
                     if row["y"] - p_y < 1.6 * row["h"]:
@@ -808,17 +838,26 @@ def tables_from_page(pno, words):
                 m = re.search(r"[（(]([^（）()]{1,16})[）)]\s*$", label)
                 if not unit and m and UNITTOK.match(m.group(1)):
                     unit = m.group(1)
+                prev = st["last"]
                 rec = {"label": label, "unit": unit, "vals": {y: v for y, (v, _) in vals.items() if y != "_blank"},
-                       "y": row["y"], "group": st["group"], "wrapped": wrapped}
+                       "y": row["y"], "group": st["group"], "wrapped": wrapped,
+                       "await": not label, "y_last": row["y"],
+                       # a second unit line of the same indicator (MWh, then tce) has no label of its own
+                       "inherit": prev["label"] if prev is not None and not label and prev["label"]
+                       and unit and len(unit) <= 10 and unit != prev["unit"]
+                       and row["y"] - prev["y_last"] < 3 * row["h"] else ""}
+                if prev is not None:
+                    prev["await"] = False
                 st["recs"].append(rec)
                 st["last"] = rec
-            if any_vals:
-                last_y = row["y"]
+            if any_vals or (any(st_.get("dead") for st_ in state)
+                            and any(NUMTOK.match(c["t"].replace(" ", "")) for c in row["cells"])):
+                last_y = row["y"]  # the table beside a stopped one still has rows here
             j += 1
         for s_i, sg in enumerate(segs):
             t_no += 1
             for k, rr in enumerate(state[s_i]["recs"]):
-                lab, note = clean_label(rr["label"])
+                lab, note = clean_label(rr["label"] or rr.get("inherit", ""))
                 grp, gnote = clean_label(rr["group"])
                 if not lab:
                     continue
@@ -880,7 +919,7 @@ def scaled(k):
 
 
 BREAK = re.compile(r"^按.{1,8}(分|划分)|^by\s+\w+|(性别|年龄|地区|地域|学历|职级|类别)(结构|分布|构成)$", re.I)
-EXCL_ABS = re.compile(r"强度|intensity|单位(产值|产品|营收|收入|面积)|每|占比|比例|比率|率|%|percentage|减排量|减少|降低|下降|reduction|目标|target|增长|同比|变化|抵消|避免|avoided|offset|碳汇|核查|覆盖", re.I)
+EXCL_ABS = re.compile(r"强度|密度|intensity|单位(产值|产品|营收|收入|面积)|每|占比|比例|比率|率|%|percentage|减排量|减少|降低|下降|reduction|目标|target|增长|同比|变化|抵消|避免|avoided|offset|碳汇|核查|覆盖", re.I)
 MET = {
     "s1": re.compile(r"范围\s*[一1](?![\d.、,，和及与+&]\s*(范围)?\s*[二2三3])|scope\s*1(?!\s*[\d.,+&]|\s*and)|直接(温室气体)?排放", re.I),
     "s2": re.compile(r"范围\s*[二2](?![\d.、,，和及与+&]\s*(范围)?\s*[三3])|scope\s*2(?!\s*[\d.,+&]|\s*and)|(能源|外购)?间接(温室气体)?排放(?<!其他间接排放)", re.I),
@@ -893,8 +932,12 @@ MET = {
     "energy": re.compile(r"综合能源?消耗(总)?量|能源消耗总量|总能耗|能源使用总量|total energy (consumption|use)", re.I),
     "water": re.compile(r"(总)?(用水|耗水|取水|新鲜水(消耗|使用)?)总?量|total water (consumption|withdrawal|use)", re.I),
     "revenue": re.compile(r"^营业(总)?收入|^revenue|^total revenue", re.I),
-    "ghg_int": re.compile(r"(温室气体|碳)排放强度|emissions? intensity|ghg intensity", re.I),
+    "ghg_int": re.compile(r"(温室气体|碳)排放(强度|密度)|emissions? intensity|ghg intensity", re.I),
 }
+
+
+MONEY_UNIT = re.compile(r"元|RMB|CNY|USD|HKD|EUR|\$|¥|million|billion|万|亿", re.I)
+UNIT_TAIL = re.compile(r"(?:(?:RMB|CNY|USD|HKD)\s*)?[\d,]*\s*(?:of\s+)?(?:revenue|operating income|营收|营业收入|产值|元)", re.I)
 
 
 def metric(k):
@@ -903,6 +946,8 @@ def metric(k):
         return "ghg_int"
     for key in ("emp", "male", "female", "revenue"):
         if MET[key].search(lab):
+            if key == "revenue" and k.get("unit") and not MONEY_UNIT.search(k["unit"]):
+                continue  # 'revenue' at the start of a label with m3 / tCO2e is a wrapped unit, not revenue
             return key
     if EXCL_ABS.search(lab) or k["pct"]:
         return ""
@@ -930,7 +975,7 @@ def number_checks(kpis, pages, L):
     for k in kpis:
         tab_metrics[k["table"]].add(k["metric"])
     for k in kpis:
-        if not k["metric"] and {"s1", "s2"} <= tab_metrics[k["table"]] and re.match(r"^(合计|总计|小计|总量|total)?", k["label"], re.I):
+        if not k["metric"] and {"s1", "s2"} <= tab_metrics[k["table"]] and re.match(r"^(合计|总计|小计|总量|total)", k["label"], re.I):
             k["metric"] = "tot"
 
     def add(sev, title, detail, pages_, rule, why=None, fix=None, ks=()):
@@ -1195,7 +1240,7 @@ def gap_issues(cov, L, zh, scope=None):
 
 # ======================================================================= year on year
 def target_units(us):
-    rx = re.compile(r"(目标|承诺|力争|target|commit|pledge).{0,40}20\d\d|20\d\d.{0,40}(目标|承诺|target)", re.I)
+    rx = re.compile(r"(目标|承诺|力争).{0,40}20\d\d|20\d\d.{0,40}(目标|承诺)|(target|commit|pledge).{0,120}20\d\d|20\d\d.{0,60}target", re.I)
     return [(p, s) for p, s, b in us if not b and rx.search(s)]
 
 
@@ -1541,6 +1586,8 @@ def the_read(res, L, prev=None):
         limits.append(L["l_index_sections"])
     if gi.get("omitted"):
         limits.append(L["i_omit"].format(n=gi["omitted"]))
+    if res.get("traditional"):
+        limits.append(L["l_trad"])
     limits.append(L["l_keyword"])
     headline = L["headline"].format(stds=stds,
                                     issues=L["issues_line"].format(c=len(cons), h=len(hc), m=len(mc), k=len(kg)))
@@ -1589,16 +1636,20 @@ TARGET_RULES = ("GW-04", "GW-05", "GW-06", "GW-07")
 
 
 def report_year(res):
-    ys = [int(k["year"]) for k in res.get("kpis", []) if str(k.get("year", "")).isdigit()]
-    return max(ys) if ys else 2025
+    """Latest year with a real share of the table values (scenario / target tables that run to 2030-2050 hold few)."""
+    n = Counter(int(k["year"]) for k in res.get("kpis", []) if str(k.get("year", "")).isdigit())
+    if not n:
+        return 2025
+    top = max(n.values())
+    return max(y for y, c in n.items() if c >= 0.2 * top)
 
 
 def dated_targets(us, ry=2025):
     def near(s):
-        return any(ry < int(y) <= ry + 10 for t in re.findall(r"(?:by|before|until)\s*(20[2-4]\d)|(?<!\d)(20[2-4]\d)\s*年(?!度)", s, re.I) for y in t if y)
+        return any(ry < int(y) <= ry + 10 for t in re.findall(r"(?:by|before|until)\s*(20[2-4]\d)\b|(?<!\d)(20[2-4]\d)\s*年(?!度)", s, re.I) for y in t if y)
     return [(p, s) for p, s in target_units(us)
             if near(s)
-            and re.search(r"\d+(\.\d+)?\s*[%％]|碳中和|净零|net[- ]zero|carbon neutral", s, re.I)
+            and re.search(r"\d+(\.\d+)?\s*([%％]|per\s?cent)|碳中和|净零|net[- ]zero|carbon neutral", s, re.I)
             and not re.search(r"可持续发展目标|SDG|行业领先", s)]
 
 
@@ -1668,8 +1719,44 @@ def rating(res, lang, prev=None):
 
 
 # ======================================================================= main entry
+def is_traditional(doc, table):
+    """True when the report is written in Traditional Chinese."""
+    if not table:
+        return False
+    sample = "".join((p.get("text") or "") for p in doc["pages"][:40])[:150000]
+    cjk = len(re.findall(f"[{CJK}]", sample))
+    if cjk < 500:
+        return False
+    trad = sum(1 for ch in sample if ord(ch) in table)
+    return trad > cjk * 0.04
+
+
+def to_simplified(doc, table):
+    """Character-for-character conversion (same length, so word positions stay valid)."""
+    pages = []
+    for p in doc["pages"]:
+        q = dict(p)
+        q["text"] = (p.get("text") or "").translate(table)
+        if p.get("words"):
+            q["words"] = [list(w[:4]) + [str(w[4]).translate(table)] + list(w[5:]) if len(w) >= 5 else w for w in p["words"]]
+        pages.append(q)
+    return {**doc, "pages": pages}
+
+
+INDEX_CODE = re.compile(r"(?<![\d.])(?:GRI\s?\d{1,3}(?:-\d{1,2})?|\d{3}-\d{1,2}|[ABCD]\d{1,2}(?:\.\d{1,2})?)(?![\d.])")
+
+
+def index_pages(pages):
+    """Content-index pages (GRI / HKEX / exchange-guideline tables): they quote the standards' wording,
+    so claim checks skip them."""
+    return {i for i, p in enumerate(pages, 1) if len(INDEX_CODE.findall(p)) >= 12}
+
+
 def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False, standards=None):
     """doc -> result dict. cfg = compile_config(...) output."""
+    trad = is_traditional(doc, cfg.get("ts"))
+    if trad:
+        doc = to_simplified(doc, cfg["ts"])
     raw = [normalise(p.get("text") or "") for p in doc["pages"]]
     pages = strip_repeats(raw)
     rl = lang_of(pages)
@@ -1682,10 +1769,11 @@ def analyse(doc, cfg, lang="auto", prev_doc=None, _is_prev=False, standards=None
     res = {"file": doc.get("file", ""), "core": CORE_VERSION, "lang": lang, "report_lang": rl, "n_pages": len(pages),
            "chars": sum(len(p) for p in pages), "units": us, "coverage": cov, "kpis": kpis,
            "scanned": [i + 1 for i, p in enumerate(raw) if len(p.strip()) < 40],
-           "score_all": score(cov), "score_guide": score(cov, guide_only=True)}
+           "score_all": score(cov), "score_guide": score(cov, guide_only=True), "traditional": trad}
     if _is_prev:
         return res
-    cl, dens = claims(cfg["rules"], cfg["terms"], us, pages, L)
+    skip = index_pages(pages)
+    cl, dens = claims(cfg["rules"], cfg["terms"], [u for u in us if u[0] not in skip], pages, L)
     nc, passed = number_checks(kpis, pages, L)
     idx_issues, gi = gri_index(doc, pages, cfg, L)
     detected = detect_standards(cfg, pages, bool(gi))
