@@ -14,6 +14,7 @@ const NAMES = {
   en: { clarity: 'Clarity audit report', cdp: 'CDP response', rba: 'RBA audit report', ecovadis: 'EcoVadis questionnaire', smeta: 'SMETA audit report', bsci: 'amfori BSCI audit report' },
   zh: { clarity: 'Clarity 审核报告', cdp: 'CDP 问卷回答', rba: 'RBA 审核报告', ecovadis: 'EcoVadis 问卷', smeta: 'SMETA 审核报告', bsci: 'amfori BSCI 审核报告' },
 }
+const AUTO_ORDER = ['rba', 'smeta', 'bsci', 'clarity', 'cdp', 'ecovadis']
 const PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/'
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs'
 
@@ -26,6 +27,12 @@ const T = {
     error: 'The check could not finish.', load: 'The PDF reader could not load. Check your internet connection and try again.',
     scanned: '{name}: no text found — this looks like a scanned PDF. Please use the text PDF exported from the platform.',
     wrong: '{name} is a different report type ({other}). Use its own checker instead:',
+    dropAuto: 'Drop audit report or questionnaire PDFs here',
+    types: 'Recognised: Clarity, RBA, SMETA, amfori BSCI, EcoVadis and CDP. The type of each file is detected automatically.',
+    unknown: '{name}: report type not recognised. Supported: Clarity, RBA, SMETA, amfori BSCI, EcoVadis, CDP.',
+    excel: '{name}: Excel files are checked on their own pages:',
+    excelLinks: [['Carbon Footprint Form Check', '/en/carbon-qc.html'], ['SLCP Verifier Tool QC', '/en/slcp-qc.html']],
+    rulesOf: 'Rules and notes', reports: 'Reports',
     detail: 'Details',
     files: '{n} file(s) checked', errors: 'Errors', warnings: 'Warnings', info: 'Info',
     download: 'Download Excel report', again: 'Check other files',
@@ -42,6 +49,12 @@ const T = {
     error: '检查未能完成。', load: 'PDF 读取组件加载失败，请检查网络连接后重试。',
     scanned: '{name}：未读到文字，似乎是扫描件。请使用平台导出的文字版 PDF。',
     wrong: '{name} 看起来是{other}，不是{what}。请改用{other}质检：',
+    dropAuto: '将审核报告或问卷 PDF 拖到这里',
+    types: '可识别：Clarity、RBA、SMETA、amfori BSCI、EcoVadis 和 CDP，自动判断每个文件的类型。',
+    unknown: '{name}：未能识别报告类型。支持：Clarity、RBA、SMETA、amfori BSCI、EcoVadis、CDP。',
+    excel: '{name}：Excel 文件请在专门页面检查：',
+    excelLinks: [['碳足迹表格检查', '/zh/tools/carbon-qc.html'], ['SLCP 核查工具在线质检', '/zh/tools/slcp-qc.html']],
+    rulesOf: '规则与说明', reports: '报告',
     detail: '详细信息',
     files: '已检查 {n} 个文件', errors: '错误', warnings: '警告', info: '提示',
     download: '下载 Excel 报告', again: '检查其他文件',
@@ -58,8 +71,9 @@ const LINKS = {
 const L = computed(() => (props.lang === 'zh' ? 'zh' : 'en'))
 const t = computed(() => T[L.value])
 const fmt = (s, o) => s.replace(/\{(\w+)\}/g, (_, k) => o[k] ?? '')
+const auto = computed(() => props.kind === 'auto')
 const mod = computed(() => MODS[props.kind])
-const what = computed(() => NAMES[L.value][props.kind])
+const what = computed(() => (auto.value ? t.value.reports : NAMES[L.value][props.kind]))
 
 const state = ref('idle') // idle | busy | done | failed
 const stage = ref('')
@@ -88,9 +102,14 @@ async function getPdfjs() {
 function warm() { getPdfjs().catch(() => {}) }
 
 async function run(fileList) {
-  const files = [...(fileList || [])].filter(f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf')
-  if (!files.length) return
+  const isPdf = f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf'
+  const picked = [...(fileList || [])]
+  const files = picked.filter(isPdf)
+  const xl = auto.value ? picked.filter(f => /\.xls[xm]?$/i.test(f.name)) : []
+  if (!files.length && !xl.length) return
   state.value = 'busy'; notices.value = []; results.value = []; crossFindings.value = []
+  for (const f of xl) notices.value.push({ msg: fmt(t.value.excel, { name: f.name }), links: t.value.excelLinks })
+  if (!files.length) { failMsg.value = ''; state.value = 'failed'; return }
   ruleSel.value = ''; fileSel.value = ''; query.value = ''; limit.value = 300
   sevOn.value = { error: true, warning: true, info: true }
   stage.value = t.value.loading
@@ -103,13 +122,17 @@ async function run(fileList) {
       const data = new Uint8Array(await f.arrayBuffer())
       const doc = await readPdf(pdfjs, data, { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/' })
       if (doc.text.replace(/\s/g, '').length < 200) { notices.value.push({ msg: fmt(t.value.scanned, { name: f.name }) }); continue }
-      if (!mod.value.detect(doc.text)) {
+      let kind = props.kind
+      if (auto.value) {
+        kind = AUTO_ORDER.find(k => MODS[k].detect(doc.text))
+        if (!kind) { notices.value.push({ msg: fmt(t.value.unknown, { name: f.name }) }); continue }
+      } else if (!mod.value.detect(doc.text)) {
         const other = Object.keys(MODS).find(k => k !== props.kind && MODS[k].detect(doc.text))
         if (other) { notices.value.push({ msg: fmt(t.value.wrong, { name: f.name, other: NAMES[L.value][other], what: what.value }), link: LINKS[L.value][other] }); continue }
       }
-      const r = mod.value.check(doc, f.name)
-      r.file = f.name
-      for (const x of r.findings) x.file = f.name
+      const r = MODS[kind].check(doc, f.name)
+      r.file = f.name; r.kind = kind
+      for (const x of r.findings) { x.file = f.name; x.kind = kind }
       out.push(r)
     } catch (e) {
       notices.value.push({ msg: `${f.name}: ${t.value.error} ${e.message || ''}` })
@@ -117,7 +140,10 @@ async function run(fileList) {
   }
   stage.value = t.value.checking
   let cross = []
-  try { if (mod.value.crossCheck && out.length > 1) cross = mod.value.crossCheck(out).map(x => ({ ...x, cross: true })) } catch (e) { notices.value.push({ msg: 'Cross-file check: ' + (e.message || e) }) }
+  for (const k of new Set(out.map(r => r.kind))) {
+    const grp = out.filter(r => r.kind === k)
+    try { if (MODS[k].crossCheck && grp.length > 1) cross.push(...MODS[k].crossCheck(grp).map(x => ({ ...x, cross: true, kind: k }))) } catch (e) { notices.value.push({ msg: 'Cross-file check: ' + (e.message || e) }) }
+  }
   for (const r of out) delete r.R
   results.value = out
   crossFindings.value = cross
@@ -130,7 +156,8 @@ function onDrop(e) { dragging.value = false; run(e.dataTransfer.files) }
 function reset() { state.value = 'idle'; results.value = []; notices.value = []; crossFindings.value = [] }
 
 const all = computed(() => [...results.value.flatMap(r => r.findings), ...crossFindings.value])
-const rules = computed(() => mod.value.RULES)
+const kindsUsed = computed(() => (auto.value ? AUTO_ORDER.filter(k => results.value.some(r => r.kind === k)) : [props.kind]))
+const rules = computed(() => Object.assign({}, ...kindsUsed.value.map(k => MODS[k].RULES)))
 const title = id => rules.value[id]?.[L.value] || rules.value[id]?.en || id
 const counts = computed(() => { const c = { error: 0, warning: 0, info: 0 }; for (const x of all.value) c[x.sev]++; return c })
 const rulesUsed = computed(() => {
@@ -182,16 +209,18 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
     <div v-if="state === 'idle' || state === 'failed'" class="drop" :class="{ over: dragging }"
          @dragenter.prevent="dragging = true; warm()" @dragover.prevent @dragleave.prevent="dragging = false"
          @drop.prevent="onDrop" @mouseenter="warm" @focusin="warm">
-      <p class="drop-main">{{ fmt(t.drop, { what }) }}</p>
+      <p class="drop-main">{{ auto ? t.dropAuto : fmt(t.drop, { what }) }}</p>
       <p class="drop-or">{{ t.or }}</p>
       <button class="btn primary" @click="input.click()">{{ t.choose }}</button>
       <input ref="input" type="file" accept=".pdf,application/pdf" multiple hidden @change="onPick">
       <p class="fine">🔒 {{ t.privacy }} {{ t.multi }}</p>
+      <p v-if="auto" class="fine">{{ t.types }}</p>
     </div>
 
     <div v-if="state === 'failed' && failMsg" class="alert" role="alert"><strong>{{ failMsg }}</strong></div>
     <div v-for="(n, i) in notices" :key="i" class="alert warn" role="status">
       {{ n.msg }} <a v-if="n.link" :href="n.link">{{ n.link }}</a>
+      <template v-for="(l, j) in n.links || []" :key="j">{{ j ? ' · ' : ' ' }}<a :href="l[1]">{{ l[0] }}</a></template>
     </div>
 
     <div v-if="state === 'busy'" class="busy" aria-live="polite"><span class="spinner" aria-hidden="true"></span><span>{{ stage }}</span></div>
@@ -210,6 +239,7 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
           <div class="ctype">{{ r.meta.type }}</div>
           <div class="ctitle">{{ r.meta.title }}</div>
           <div class="fine file">{{ r.file }}</div>
+          <div v-if="auto" class="fine"><a :href="LINKS[L][r.kind]">{{ t.rulesOf }} →</a></div>
           <dl><template v-for="f in r.meta.fields" :key="f[0]"><dt>{{ f[0] }}</dt><dd>{{ f[1] }}</dd></template></dl>
         </div>
       </div>

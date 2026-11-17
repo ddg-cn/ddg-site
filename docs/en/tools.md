@@ -15,6 +15,7 @@ Every checker runs in your browser: the file is read on your computer and is not
 
 | Tool | Checks | Input | 中文 |
 |------|--------|-------|------|
+| [🧾 **Report QC**](/en/report-qc.html) <Badge type="warning" text="preview" /> | **Start here.** Drop any mix of Clarity, RBA, SMETA, amfori BSCI, EcoVadis and CDP PDFs; the type of each file is detected and it gets the checks below. The pages below explain the rules of each report type | PDF (several, mixed) | [中文](/zh/tools/report-qc.html) |
 | [🔎 Clarity Audit Report QC](/en/clarity-qc.html) | Bureau Veritas CLARITY field audit and self-assessment reports: scores vs NC counts, NC overview, answers vs comments, cross-checks between the reports of one site | PDF (one or more) | [中文](/zh/tools/clarity-qc.html) |
 | [🌍 CDP Response QC](/en/cdp-qc.html) | CDP questionnaire response export: missing core questions, unticked options, blank fields, emissions breakdowns vs totals, target and base-year dates | PDF | [中文](/zh/tools/cdp-qc.html) |
 | [🏭 RBA Audit Report QC](/en/rba-qc.html) | RBA VAP validated audit reports: results vs section summary vs NC list, estimated score, executive summary, dates, data-point arithmetic, legal references | PDF (full and/or summary) | [中文](/zh/tools/rba-qc.html) |
