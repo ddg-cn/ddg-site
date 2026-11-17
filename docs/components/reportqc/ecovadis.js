@@ -1,5 +1,5 @@
 // EcoVadis questionnaire export ("Survey Full" PDF) checker — run before submitting the questionnaire.
-import { cells, collector, clip, CJK, nonLatinShare, PLACEHOLDER, norm } from './common.js'
+import { cells, collector, clip, CJK, nonLatinShare, PLACEHOLDER, norm, num } from './common.js'
 
 export const RULES = {
   'EV-01': { sev: 'error', en: 'Question not complete (status Mandatory / Incomplete)', zh: '问题未完成（状态为 Mandatory / Incomplete）' },
@@ -151,9 +151,27 @@ export function check(doc, file = '') {
   for (const p of doc.pages) for (const l of p.lines) { const m = PLACEHOLDER.exec(l.text); if (m && !seen.has(l.text)) { seen.add(l.text); add('EV-14', { ...F, page: p.n, msg: `"${m[0]}"`, text: l.text }) } }
   const scope = (/Assessment scope:\s*(.+)/.exec(doc.text) || [])[1] || ''
   return {
-    kind: 'ecovadis', findings: out, stats: { questions: qs.length, documents: qs.reduce((a, q) => a + q.docs.length, 0), kpis: qs.reduce((a, q) => a + q.kpis.length, 0) },
+    R: { qs, scope, exportYear }, kind: 'ecovadis', findings: out, stats: { questions: qs.length, documents: qs.reduce((a, q) => a + q.docs.length, 0), kpis: qs.reduce((a, q) => a + q.kpis.length, 0) },
     meta: { type: 'EcoVadis questionnaire', title: scope || file, fields: [['Scope', scope], ['Questions', String(qs.length)], ['Complete', String(qs.filter(q => /^complete$/i.test(q.status)).length)], ['Documents', String(qs.reduce((a, q) => a + q.docs.length, 0))], ['KPI values', String(qs.reduce((a, q) => a + q.kpis.filter(k => k.value).length, 0))]].filter(f => f[1]) },
   }
 }
 
 export function detect(text) { return /EcoVadis/i.test(text) && /(GEN|LAB|ENV|SUP)\d{3}/.test(text) }
+
+// ---- data extraction (Report data extractor page) ----
+const F3 = a => a.map(([key, en, zh]) => ({ key, en, zh }))
+export const EXTRACT = {
+  report: F3([['scope', 'Assessment scope', '评估范围'], ['exportYear', 'Export year', '导出年份'], ['questions', 'Questions', '问题数'], ['complete', 'Complete', '已完成'], ['incomplete', 'Not complete', '未完成'],
+    ['documents', 'Documents attached', '附件数'], ['kpis', 'KPI values', 'KPI 数值数'], ['targets', 'Targets', '目标数']]),
+  rows: { en: 'KPI values', zh: 'KPI 数值', fields: F3([['code', 'Question', '问题'], ['theme', 'Theme', '主题'], ['kpi', 'KPI', '指标'], ['year', 'Year', '年份'], ['value', 'Value', '数值'], ['unit', 'Unit', '单位'], ['kind', 'Value or target', '数值/目标'], ['page', 'Page', '页']]) },
+}
+export function extract(R, file) {
+  const qs = R?.qs || []
+  const kp = qs.flatMap(q => q.kpis.filter(k => k.value).map(k => ({ q, k })))
+  const report = { file, scope: R?.scope || '', exportYear: R?.exportYear || '', questions: qs.length, complete: qs.filter(q => /^complete$/i.test(q.status)).length,
+    incomplete: qs.filter(q => !/^(complete|optional)$/i.test(q.status)).length, documents: qs.reduce((a, q) => a + q.docs.length, 0), kpis: kp.filter(x => !x.k.target).length, targets: kp.filter(x => x.k.target).length }
+  // documents per theme as extra columns
+  for (const q of qs) { const k = (q.theme || 'General') + ' – documents'; report[k] = (report[k] || 0) + q.docs.length }
+  const rows = kp.map(({ q, k }) => ({ code: q.code, theme: q.theme, kpi: clip(k.name || q.text, 200), year: k.year, value: num(k.value) ?? k.value, unit: k.unit, kind: k.target ? 'Target' : 'Value', page: k.page }))
+  return { report, rows }
+}

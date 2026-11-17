@@ -30,6 +30,10 @@ The PDF is read inside your browser and is not uploaded to any server. The first
 - **Page** is the page of the PDF. **Ref.** is the question, checkpoint or section the finding is about.
 - **Download Excel report** gives the same list (Summary, Issues and Rules sheets) to share or track fixes.
 
+## Estimated score
+
+The summary card shows an **estimated score** worked out from the finding counts: 200 minus 20 per Priority, about 6.3 (6–7) per Major and about 2 (1–3) per Minor non-conformance. RBA does not publish its formula, so this is a rule of thumb. It matched the one real report used for testing (8 Major and 1 Minor: 147.6/200), but treat it as a guide. It helps you see how far a facility is from 160 (Silver), 180 (Gold) or 200 (Platinum), and RBA-24 flags a stated score that falls outside the range.
+
 ## What it checks
 
 It reads the audit and facility information, the conformance results, the finding summary by section, the non-conformance details, the process summary and every question in the full listing (rating, conclusion, data points), plus the population figures.
@@ -59,6 +63,7 @@ It reads the audit and facility information, the conformance results, the findin
 | RBA-21 | Warning | Placeholder, "Not disclosed" or unfinished text |
 | RBA-22 | Warning | Overall score implausible for the findings (score > 200, or 200 with NCs) |
 | RBA-23 | Info | Data point or conclusion mostly not in English |
+| RBA-24 | Warning | Overall score outside the range estimated from the finding counts |
 
 [All tools](/en/tools.html)
 

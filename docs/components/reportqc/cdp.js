@@ -196,6 +196,7 @@ export function check(doc, file = '') {
   if (qPresent('13.3')) { const t = first('13.3.1'), c = first('13.3.2'); if (!t || !t.text.trim() || !c || !c.sel.length) add('CDP-16', { ...F, page: (t || c || first('13.3') || {}).page, ref: '13.3' }) }
   const revenue = v1('1.4.1')
   return {
+    R: { nodes, org, exportDate, endDate, revenue, s1, s2l, s2m, lang },
     kind: 'cdp', findings: out, stats: { questions: nodes.filter(n => n.id.split('.').length <= 3).length, fields: nodes.length },
     meta: { type: 'CDP questionnaire response', title: org || file, fields: [['Organisation', org], ['Exported', exportDate ? fmt(exportDate) : ''], ['Language', lang], ['Reporting year end', endDate ? fmt(endDate) : ''], ['Revenue (1.4.1)', revenue != null ? revenue.toLocaleString('en') : ''], ['Scope 1', s1 != null ? round(s1) : ''], ['Scope 2 (LB / MB)', s2l != null ? `${round(s2l)} / ${round(s2m)}` : ''], ['Questions in export', String(toc.size || '')]].filter(f => f[1]) },
   }
@@ -222,7 +223,60 @@ function scoreReport(doc, file) {
   const m = /(\S.*?) received an? ([A-D]-?|F) which is in the (\w+) band/.exec(t)
   const reg = /same as the|(higher|lower) than the/.exec(t)
   add('CDP-18', { file, page: 1, msg: `${theme[1] || 'CDP'} ${theme[2] || ''}: score ${m ? m[2] : '?'}${m ? ' (' + m[3] + ' band)' : ''}. This is CDP's score report, so there is nothing to check before submission; drop the questionnaire response export (PDF) to check your answers.`, text: (/received an? .*?sector average of [A-D]-?\./.exec(t) || [''])[0] })
-  return { kind: 'cdp', findings: out, stats: {}, meta: { type: 'CDP score report', title: (m && m[1]) || file, fields: [['Theme', theme[1] || ''], ['Year', theme[2] || ''], ['Score', m ? m[2] : ''], ['Band', m ? m[3] : '']].filter(f => f[1]) } }
+  const om = /(?:CDP SCORE REPORT - [A-Z ]+? \d{4}|UNDERSTANDING YOUR SCORE REPORT) ([^.]{1,80}?) received an? /.exec(t)
+  const sec = (/sector average of ([A-D]-?|F)\b/.exec(t) || [])[1] || ''
+  return { R: { scoreReport: true, org: om ? om[1] : '', theme: theme[1] || '', year: theme[2] || '', score: m ? m[2] : '', band: m ? m[3] : '', sector: sec }, kind: 'cdp', findings: out, stats: {}, meta: { type: 'CDP score report', title: (m && m[1]) || file, fields: [['Theme', theme[1] || ''], ['Year', theme[2] || ''], ['Score', m ? m[2] : ''], ['Band', m ? m[3] : '']].filter(f => f[1]) } }
 }
 
 export function detect(text) { return /CDP (Corporate Questionnaire|SCORE REPORT)/i.test(text) }
+
+// ---- data extraction (Report data extractor page) ----
+const F3 = a => a.map(([key, en, zh]) => ({ key, en, zh }))
+export const EXTRACT = {
+  report: F3([['org', 'Organisation', '组织'], ['reportKind', 'Document', '文件类型'], ['theme', 'Score theme', '评分主题'], ['year', 'Score year', '评分年份'], ['score', 'Score', '得分'], ['band', 'Band', '等级段'], ['sectorAvg', 'Sector average', '行业平均'], ['exported', 'Exported', '导出日期'], ['language', 'Language', '语言'], ['currency', 'Currency', '货币'], ['orgType', 'Organisation type', '组织类型'],
+    ['revenue', 'Revenue (1.4.1)', '营业收入 (1.4.1)'], ['countries', 'Countries / areas (1.7)', '运营国家/地区 (1.7)'], ['yearEnd', 'Reporting year end', '报告年度结束日'],
+    ['scope1', 'Scope 1 (t CO2e)', '范围一 (t CO2e)'], ['scope2lb', 'Scope 2 location-based', '范围二 基于位置'], ['scope2mb', 'Scope 2 market-based', '范围二 基于市场'],
+    ['scope3', 'Scope 3 total of 7.8 (t CO2e)', '范围三 7.8 合计 (t CO2e)'], ['s3calc', 'Scope 3 categories calculated', '已计算的范围三类别数'], ['s3notRel', 'Scope 3 categories not relevant', '不相关的范围三类别数'],
+    ['absTargets', 'Absolute targets', '绝对目标数'], ['intTargets', 'Intensity targets', '强度目标数'], ['sbt', 'Science-based target (first answer)', '科学碳目标（首个回答）'],
+    ['envPolicy', 'Environmental policy (4.6)', '环境政策 (4.6)'], ['firstYear', 'First year reporting (7.1)', '首次报告 (7.1)'], ['questions', 'Questions in export', '导出的问题数']]),
+  rows: { en: 'Emission targets (7.53)', zh: '减排目标 (7.53)', fields: F3([['type', 'Type', '类型'], ['ref', 'Target ref.', '目标编号'], ['sbt', 'Science-based', '科学碳目标'], ['ambition', 'Ambition', '雄心水平'], ['set', 'Date set', '设定日期'],
+    ['coverage', 'Coverage', '覆盖范围'], ['scopes', 'Scopes', '范围'], ['s2method', 'Scope 2 method', '范围二方法'], ['baseEnd', 'Base year end', '基准年结束日'], ['targetEnd', 'Target end date', '目标结束日'],
+    ['reduction', 'Targeted reduction (%)', '目标减排比例 (%)'], ['achieved', '% achieved', '完成比例 (%)'], ['status', 'Status', '状态'], ['page', 'Page', '页']]) },
+}
+export function extract(R, file) {
+  if (R && R.scoreReport) return { report: { file, org: R.org, reportKind: 'Score report', theme: R.theme, year: R.year, score: R.score, band: R.band, sectorAvg: R.sector }, rows: [] }
+  if (!R || !R.nodes) return { report: { file }, rows: [] }
+  const N = R.nodes, first = id => N.find(n => n.id === id)
+  const sel = id => (first(id)?.sel || []).join('; ')
+  const s3 = N.filter(n => n.id === '7.8.1')
+  let s3sum = 0, s3n = 0
+  for (let i = 0; i < N.length; i++) if (N[i].id === '7.8.2' && N[i].nums.length) { s3sum += N[i].nums[N[i].nums.length - 1]; s3n++ }
+  // targets: group 7.53.1.* (absolute) and 7.53.2.* (intensity) by row label
+  const groups = new Map()
+  for (const n of N) {
+    const m = /^7\.53\.([12])\.\d+$/.exec(n.id); if (!m) continue
+    const k = m[1] + '|' + (n.row || 'Row 1')
+    if (!groups.has(k)) groups.set(k, { type: m[1] === '1' ? 'Absolute' : 'Intensity', nodes: [] })
+    groups.get(k).nodes.push(n)
+  }
+  const rows = []
+  for (const g of groups.values()) {
+    const by = re => g.nodes.find(n => re.test(n.label))
+    const v = re => { const n = by(re); return n ? (n.sel.length ? n.sel.join('; ') : n.text.trim()) : '' }
+    const d = re => { const n = by(re); const x = n && mdy(n.text); return x ? fmt(x) : '' }
+    const nv = re => { const n = by(re); return n && n.nums.length ? n.nums[n.nums.length - 1] : '' }
+    rows.push({ type: g.type, ref: v(/^Target reference number/), sbt: v(/^Is this a science-based target/), ambition: v(/^Target ambition/), set: d(/^Date target was set/), coverage: v(/^Target coverage/),
+      scopes: v(/^Scopes$/), s2method: v(/^Scope 2 accounting method/), baseEnd: d(/^End date of base year/), targetEnd: d(/^End date of target/), reduction: nv(/^Targeted reduction from base year/),
+      achieved: nv(/^% of target achieved/), status: v(/^Target status/), page: g.nodes[0].page })
+  }
+  const r2 = x => x == null ? '' : Math.round(x * 100) / 100
+  const report = {
+    file, org: R.org || '', reportKind: 'Questionnaire response', exported: R.exportDate ? fmt(R.exportDate) : '', language: R.lang || '', currency: sel('1.2'), orgType: sel('1.3.2'),
+    revenue: R.revenue ?? '', countries: sel('1.7'), yearEnd: R.endDate ? fmt(R.endDate) : '',
+    scope1: r2(R.s1), scope2lb: r2(R.s2l), scope2mb: r2(R.s2m), scope3: s3n ? r2(s3sum) : '',
+    s3calc: s3.length ? s3.filter(n => /^Relevant, calculated/i.test(n.sel[0] || '')).length : '', s3notRel: s3.length ? s3.filter(n => /^Not relevant/i.test(n.sel[0] || '')).length : '',
+    absTargets: rows.filter(r => r.type === 'Absolute').length, intTargets: rows.filter(r => r.type === 'Intensity').length, sbt: rows[0]?.sbt || '',
+    envPolicy: sel('4.6'), firstYear: sel('7.1'), questions: new Set(N.map(n => n.id.split('.').slice(0, 2).join('.'))).size,
+  }
+  return { report, rows }
+}

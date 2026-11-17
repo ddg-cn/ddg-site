@@ -196,7 +196,7 @@ export function check(doc, file = '') {
     if (!/Weaknesses\s*:?\s*[^:]{20,}/i.test(flat)) miss.push('weaknesses')
     if (miss.length) add('CL-26', { ...F, page: 2, msg: 'Missing: ' + miss.join(', ') })
     placeholders(doc, add, F)
-    return { kind: 'clarity', meta: meta(R, file), findings: out, stats: { questions: 0 } }
+    return { kind: 'clarity', meta: meta(R, file), findings: out, stats: { questions: 0 }, R }
   }
 
   // relevancy
@@ -281,7 +281,7 @@ export function check(doc, file = '') {
   if (mixed.length) add('CL-20', { ...F, sev: 'info', page: null, ref: mixed.slice(0, 12).join(', ') + (mixed.length > 12 ? ' …' : ''), msg: `${mixed.length} comment(s) mix English with another language (bilingual is fine if the client accepts it)` })
   for (const [, rs] of seen) if (rs.length >= 3) add('CL-21', { ...F, page: rs[0].page, ref: rs.map(r => r.ref).join(', '), text: rs[0].comment })
   placeholders(doc, add, F)
-  return { kind: 'clarity', meta: meta(R, file), findings: out, stats: { questions: R.rows.length, ncs: R.ov.length } }
+  return { kind: 'clarity', meta: meta(R, file), findings: out, stats: { questions: R.rows.length, ncs: R.ov.length }, R }
 }
 
 function commentDates(c) {
@@ -337,3 +337,27 @@ export function crossCheck(results) {
 }
 
 export function detect(text) { return /CLARITY|BUREAU VERITAS/i.test(text) && /FIELD AUDIT|SELF ASSESSMENT/i.test(text) }
+
+// ---- data extraction (Report data extractor page) ----
+const F3 = a => a.map(([key, en, zh]) => ({ key, en, zh }))
+export const EXTRACT = {
+  report: F3([['site', 'Site', '工厂'], ['address', 'Address', '地址'], ['module', 'Module', '模块'], ['reportType', 'Report type', '报告类型'], ['reportNo', 'Report no.', '报告编号'],
+    ['completedBy', 'Completed by', '完成人'], ['completedOn', 'Completed on', '完成日期'], ['contact', 'Contact person', '联系人'],
+    ['totalPct', 'Total score %', '总分 %'], ['requiredNcs', 'Required-practice NCs', '必要实践不符合项'], ['ncs', 'Total NCs', '不符合项总数'], ['openNcs', 'Open NCs (overview)', '未关闭不符合项'],
+    ['questions', 'Checklist questions', '检查表问题数'], ['answeredNo', 'Answered No / Partially', '回答 否/部分']]),
+  rows: { en: 'Nonconformities', zh: '不符合项', fields: F3([['ref', 'Checkpoint', '检查点'], ['question', 'Question', '问题'], ['answer', 'Answer', '回答'], ['comment', 'Comments / observations', '备注/观察'], ['status', 'Status', '状态'], ['dates', 'Dates', '日期'], ['page', 'Page', '页']]) },
+}
+export function extract(R, file) {
+  const nc = r => /^(No|Partially)$/i.test(r.answer.trim())
+  const report = {
+    file, site: R.cover.site || '', address: R.cover.address || '', module: R.type ? R.type.toLowerCase().replace(/(^|\s)\w/g, x => x.toUpperCase()) : '', reportType: R.saq ? 'Self-assessment' : 'Field audit',
+    reportNo: [...new Set(R.reportNos.map(r => r.no))].join(', '), completedBy: R.cover.by || '', completedOn: fmt(dmy(R.cover.on)), contact: R.cover.contact || '',
+    totalPct: R.total ? R.total.pct : '', requiredNcs: R.total ? R.total.req : '', ncs: R.total ? R.total.tot : '', openNcs: R.ov.length ? R.ov.filter(o => /open|progress|pending/i.test(o.status)).length : '',
+    questions: R.rows.length || '', answeredNo: R.rows.length ? R.rows.filter(nc).length : '',
+  }
+  // one column per scored section: "<section> %" and "<section> NCs"
+  for (const r of R.score) { report[r.name + ' %'] = r.pct; report[r.name + ' NCs'] = r.tot; report[r.name + ' required NCs'] = r.req }
+  const src = R.ov.length ? R.ov : R.rows.filter(nc)
+  const rows = src.map(r => ({ ref: r.ref, question: r.question, answer: r.answer || '', comment: r.comment, status: r.status || '', dates: (r.dates || []).map(fmt).join(', '), page: r.page }))
+  return { report, rows }
+}

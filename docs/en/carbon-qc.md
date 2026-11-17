@@ -35,6 +35,20 @@ The workbook is read inside your browser and is not uploaded to any server. The 
 - **Factor check**: each emission factor next to the public reference range for that material, energy carrier or transport mode.
 - **Download Excel report**: Issues (with Status and Comment columns), Ratings, Factors and Rules sheets.
 
+## Check against a standard
+
+Choose a standard above the drop area. The form checks below always run; the standard adds its own rules (CF-30 to CF-38). **Automatic** applies the EU battery rules to the EU battery CFR template and no standard to other forms.
+
+| Standard | Data quality rating | Main rules checked |
+|---|---|---|
+| EU Battery Regulation (method still a draft) | TeR, GeR, TiR; DQR = sum ÷ 3; no P | EF-compliant datasets; secondary dataset TeR ≤ 4 for most relevant processes; national consumption-mix electricity, no certificates or PPAs; EF 3.1; cut-off ≤ 1% of mass per component; no offsets; functional unit per kWh over service life |
+| PEF – Recommendation (EU) 2021/2279 | TeR, GeR, TiR, P; DQR = sum ÷ 4 | company-specific data DQR ≤ 1.5 (each ≤ 2, P ≤ 3); secondary data of most relevant processes DQR ≤ 3.0; EF-compliant datasets; cut-off ≤ 3%; electricity supplier-specific → residual mix |
+| ISO 14067:2018 | no numeric scale | documented: cut-off criteria, allocation, GWP, biogenic carbon, land-use change, time period, data quality |
+| GHG Protocol Product Standard (2011) | guidance only | no offsets; documented: GWP source, biogenic and land-use change, allocation, time period, assurance, uncertainty |
+| PACT v3.0 · Catena-X v4 · TfS v3.0 | TeR, GeR, TiR, 1–5 | TeR 1–2 only for primary data (database datasets 3 or worse); cut-off ≤ 3%; IPCC AR6; electricity supplier-specific → residual mix; primary data share documented |
+
+Sources: [Regulation (EU) 2023/1542](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R1542) and the [April 2024 draft method](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=PI_COM:Ares(2024)3131389) (not yet adopted); [Recommendation (EU) 2021/2279](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32021H2279); [GHG Protocol Product Standard](https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf); [PACT Methodology v3.0](https://www.carbon-transparency.org/resources/pact-methodology-v3-methodology-for-calculating-and-exchanging-cradle-to-gate-product-carbon-footprints-pcfs); [Catena-X PCF Rulebook v4](https://catena-x.net/wp-content/uploads/2025/10/Catena-X-Product-Carbon-Footprint-Rulebook_v4-with-line-numbers.pdf); [TfS PCF Guideline v3.0](https://tfs-initiative.com/app/uploads/2024/12/TfS-PCF-Guidelines-2024.pdf). ISO 14067 is a paid standard, so its checks only test that the items are documented; confirm against your copy. "Most relevant process" cannot be read from a form, so rules that apply only to most relevant processes are warnings to review.
+
 ## How the suggested ratings work
 
 Scale 1 (best) to 5 (worst), as in the PEF / EU battery carbon footprint rules. DQR = the average of the ratings the template uses.
@@ -69,6 +83,15 @@ The rules read only what the form says. A stated rating can be right for reasons
 | CF-16 | Error | Product totals do not add up (module = cells × cell energy, mass and footprint, per-kWh figure) |
 | CF-17 | Info | Same material with a different factor or dataset in another uploaded file |
 | CF-20 – CF-28 | Error / Warning / Info | Life-cycle inventory sheets: product name vs specification, data period (at least 6 months), line in file name vs form, per-unit = total ÷ production, mass balance gap ≥ 5%, unit labels, data from other periods, t·km = mass × distance, blank required fields |
+| CF-30 | Error | Rating not allowed under the selected standard (e.g. TeR 1–2 for a database dataset under PACT) |
+| CF-31 | Warning / Info | DQR formula or criteria differ from the selected standard |
+| CF-32 | Warning | Data quality above the threshold of the selected standard |
+| CF-33 | Warning | Datasets not EF-compliant where the standard requires EF-compliant data |
+| CF-34 | Error / Warning / Info | Electricity modelling does not follow the selected standard |
+| CF-35 | Warning / Info | GWP set or characterisation method differs from the standard or is not stated |
+| CF-36 | Warning | Cut-off above the limit of the selected standard |
+| CF-37 | Error | Offsets or carbon credits included in the footprint |
+| CF-38 | Info | Item the selected standard asks to document not found in the form |
 
 ## Reference values
 

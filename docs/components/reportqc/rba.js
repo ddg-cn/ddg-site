@@ -24,6 +24,7 @@ export const RULES = {
   'RBA-20': { sev: 'error', en: 'Executive summary report differs from the full report', zh: '执行摘要报告与完整报告不一致' },
   'RBA-21': { sev: 'warning', en: 'Placeholder, "Not disclosed" or unfinished text', zh: '占位符、“Not disclosed”或未完成的文字' },
   'RBA-22': { sev: 'warning', en: 'Overall score implausible for the findings (score > 200, or 200 with NCs)', zh: '总分与发现不符（超过 200，或有不符合项仍为 200）' },
+  'RBA-24': { sev: 'warning', en: 'Overall score outside the range estimated from the finding counts (Priority −20, Major −6 to −7, Minor −1 to −3)', zh: '总分超出按发现数量估算的范围（优先 −20，严重 −6 至 −7，轻微 −1 至 −3）' },
   'RBA-23': { sev: 'info', en: 'Data point or conclusion mostly not in English', zh: '数据点或结论大部分不是英文' },
 }
 
@@ -146,6 +147,8 @@ export function check(doc, file = '') {
     const sumNc = X.risk + X.minor + X.major + X.priority
     if (X.conf + sumNc + X.na !== X.total && X.conf + sumNc + X.ofi + X.na !== X.total) add('RBA-04', { ...F, page: X.page, msg: `${X.conf} conformance + ${sumNc} NC/risk + ${X.na} N/A = ${X.conf + sumNc + X.na}, total scored questions ${X.total}` })
     if (scoreTxt && Math.abs(+scoreTxt[1] - X.score) > 0.05) add('RBA-04', { ...F, page: 1, msg: `Overall Audit Score ${scoreTxt[1]} vs results table ${X.score}` })
+    const E = estimateScore(X)
+    if (E && (X.score < E.lo - 0.05 || X.score > E.hi + 0.05)) add('RBA-24', { ...F, page: X.page, msg: `Score ${X.score}; ${X.priority} Priority, ${X.major} Major, ${X.minor} Minor give about ${E.est} (range ${E.lo}–${E.hi})` })
     if (X.score > 200 || X.score < 0 || (X.score === 200 && sumNc > 0)) add('RBA-22', { ...F, page: 1, msg: `Score ${X.score} with ${sumNc} NC/risk finding(s)` })
     if (R.sections.length) {
       for (const k of ['conf', 'risk', 'minor', 'major', 'priority', 'ofi', 'total', 'na']) {
@@ -248,6 +251,18 @@ export function check(doc, file = '') {
   return { kind: 'rba', meta: meta(R, file), findings: out, stats: { questions: R.qs.length, ncs: R.ncList.length }, R }
 }
 
+// Score estimate from finding counts. RBA does not publish the formula; the per-finding
+// deductions are a rule of thumb (Priority −20, Major −6 to −7, Minor −1 to −3). The point
+// estimate (Major 6.3, Minor 2.0) reproduces the one real report available (8 Major + 1 Minor = 147.6).
+export const SCORE_RULE = { priority: [20, 20, 20], major: [6, 6.3, 7], minor: [1, 2, 3] }
+export function estimateScore(X) {
+  if (!X) return null
+  const d = i => ['priority', 'major', 'minor'].reduce((a, k) => a + (X[k] || 0) * SCORE_RULE[k][i], 0)
+  const cl = v => Math.max(0, Math.round((200 - v) * 10) / 10)
+  const est = cl(d(1)), lo = cl(d(2)), hi = cl(d(0))
+  return { est, lo, hi }
+}
+
 // Arithmetic inside one text block.
 function arith(d, q, add, F) {
   const t = d.t
@@ -280,10 +295,11 @@ const around = (t, i) => t.slice(Math.max(0, i - 80), i + 160)
 
 function meta(R, file) {
   const I = R.info
+  const est = estimateScore(R.results)
   return {
     type: R.summaryReport ? 'RBA VAP – executive summary report' : 'RBA VAP – full report',
     title: I['Audited Facility'] || I['Facility Name'] || file,
-    fields: [['Audit ref.', I['Audit Reference Number']], ['Audit firm', I['Audit Firm']], ['Audit dates', [I['Audit Start Date'], I['Closing Meeting Date']].filter(Boolean).join(' – ')], ['Score', I['Overall Audit Score']], ['VAP version', I['VAP Version']], ['Questions read', String(R.qs.length || '')]].filter(f => f[1]),
+    fields: [['Audit ref.', I['Audit Reference Number']], ['Audit firm', I['Audit Firm']], ['Audit dates', [I['Audit Start Date'], I['Closing Meeting Date']].filter(Boolean).join(' – ')], ['Score', I['Overall Audit Score']], ...(est ? [['Estimated score', `${est.est} (range ${est.lo}–${est.hi}; ${R.results.priority} P / ${R.results.major} Maj / ${R.results.minor} Min)`]] : []), ['VAP version', I['VAP Version']], ['Questions read', String(R.qs.length || '')]].filter(f => f[1]),
     ref: I['Audit Reference Number'],
   }
 }
@@ -305,3 +321,47 @@ export function crossCheck(results) {
 }
 
 export function detect(text) { return /Validated Audit Report/.test(text) && /RBA/.test(text) }
+
+// ---- data extraction (Report data extractor page) ----
+const QA = s => s.replace(/\s+/g, ' ').trim()
+export const EXTRACT = {
+  report: [
+    ['ref', 'Audit reference number', '审核参考编号'], ['auditId', 'Audit ID', '审核 ID'], ['reportType', 'Report type', '报告类型'],
+    ['facility', 'Audited facility', '受审工厂'], ['company', 'Company name', '公司名称'], ['facilityId', 'RBA facility ID', 'RBA 工厂 ID'],
+    ['address', 'Facility address', '工厂地址'], ['country', 'Country', '国家'], ['businessType', 'Business type', '业务类型'],
+    ['category', 'Audit category', '审核类别'], ['auditType', 'Audit type', '审核类型'], ['version', 'VAP version', 'VAP 版本'],
+    ['firm', 'Audit firm', '审核机构'], ['auditors', 'Auditors', '审核员'],
+    ['start', 'Audit start date', '审核开始日期'], ['closing', 'Closing meeting date', '末次会议日期'], ['qc', 'QC completed date', 'QC 完成日期'],
+    ['score', 'Overall score', '总分'], ['estScore', 'Estimated score', '估算得分'],
+    ['conf', 'Conformance', '符合'], ['risk', 'Risk of NC', '不符合风险'], ['minor', 'Minor NC', '轻微不符合'], ['major', 'Major NC', '严重不符合'], ['priority', 'Priority NC', '优先不符合'], ['ofi', 'Opportunity for improvement', '改进机会'],
+    ['scored', 'Scored questions', '计分问题数'], ['na', 'Not applicable', '不适用'],
+    ['secA', 'A) Labor NCs', 'A) 劳工 不符合项'], ['secB', 'B) Health & safety NCs', 'B) 健康安全 不符合项'], ['secC', 'C) Environment NCs', 'C) 环境 不符合项'], ['secD', 'D) Ethics NCs', 'D) 道德 不符合项'], ['secE', 'E) Management system NCs', 'E) 管理体系 不符合项'],
+    ['workers', 'Total workers', '工人总数'], ['male', 'Male workers', '男性工人'], ['female', 'Female workers', '女性工人'], ['migrant', 'Migrant workers', '外来务工人员'],
+  ].map(([key, en, zh]) => ({ key, en, zh })),
+  rows: { en: 'Non-conformances', zh: '不符合项', fields: [
+    ['question', 'Question #', '问题编号'], ['section', 'Section', '章节'], ['rating', 'Rating', '评级'], ['legal', 'Legal NC', '法律不符合'], ['questionText', 'Question text', '问题'], ['conclusion', 'Conclusion', '结论'], ['page', 'Page', '页'],
+  ].map(([key, en, zh]) => ({ key, en, zh })) },
+}
+const SEC = { A: 'Labor', B: 'Health and safety', C: 'Environment', D: 'Ethics', E: 'Management system' }
+export function extract(R, file) {
+  const I = R.info, X = R.results || {}, est = estimateScore(R.results)
+  const sec = k => { const s = R.sections.find(r => r.name === k); return s ? s.minor + s.major + s.priority : '' }
+  const P = k => R.pop[k]?.v ?? ''
+  const report = {
+    file, ref: I['Audit Reference Number'] || '', auditId: I['Audit ID'] || '', reportType: R.summaryReport ? 'Executive summary' : 'Full report',
+    facility: I['Audited Facility'] || I['Facility Name'] || '', company: I['Company Name'] || '', facilityId: I['RBA Facility ID'] || '', address: I['Facility Address'] || '', country: I['Facility Country'] || '',
+    businessType: I['Business Type'] || '', category: I['Audit Category'] || '', auditType: I['Audit Type'] || '', version: I['VAP Version'] || '', firm: I['Audit Firm'] || '', auditors: I['Auditor Information'] || '',
+    start: fmt(mdy(I['Audit Start Date'])), closing: fmt(mdy(I['Closing Meeting Date'])), qc: fmt(mdy(I['QC Completed Date'])),
+    score: X.score ?? '', estScore: est ? est.est : '', conf: X.conf ?? '', risk: X.risk ?? '', minor: X.minor ?? '', major: X.major ?? '', priority: X.priority ?? '', ofi: X.ofi ?? '', scored: X.total ?? '', na: X.na ?? '',
+    secA: sec('A'), secB: sec('B'), secC: sec('C'), secD: sec('D'), secE: sec('E'),
+    workers: P('2.3') !== '' ? P('2.3') : (num(I['Total Number Of Workers']) ?? ''), male: P('2.1'), female: P('2.2'), migrant: P('3.6'),
+  }
+  const qById = new Map(R.qs.map(q => [q.id, q]))
+  const src = R.ncList.length ? R.ncList : R.qs.filter(q => /non-conformance|risk of/i.test(q.rating)).map(q => ({ id: q.id, rating: q.rating, page: q.page }))
+  const rows = src.map(n => {
+    const q = qById.get(n.id) || {}
+    const s = /^VAP-([A-E])/.exec(n.id)?.[1]
+    return { question: n.id, section: s ? s + ') ' + SEC[s] : '', rating: n.rating || q.rating || '', legal: /legal (non[- ]?conformance|non[- ]?compliance)/i.test(q.conclusion || '') ? 'Yes' : '', questionText: QA(q.text || ''), conclusion: QA(q.conclusion || ''), page: q.page || n.page || '' }
+  })
+  return { report, rows }
+}

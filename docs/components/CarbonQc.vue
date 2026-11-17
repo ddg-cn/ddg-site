@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
 import { toSheets, checkFile, crossCheck, RULES } from './carbon/cfqc.js'
+import { STANDARDS } from './carbon/standards.js'
 
 const props = defineProps({ lang: { type: String, default: 'en' } })
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs'
@@ -51,10 +52,15 @@ const dragging = ref(false), tab = ref('issues'), sevOn = ref({ error: true, war
 const ruleSel = ref(''), fileSel = ref(''), query = ref(''), limit = ref(200), onlyDiff = ref(true)
 const input = ref(null), reportUrl = ref(''), reportName = ref('')
 let X = null
+const std = ref('auto')
+let lastFiles = null
+const stdInfo = computed(() => STANDARDS.find(x => x.id === std.value))
+const stdLabel = { en: { label: 'Check against', auto: 'Automatic (EU battery rules for the CFR template)', none: 'Form checks only (no standard)', rerun: 'Re-check with this standard' }, zh: { label: '对照标准', auto: '自动（CFR 模板按欧盟电池规则）', none: '仅表格检查（不对照标准）', rerun: '按此标准重新检查' } }
 
 async function run(fileList) {
   const files = [...(fileList || [])].filter(f => /\.(xlsx|xlsm|xls)$/i.test(f.name))
   if (!files.length) return
+  lastFiles = files
   state.value = 'busy'; notices.value = []; results.value = []; crossF.value = []; tab.value = 'issues'
   ruleSel.value = ''; fileSel.value = ''; query.value = ''; limit.value = 200; sevOn.value = { error: true, warning: true, info: true }
   stage.value = t.value.loading
@@ -68,7 +74,7 @@ async function run(fileList) {
       const buf = new Uint8Array(await f.arrayBuffer())
       if (new TextDecoder().decode(buf.slice(0, 11)) === '%TSD-Header') { notices.value.push(fmt(t.value.drm, { name: f.name })); continue }
       const wb = X.read(buf, { type: 'array', cellFormula: false, cellHTML: false })
-      const r = checkFile(toSheets(X, wb), f.name)
+      const r = checkFile(toSheets(X, wb), f.name, { standard: std.value === 'none' ? '' : std.value })
       if (!r.findings.length && !r.ratings.length && r.meta.type === 'Carbon footprint form') notices.value.push(fmt(t.value.nothing, { name: f.name }))
       out.push(r)
     } catch (e) { notices.value.push(fmt(t.value.failed, { name: f.name, err: e.message || e })) }
@@ -133,6 +139,17 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
 
 <template>
   <div class="qc">
+    <div class="stdsel">
+      <label>{{ stdLabel[L].label }}
+        <select v-model="std">
+          <option value="auto">{{ stdLabel[L].auto }}</option>
+          <option v-for="s in STANDARDS" :key="s.id" :value="s.id">{{ s[L] }}</option>
+          <option value="none">{{ stdLabel[L].none }}</option>
+        </select>
+      </label>
+      <button v-if="state === 'done' && lastFiles" class="btn sm" @click="run(lastFiles)">{{ stdLabel[L].rerun }}</button>
+      <p v-if="stdInfo" class="fine">{{ stdInfo.status[L] }} <a :href="stdInfo.url" target="_blank" rel="noopener">↗</a></p>
+    </div>
     <div v-if="state === 'idle'" class="drop" :class="{ over: dragging }" @dragenter.prevent="dragging = true" @dragover.prevent @dragleave.prevent="dragging = false" @drop.prevent="onDrop">
       <p class="drop-main">{{ t.drop }}</p>
       <p class="drop-or">{{ t.or }}</p>
@@ -235,6 +252,11 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
 
 <style scoped>
 .qc { margin: 24px 0; }
+.stdsel { margin-bottom: 12px; display: flex; flex-wrap: wrap; gap: 6px 10px; align-items: center; }
+.stdsel label { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; font-weight: 500; }
+.stdsel select { border: 1px solid var(--vp-c-divider); border-radius: 8px; padding: 5px 10px; background: var(--vp-c-bg); color: var(--vp-c-text-1); max-width: 100%; }
+.stdsel .fine { flex-basis: 100%; margin: 0; }
+.btn.sm { padding: 3px 10px; font-size: .85em; }
 .drop { border: 2px dashed var(--vp-c-divider); border-radius: 12px; padding: 32px 16px; text-align: center; background: var(--vp-c-bg-soft); }
 .drop.over { border-color: var(--vp-c-brand-1); background: var(--vp-c-brand-soft); }
 .drop p { margin: 6px 0; }

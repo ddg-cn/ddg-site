@@ -5,12 +5,14 @@ import * as clarity from './reportqc/clarity.js'
 import * as cdp from './reportqc/cdp.js'
 import * as rba from './reportqc/rba.js'
 import * as ecovadis from './reportqc/ecovadis.js'
+import * as smeta from './reportqc/smeta.js'
+import * as bsci from './reportqc/bsci.js'
 
 const props = defineProps({ kind: { type: String, required: true }, lang: { type: String, default: 'en' } })
-const MODS = { clarity, cdp, rba, ecovadis }
+const MODS = { clarity, cdp, rba, ecovadis, smeta, bsci }
 const NAMES = {
-  en: { clarity: 'Clarity audit report', cdp: 'CDP response', rba: 'RBA audit report', ecovadis: 'EcoVadis questionnaire' },
-  zh: { clarity: 'Clarity 审核报告', cdp: 'CDP 问卷回答', rba: 'RBA 审核报告', ecovadis: 'EcoVadis 问卷' },
+  en: { clarity: 'Clarity audit report', cdp: 'CDP response', rba: 'RBA audit report', ecovadis: 'EcoVadis questionnaire', smeta: 'SMETA audit report', bsci: 'amfori BSCI audit report' },
+  zh: { clarity: 'Clarity 审核报告', cdp: 'CDP 问卷回答', rba: 'RBA 审核报告', ecovadis: 'EcoVadis 问卷', smeta: 'SMETA 审核报告', bsci: 'amfori BSCI 审核报告' },
 }
 const PDFJS = 'https://cdn.jsdelivr.net/npm/pdfjs-dist@4.10.38/'
 const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs'
@@ -23,7 +25,7 @@ const T = {
     loading: 'Loading the PDF reader…', reading: 'Reading {name} ({i}/{n})…', checking: 'Checking…',
     error: 'The check could not finish.', load: 'The PDF reader could not load. Check your internet connection and try again.',
     scanned: '{name}: no text found — this looks like a scanned PDF. Please use the text PDF exported from the platform.',
-    wrong: '{name} looks like a {other}, not a {what}. Use the {other} checker instead:',
+    wrong: '{name} is a different report type ({other}). Use its own checker instead:',
     detail: 'Details',
     files: '{n} file(s) checked', errors: 'Errors', warnings: 'Warnings', info: 'Info',
     download: 'Download Excel report', again: 'Check other files',
@@ -50,8 +52,8 @@ const T = {
   },
 }
 const LINKS = {
-  en: { clarity: '/en/clarity-qc.html', cdp: '/en/cdp-qc.html', rba: '/en/rba-qc.html', ecovadis: '/en/ecovadis-qc.html' },
-  zh: { clarity: '/zh/tools/clarity-qc.html', cdp: '/zh/tools/cdp-qc.html', rba: '/zh/tools/rba-qc.html', ecovadis: '/zh/tools/ecovadis-qc.html' },
+  en: { clarity: '/en/clarity-qc.html', cdp: '/en/cdp-qc.html', rba: '/en/rba-qc.html', ecovadis: '/en/ecovadis-qc.html', smeta: '/en/smeta-qc.html', bsci: '/en/bsci-qc.html' },
+  zh: { clarity: '/zh/tools/clarity-qc.html', cdp: '/zh/tools/cdp-qc.html', rba: '/zh/tools/rba-qc.html', ecovadis: '/zh/tools/ecovadis-qc.html', smeta: '/zh/tools/smeta-qc.html', bsci: '/zh/tools/bsci-qc.html' },
 }
 const L = computed(() => (props.lang === 'zh' ? 'zh' : 'en'))
 const t = computed(() => T[L.value])

@@ -4,6 +4,7 @@
 // geography, UUID), so it works on the EU battery CFR template and on similar customer templates.
 // It also checks life-cycle inventory (LCI) data collection sheets.
 
+import { applyStandard, defaultStandard, STANDARDS } from './standards.js'
 import { matchMaterial, matchEnergy, matchTransport, matchWaste, geoCode, regionOf, dbYear, MATERIALS, ENERGY, TRANSPORT, GRID, TRANSPORT_SRC } from './factors.js'
 
 export const RULES = {
@@ -32,6 +33,15 @@ export const RULES = {
   'CF-26': { sev: 'warning', en: 'Data or allocation taken from a different period', zh: '数据或分配依据来自其他期间' },
   'CF-27': { sev: 'warning', en: 'Transport t·km does not equal mass × distance', zh: '运输吨公里不等于质量 × 距离' },
   'CF-28': { sev: 'info', en: 'Required fields left blank', zh: '必填字段空白' },
+  'CF-30': { sev: 'error', en: 'Rating not allowed under the selected standard (e.g. TeR 1–2 for a database dataset)', zh: '评分不符合所选标准（如数据库数据集评 TeR 1–2）' },
+  'CF-31': { sev: 'warning', en: 'DQR formula or criteria differ from the selected standard', zh: 'DQR 公式或评分项与所选标准不同' },
+  'CF-32': { sev: 'warning', en: 'Data quality above the threshold of the selected standard', zh: '数据质量超出所选标准的限值' },
+  'CF-33': { sev: 'warning', en: 'Datasets not EF-compliant where the standard requires EF-compliant data', zh: '标准要求 EF 兼容数据集，但所用数据集未标明 EF 兼容' },
+  'CF-34': { sev: 'warning', en: 'Electricity modelling does not follow the selected standard', zh: '电力建模方式不符合所选标准' },
+  'CF-35': { sev: 'warning', en: 'GWP set / characterisation method differs from the selected standard or is not stated', zh: 'GWP / 特征化方法与所选标准不同或未说明' },
+  'CF-36': { sev: 'warning', en: 'Cut-off above the limit of the selected standard', zh: '截断比例超出所选标准的限值' },
+  'CF-37': { sev: 'error', en: 'Offsets or carbon credits included in the footprint', zh: '碳足迹中计入了抵消或碳信用' },
+  'CF-38': { sev: 'info', en: 'Item the selected standard asks to document not found in the form', zh: '表格中未找到所选标准要求记录的内容' },
 }
 
 // ---------- workbook → sheets ----------
@@ -460,8 +470,14 @@ export function checkFile(sheets, fileName, opts = {}) {
   const base = vis.find(s => /基本数据|basic data|general data/i.test(s.name))
   const mat = vis.find(s => /原料|material/i.test(s.name) && s !== base)
   if (base && mat) lciChecks(vis, base, fileName, add, meta, label, cellLoc)
+  const std = opts.standard == null || opts.standard === 'auto' ? defaultStandard(!!gi) : opts.standard
+  if (std && ratings.length) {
+    applyStandard(std, { ratings, vis, add, label, txt })
+    const S = STANDARDS.find(x => x.id === std)
+    if (S) meta.fields.push(['Standard', S.en])
+  }
   meta.fields.push(['Datasets rated', String(ratings.length)], ['Factors checked', String(factors.filter(f => f.lo != null).length)])
-  return { file: fileName, meta, findings: out, ratings, factors }
+  return { file: fileName, meta, findings: out, ratings, factors, standard: std }
 }
 
 function lciChecks(vis, base, fileName, add, meta, label, cellLoc) {
