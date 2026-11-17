@@ -40,6 +40,7 @@ TXT = {
         "l_index_sections": "The GRI content index cites sections, not page numbers, so only 'is it in the report at all' was checked.",
         "i_missing": "GRI index lists {c} ({t}), but no matching content was found",
         "i_missing_d": "The content index cites “{loc}” for GRI {c}; a keyword search of the rest of the report found nothing on this topic.",
+        "i_missing_d2": "The content index lists GRI {c}; a keyword search of the rest of the report found nothing on this topic.",
         "i_page": "GRI index points to the wrong page for {c} ({t})",
         "i_page_d": "The index says p.{pp} (PDF p.{pdf}); the topic is not there but appears on PDF p.{where}.",
         "i_why": "An index that points to missing or wrong content misleads readers and does not meet GRI's 'in accordance' requirements.",
@@ -129,6 +130,7 @@ TXT = {
         "l_index_sections": "GRI 内容索引引用的是章节名称而非页码，因此只检查了“报告中是否有相关内容”。",
         "i_missing": "GRI 索引列出 {c}（{t}），但未找到相应内容",
         "i_missing_d": "内容索引称 GRI {c} 见“{loc}”，但在报告其余部分按关键词搜索未找到相关内容。",
+        "i_missing_d2": "内容索引列出了 GRI {c}，但在报告其余部分按关键词搜索未找到相关内容。",
         "i_page": "GRI 索引中 {c}（{t}）的页码有误",
         "i_page_d": "索引标注第 {pp} 页（PDF 第 {pdf} 页），该页没有相关内容；相关内容在 PDF 第 {where} 页。",
         "i_why": "索引指向缺失或错误的内容会误导读者，也不符合 GRI“符合标准”的要求。",
@@ -223,6 +225,27 @@ def compile_or_none(pattern, flags=0):
         return None
 
 
+def wrap_tolerant(pattern):
+    """English keyword patterns: a space may be any whitespace, so words broken across lines still match."""
+    if not pattern:
+        return pattern
+    out, in_cls, esc = [], False, False
+    for ch in pattern:
+        if esc:
+            out.append(ch); esc = False
+        elif ch == "\\":
+            out.append(ch); esc = True
+        elif ch == "[":
+            in_cls = True; out.append(ch)
+        elif ch == "]":
+            in_cls = False; out.append(ch)
+        elif ch == " ":
+            out.append(r"\s" if in_cls else r"\s+")
+        else:
+            out.append(ch)
+    return "".join(out)
+
+
 def _active(rows):
     return [r for r in rows if r.get("ID") and str(r.get("Active (Y/N)", "Y")).strip().upper() != "N"]
 
@@ -232,7 +255,7 @@ def compile_config(cfg):
     for d in _active(cfg["indicators"]):
         d = dict(d)
         d["re_cn"] = compile_or_none(d.get("Keywords CN (regex)"))
-        d["re_en"] = compile_or_none(d.get("Keywords EN (regex)"), re.I)
+        d["re_en"] = compile_or_none(wrap_tolerant(d.get("Keywords EN (regex)")), re.I)
         d["quant"] = str(d.get("Quantitative (Y/N)", "")).upper() == "Y"
         d["guide"] = "CN Guide" in (d.get("References") or "")
         inds.append(d)
@@ -240,7 +263,7 @@ def compile_config(cfg):
     for r in _active(cfg["rules"]):
         r = dict(r)
         r["re_cn"] = compile_or_none(r.get("Pattern CN (regex)"))
-        r["re_en"] = compile_or_none(r.get("Pattern EN (regex)"), re.I)
+        r["re_en"] = compile_or_none(wrap_tolerant(r.get("Pattern EN (regex)")), re.I)
         r["re_unless"] = compile_or_none(r.get("Unless in same sentence (regex)"), re.I)
         r["re_lower"] = compile_or_none(r.get("Lower if (regex)"), re.I)
         r["evidence"] = (r.get("Evidence elsewhere (regex, {m} = match)") or "").strip()
@@ -564,6 +587,53 @@ def clean_label(t):
     return t, False
 
 
+def _join(a, b):
+    """Join a label wrapped over two lines: no space inside CJK text, a space between Latin words."""
+    a, b = (a or "").rstrip(), (b or "").lstrip()
+    if not a or not b:
+        return (a + b).strip()
+    if re.match(r"[A-Za-z0-9)\]%]", a[-1]) and re.match(r"[A-Za-z0-9(\[]", b[0]):
+        return a + " " + b
+    return a + b
+
+
+SUBROW = re.compile(r"^\s*(?:[-–—·•▪]+\s*|of\s+which\s*[:：]?\s*|including\s*[:：]\s*|其中\s*[:：]?\s*)(?=\S)", re.I)
+
+
+def qualify_subrows(recs, carry=None):
+    """Rows like '-Automobile business' or '其中：汽车业务' break down the row above them.
+    Give them the parent's name ('Total water withdrawal – Automobile business') so the
+    same breakdown under different totals is not read as one indicator. Works across the
+    tables of a page (in reading order) and from the end of the previous page (carry)."""
+    rows = {}
+    for k in recs:
+        rows.setdefault((k["table"], k["row"]), k)
+    # reading order: column by column (side-by-side tables), top to bottom
+    cols = []
+    for x in sorted({k.get("_col", 0) for k in rows.values()}):
+        if not cols or x - cols[-1][-1] > 80:
+            cols.append([x])
+        else:
+            cols[-1].append(x)
+    cno = {x: i for i, g in enumerate(cols) for x in g}
+    order = sorted(rows.values(), key=lambda k: (cno[k.get("_col", 0)], k.get("_y", 0)))
+    # a column often continues the one before it (two-column pages), so the last parent carries over
+    parent, new = carry, {}
+    for k in order:
+        lab = k["label"]
+        if SUBROW.match(lab):
+            k["sub"] = True
+            if parent:
+                new[(k["table"], k["row"])] = (parent + " – " + SUBROW.sub("", lab))[:120]
+        else:
+            parent = lab
+    for k in recs:
+        k["label"] = new.get((k["table"], k["row"]), k["label"])
+        if rows.get((k["table"], k["row"]), {}).get("sub"):
+            k["sub"] = True
+    return parent
+
+
 def _split_unit_num(cells):
     """'次/百万工时0.00' -> unit cell + number cell (proportional x)."""
     out = []
@@ -719,7 +789,7 @@ def tables_from_page(pno, words):
                         continue
                     lr = st["last"]
                     if lr is not None and lr.get("wrapped") and row["y"] - lr["y"] < 1.6 * row["h"]:
-                        lr["label"] = (lr["label"] + label).strip()
+                        lr["label"] = _join(lr["label"], label)
                         lr["wrapped"] = False
                         continue
                     if st["pending"] and row["y"] - st["pending"][1] >= 1.6 * row["h"]:
@@ -731,7 +801,7 @@ def tables_from_page(pno, words):
                 if st["pending"]:
                     p_lab, p_y = st["pending"]
                     if row["y"] - p_y < 1.6 * row["h"]:
-                        label, wrapped = (p_lab + label).strip(), not label
+                        label, wrapped = _join(p_lab, label), not label
                     else:
                         st["group"] = p_lab
                     st["pending"] = None
@@ -758,7 +828,8 @@ def tables_from_page(pno, words):
                         continue
                     pct = v.endswith(("%", "％")) or rr["unit"] in ("%", "％")
                     out.append({"page": pno, "table": f"{pno}.{t_no}", "row": k, "title": title, "group": grp[:60], "label": lab[:90],
-                                "unit": rr["unit"], "year": y, "value": v, "num": n, "pct": pct, "note": note or gnote})
+                                "unit": rr["unit"], "year": y, "value": v, "num": n, "pct": pct, "note": note or gnote,
+                                "_y": rr["y"], "_col": round(sg["left"])})
         i += 1
     if not out:
         out = _vertical_tables(pno, rows)
@@ -766,10 +837,14 @@ def tables_from_page(pno, words):
 
 
 def kpis_of(doc):
-    out = []
+    out, carry = [], None
     for pno, p in enumerate(doc["pages"], 1):
-        if p.get("words"):
-            out.extend(tables_from_page(pno, p["words"]))
+        recs = tables_from_page(pno, p["words"]) if p.get("words") else []
+        carry = qualify_subrows(recs, carry) if recs else None
+        for k in recs:
+            k.pop("_y", None)
+            k.pop("_col", None)
+        out.extend(recs)
     return out
 
 
@@ -972,7 +1047,7 @@ def number_checks(kpis, pages, L):
         for rn in sorted(rows):
             ks = rows[rn]
             lab = ks[0]["label"]
-            if re.match(r"^(其中|含|包括|of which|including)", lab, re.I):
+            if ks[0].get("sub") or re.match(r"^(其中|含|包括|of which|including)", lab, re.I):
                 if not parent:
                     continue
                 pv = {k["year"]: k for k in parent}
@@ -1000,7 +1075,8 @@ def number_checks(kpis, pages, L):
         lab = re.sub(r"[\s\W_]+", "", k["label"]).lower()
         ctx = re.sub(r"[\s\W\d_]+", "", (k["group"] or "")).lower()
         generic = BREAK.search(k["group"] or "") or re.search(r"(占比|比例|比率|率|share|ratio|rate)$", lab)
-        if (k["metric"] or len(lab) >= 10) and not generic and not re.match(r"^(其中|男|女|合计|总计|小计|total)", lab):
+        vertical = ".v" in str(k["table"])  # years-down-the-side table: label is a column head with no row context
+        if (k["metric"] or len(lab) >= 10) and not generic and not vertical and not re.match(r"^(其中|男|女|合计|总计|小计|total)", lab):
             seen[(lab, ctx, k["year"], unit_key(k["unit"])[0], k["pct"])].append(k)
     reported = set()
     for (lab, ctx, y, u, pct), ks in seen.items():
@@ -1266,6 +1342,25 @@ def _page_nums(t):
     return out
 
 
+def _drop_footer(rows):
+    """Remove a page footer such as '2025 XX Sustainability Report    172' - its page number
+    is not part of the last index entry. A footer row has no GRI code, has a bare number
+    and sits well below the rows before it."""
+    if len(rows) < 4:
+        return rows
+    gaps = sorted(b["y"] - a["y"] for a, b in zip(rows, rows[1:]))
+    med = gaps[len(gaps) // 2] or 1
+    while len(rows) >= 4:
+        last = rows[-1]
+        texts = [c["t"].strip() for c in last["cells"]]
+        if (not any(GRI_CODE.match(t) for t in texts) and any(re.fullmatch(r"\d{1,3}", t) for t in texts)
+                and last["y"] - rows[-2]["y"] > 2 * med):
+            rows = rows[:-1]
+        else:
+            break
+    return rows
+
+
 def gri_index(doc, pages, cfg, L):
     """Read the GRI content index and check it against the report. Returns (issues, summary)."""
     n = len(pages)
@@ -1278,6 +1373,7 @@ def gri_index(doc, pages, cfg, L):
         if not ok:
             continue
         idx_pages.append(pno)
+        rows = _drop_footer(rows)
         active = []
         for r in rows:
             for c in r["cells"]:
@@ -1319,7 +1415,7 @@ def gri_index(doc, pages, cfg, L):
         m = gmap.get(code) or gmap.get(code.split("-")[0])
         texts = [t for t in e["texts"] if t.strip()]
         nums = [x for t in texts if PAGE_CELL.match(t.strip()) for x in _page_nums(t) if 0 < x <= 2 * n + 10]
-        if any(OMIT.search(t) for t in texts):  # full or partial omission stated in the index: not checked
+        if any(OMIT.search(t) or t.strip() in ("/", "—", "–", "-", "N/A", "NA") for t in texts):  # omission stated in the index ('/' = not reported): not checked
             omitted += 1
             continue
         if not m or not texts:
@@ -1331,7 +1427,7 @@ def gri_index(doc, pages, cfg, L):
             loc = ", ".join(str(x) for x in nums[:4]) if nums else short(" ".join(t for t in texts if not PAGE_CELL.match(t.strip()))[-40:], 40)
             strong = any(i in KEY_GAPS or (inds.get(i) or {}).get("quant") for i in m["ids"])
             issues.append({"sev": "Medium" if strong else "Low", "type": "Consistency", "rule": "IDX-01", "title": L["i_missing"].format(c=code, t=title),
-                           "pages": [e["page"]], "found": f"GRI {code}", "evidence": L["i_missing_d"].format(loc=loc, c=code),
+                           "pages": [e["page"]], "found": f"GRI {code}", "evidence": (L["i_missing_d"] if nums else L["i_missing_d2"]).format(loc=loc, c=code),
                            "note": "", "why": L["i_why"], "fix": L["i_fix"]})
         elif nums:
             pairs.append((code, title, e["page"], nums, h))
