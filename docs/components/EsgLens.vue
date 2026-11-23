@@ -167,6 +167,7 @@ const STDS = [
   { code: 'GRI', en: 'GRI Standards', zh: 'GRI 标准' },
   { code: 'ISSB', en: 'ISSB (IFRS S1 / S2)', zh: 'ISSB（IFRS S1 / S2）' },
   { code: 'HKEX', en: 'HKEX ESG Reporting Code (C2)', zh: '港交所 ESG 报告守则（附录 C2）' },
+  { code: 'ESRS', en: 'ESRS (EU, 2026)', zh: '欧盟 ESRS（2026 版）' },
   { code: 'IFC', en: 'IFC Performance Standards', zh: 'IFC 绩效标准', lens: true },
   { code: 'RATER', en: 'Rater key issues (public lists, e.g. MSCI)', zh: '评级机构关键议题（公开清单，如 MSCI）', lens: true }
 ]

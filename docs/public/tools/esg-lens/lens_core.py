@@ -1291,7 +1291,7 @@ def yoy(cur, prev, L, zh):
 # ======================================================================= the read
 # ======================================================================= standards
 SHORT = {"CN": ("exchange guideline", "交易所指引"), "GRI": ("GRI", "GRI"), "ISSB": ("ISSB", "ISSB"), "HKEX": ("HKEX", "港交所守则"),
-         "IFC": ("IFC PS", "IFC 绩效标准"), "RATER": ("rater key issues", "评级关键议题"), "TCFD": ("TCFD", "TCFD"), "SASB": ("SASB", "SASB")}
+         "IFC": ("IFC PS", "IFC 绩效标准"), "RATER": ("rater key issues", "评级关键议题"), "TCFD": ("TCFD", "TCFD"), "SASB": ("SASB", "SASB"), "ESRS": ("ESRS", "ESRS")}
 REFVERB = re.compile(r"参照|参考|依据|遵循|按照|根据|结合|对标|符合|采用|编制|in accordance|with reference|prepared|aligned?|follow|according|reference", re.I)
 
 

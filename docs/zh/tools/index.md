@@ -31,6 +31,7 @@ head:
 | [🔍 ESG 报告透镜](/zh/tools/esg-lens.html) | 抽查可持续发展 / ESG 报告：对不上的数字、需要证据的说法、与报告标准的差距；A–E 内容评级 | [English](/en/esg-lens.html) |
 | [🥬 农产品碳足迹计算器](/zh/tools/farm-carbon.html) | 根据化肥、燃料、电力和地膜用量，快速估算蔬菜、水果、茶叶和粮食的农场端碳足迹；IPCC 2019 Tier 1 田间 N2O 和稻田 CH4；排放因子可修改，可导出 Excel | [English](/en/farm-carbon.html) |
 | [🗺️ 气候与 ESG 评级一览](/zh/tools/esg-glance.html) | 按地区、行业和规模查看 SBTi 目标；CDP A 名单；EcoVadis 奖牌；IRMA 矿山；RMI 冶炼厂。可自选角度筛选；每年更新 | [English](/en/esg-glance.html) |
-| [📈 主要社会责任审核项目一览](/zh/tools/peer-programs.html) | SLCP、SMETA、amfori BSCI、RBA、SA8000 等项目的审核数量与覆盖范围 | [English](/en/peer-programs.html) |
+| [📈 主要社会责任审核项目一览](/zh/tools/peer-programs.html) | SLCP、SMETA、amfori BSCI、RBA、SA8000、Better Work、FLA、Fair Wear、Higg FEM 等项目的审核数量与覆盖范围 | [English](/en/peer-programs.html) |
+| [🌐 国家与地区参考](/zh/tools/country-ref.html) | 供应商风险筛查的国家背景：清廉指数、世界银行治理分数、美国劳工部货物清单和 CBP 暂扣令，并链接 UFLPA 实体清单等参考资料 | [English](/en/country-ref.html) |
 
 本地运行的 Streamlit 工具套件（供应商风险评分、制裁筛查、CMRT 差距分析等）另见 [DD Tools 工具套件](/zh/dd-toolkit.html)。

@@ -39,6 +39,7 @@ Choose what to check against, or leave **As stated in the report** ticked: the t
 | GRI Standards (GRI 2, 3 and topic standards) | Reporting standard | 94 |
 | ISSB (IFRS S1 / S2) | Reporting standard | 22 |
 | HKEX ESG Reporting Code (Appendix C2) | Exchange rule | 50 |
+| ESRS, EU (2026 revision, Delegated Regulation (EU) 2026/1563) | Reporting standard - ESRS 2 and climate (E1) are scored; other topics depend on the company's own materiality assessment, so they are shown but not scored. Codes follow the 2026 version, with the earlier (Set 1, 2023/2772) code in brackets where it changed, since FY2026 reports may still use Set 1 | 55 (21 scored) |
 | IFC Performance Standards | Reference lens - written for financed projects, not for reports, so scores run lower | 26 |
 | Rater key issues | Rater lens - built from the key-issue lists raters such as MSCI publish; **not an MSCI rating**, not affiliated with any rater; sector-specific issues are shown but not scored | 32 |
 
