@@ -80,7 +80,11 @@ const family = m => !m ? null : m.id.replace(/_(recycled|primary|foil|syn|nat|di
 
 // ---------- header detection ----------
 const H = {
-  ter: /^te?r$/i, ger: /^ge?r$/i, tir: /^ti?r$/i, p: /^(p|pr|precision|精确度)$/i, dqr: /^dqr\b|^dqr$/i,
+  // short codes ("TeR", "TeR (1-5)"), full names, Chinese names
+  ter: /^te?r\b(?!\s*[a-z])|^technolog(y|ical)[- ]representativ|^技术代表性/i,
+  ger: /^ge?r\b(?!\s*[a-z])|^geograph(y|ic|ical)[- ]representativ|^地理代表性/i,
+  tir: /^ti?r\b(?!\s*[a-z])|^(time|temporal)[- ](related[- ])?representativ|^时间代表性/i,
+  p: /^(p|pr|precision|精确度|精度)$|^(p|precision)\s*\(|^precision\b|^精确度/i, dqr: /^dqr\b|^data quality rating|^数据质量评分|^数据质量等级/i,
   ef: /(^|\s)e\s?f\b|emission factor|evirgin|erecycled|排放因子|kg\s*co2[-\s]?eq\.?\s*\/\s*(kg|fu|ton|t\b|kwh|unit)/i,
   src: /data\s*source|数据来源|^source$/i,
   db: /(database|dataset)\s*-?\s*(material |process )?name|数据集名称|数据库名称/i,
@@ -100,7 +104,7 @@ function findTables(sh) {
     const ters = []
     row.forEach((v, c) => { if (H.ter.test(txt(v))) ters.push(c) })
     if (!ters.length) continue
-    const blocks = []
+    const blocks = [], groups = []
     let prevEnd = -1
     for (const t of ters) {
       const b = { ter: t }
@@ -121,58 +125,114 @@ function findTables(sh) {
         else if (b.dist == null && b.ef != null && cellIs(sh, r, c, H.dist)) b.dist = c
       }
       if (b.ef == null) for (let c = t - 1; c > prevEnd && c >= t - 10; c--) if (cellIs(sh, r, c, H.ef)) { b.ef = c; break }
+      groups.push(b)
       if (b.ef == null) continue
       b.label = (/^(e[a-z_]+)/i.exec(txt(row[b.ef])) || [, 'EF'])[1]
       prevEnd = b.dqr ?? b.tir ?? b.ter
       blocks.push(b)
     }
+    // rating blocks moved away from their EF columns (e.g. all at the far right): pair them in order,
+    // 1st rating block with the 1st EF column, when there are as many EF columns as rating blocks
+    if (blocks.length < groups.length) {
+      const efCols = row.map((v, c) => (H.ef.test(txt(v)) && !H.emis.test(txt(v)) ? c : -1)).filter(c => c >= 0)
+      if (efCols.length === groups.length) {
+        blocks.length = 0
+        groups.forEach((g, i) => {
+          const b = { ter: g.ter, ger: g.ger, tir: g.tir, p: g.p, dqr: g.dqr, ef: efCols[i] }
+          const lo = i ? efCols[i - 1] : -1
+          for (let c = b.ef - 1; c > lo && c >= b.ef - 8; c--) {
+            if (b.uuid == null && cellIs(sh, r, c, H.uuid)) b.uuid = c
+            else if (b.geo == null && cellIs(sh, r, c, H.geo)) b.geo = c
+            else if (b.db == null && cellIs(sh, r, c, H.db)) b.db = c
+            else if (b.src == null && cellIs(sh, r, c, H.src)) b.src = c
+          }
+          b.label = (/^(e[a-z_]+)/i.exec(txt(row[b.ef])) || [, 'EF'])[1]
+          blocks.push(b)
+        })
+      }
+    }
     if (!blocks.length) continue
-    const firstEf = blocks[0].ef
-    const T = { r, blocks, emis: [] }
-    // name / context / quantity / origin / details / r1 columns left of the first EF
-    for (let c = firstEf - 1; c >= 0; c--) {
-      const is = re => cellIs(sh, r, c, re)
-      if (T.details == null && is(H.details)) T.details = c
-      else if (T.origin == null && is(H.origin)) T.origin = c
-      else if (T.qty == null && is(H.qty)) T.qty = c
-      else if (T.mass == null && is(H.mass) && !is(/composition/i)) T.mass = c
-      else if (is(H.name)) { if (T.name == null) T.name = c; else if (T.ctx == null) T.ctx = c }
-      if (T.unit == null && /^fu\b|\(kwh|unit/i.test(txt(sh.rows[r][c]))) T.unit = c
-    }
-    if (T.qty == null) T.qty = T.mass
-    if (T.name == null) { for (let c = firstEf - 1; c >= 0; c--) if (txt(sh.rows[r][c])) { T.name = c; break } }
-    for (let c = 0; c < row.length; c++) {
-      const s = headerText(sh, r, c)
-      if (c > firstEf && H.emis.test(s) && !blocks.some(b => b.ef === c)) T.emis.push(c)
-      if (T.r1 == null && H.r1.test(txt(row[c]))) T.r1 = c
-    }
-    // data rows
-    T.rows = []
-    let empty = 0
-    for (let rr = r + 1; rr < sh.rows.length; rr++) {
-      const rw = sh.rows[rr]
-      if (rw.some(v => H.ter.test(txt(v)) || /^dqr$/i.test(txt(v)) || /^kg\s*co2[-\s]?eq\.?\s*\/\s*1/i.test(txt(v)))) break
-      if (rw.some(v => /please complete/i.test(txt(v)))) continue
-      const used = blocks.some(b => num(rw[b.ef]) != null || !blank(rw[b.db]) || !blank(rw[b.src]))
-      if (!used) { if (++empty >= 4) break; continue }
-      empty = 0
-      T.rows.push(rr)
-    }
-    // unlabelled column holding the real item names (e.g. E = "Material 1", F = "Lithium carbonate")
-    for (let c = (T.name ?? -1) + 1; c < firstEf; c++) {
-      if (txt(sh.rows[r][c]) || txt((sh.rows[r - 1] || [])[c]) || c === T.qty || c === T.origin || c === T.details || c === T.mass) continue
-      const vals = T.rows.map(rr => sh.rows[rr][c]).filter(v => txt(v))
-      if (vals.length >= Math.max(1, T.rows.length * 0.5) && vals.filter(v => num(v) == null).length >= vals.length * 0.8) { T.ctx = T.name; T.name = c; break }
-    }
-    // two "database name" columns: the right one holding country codes is really the geography
-    for (const b of blocks) {
-      if (b.geo != null || b.db == null) continue
-      const looksGeo = col => { const vals = T.rows.map(rr => txt(sh.rows[rr][col])).filter(v => v && !/^n$/i.test(v)); return vals.length && vals.filter(v => geoCode(v)).length >= vals.length * 0.7 }
-      if (looksGeo(b.db) && b.db - 1 >= 0 && cellIs(sh, r, b.db - 1, H.db)) { b.geo = b.db; b.db = b.db - 1; b.geoMislabel = true }
-    }
-    tables.push(T)
+    tables.push(buildTable(sh, r, blocks))
   }
+  if (!tables.length) { const T = looseTable(sh); if (T) tables.push(T) }
   return tables
+}
+
+
+// name / context / quantity / origin / details / r1 columns, data rows, for one header row.
+// loose: the columns were found anywhere in the row, so look on both sides of the EF column.
+function buildTable(sh, r, blocks, loose = false) {
+  const row = sh.rows[r]
+  const firstEf = blocks[0].ef
+  const T = { r, blocks, emis: [] }
+  // name / context / quantity / origin / details / r1 columns left of the first EF
+  const taken = new Set(blocks.flatMap(b => ['ter', 'ger', 'tir', 'p', 'dqr', 'ef', 'src', 'db', 'geo', 'uuid'].map(k => b[k]).filter(v => v != null)))
+  const leftCols = loose ? [...Array(row.length).keys()].filter(c => !taken.has(c)).sort((x, y) => Math.abs(x - firstEf) - Math.abs(y - firstEf)).sort((x, y) => (y < firstEf) - (x < firstEf)) : [...Array(firstEf).keys()].reverse()
+  for (const c of leftCols) {
+    const is = re => cellIs(sh, r, c, re)
+    if (T.details == null && is(H.details)) T.details = c
+    else if (T.origin == null && is(H.origin)) T.origin = c
+    else if (T.qty == null && is(H.qty)) T.qty = c
+    else if (T.mass == null && is(H.mass) && !is(/composition/i)) T.mass = c
+    else if (is(H.name)) { if (T.name == null) T.name = c; else if (T.ctx == null) T.ctx = c }
+    if (T.unit == null && /^fu\b|\(kwh|unit/i.test(txt(sh.rows[r][c]))) T.unit = c
+  }
+  if (T.qty == null) T.qty = T.mass
+  if (T.name == null) { for (let c = firstEf - 1; c >= 0; c--) if (txt(sh.rows[r][c])) { T.name = c; break } }
+  for (let c = 0; c < row.length; c++) {
+    const s = headerText(sh, r, c)
+    if (c > firstEf && H.emis.test(s) && !blocks.some(b => b.ef === c)) T.emis.push(c)
+    if (T.r1 == null && H.r1.test(txt(row[c]))) T.r1 = c
+  }
+  // data rows
+  T.rows = []
+  let empty = 0
+  for (let rr = r + 1; rr < sh.rows.length; rr++) {
+    const rw = sh.rows[rr]
+    if (rw.some(v => H.ter.test(txt(v)) || /^dqr$/i.test(txt(v)) || /^kg\s*co2[-\s]?eq\.?\s*\/\s*1/i.test(txt(v)))) break
+    if (rw.some(v => /please complete/i.test(txt(v)))) continue
+    const used = blocks.some(b => num(rw[b.ef]) != null || !blank(rw[b.db]) || !blank(rw[b.src]))
+    if (!used) { if (++empty >= 4) break; continue }
+    empty = 0
+    T.rows.push(rr)
+  }
+  // unlabelled column holding the real item names (e.g. E = "Material 1", F = "Lithium carbonate")
+  for (let c = (T.name ?? -1) + 1; c < firstEf; c++) {
+    if (txt(sh.rows[r][c]) || txt((sh.rows[r - 1] || [])[c]) || c === T.qty || c === T.origin || c === T.details || c === T.mass) continue
+    const vals = T.rows.map(rr => sh.rows[rr][c]).filter(v => txt(v))
+    if (vals.length >= Math.max(1, T.rows.length * 0.5) && vals.filter(v => num(v) == null).length >= vals.length * 0.8) { T.ctx = T.name; T.name = c; break }
+  }
+  // two "database name" columns: the right one holding country codes is really the geography
+  for (const b of blocks) {
+    if (b.geo != null || b.db == null) continue
+    const looksGeo = col => { const vals = T.rows.map(rr => txt(sh.rows[rr][col])).filter(v => v && !/^n$/i.test(v)); return vals.length && vals.filter(v => geoCode(v)).length >= vals.length * 0.7 }
+    if (looksGeo(b.db) && b.db - 1 >= 0 && cellIs(sh, r, b.db - 1, H.db)) { b.geo = b.db; b.db = b.db - 1; b.geoMislabel = true }
+  }
+  return T
+}
+
+// Fallback when no table has the usual layout (TeR / GeR / TiR right next to each other, EF and
+// dataset columns just left of them): a header row with an EF column and either two of TeR / GeR /
+// TiR or a name and a quantity column, with the columns in any order.
+function looseTable(sh) {
+  for (let r = 0; r < Math.min(sh.rows.length, 80); r++) {
+    const row = sh.rows[r]
+    const own = re => row.findIndex(v => re.test(txt(v)))
+    const ef = row.findIndex((v, c) => H.ef.test(txt(v)) && !H.emis.test(txt(v)))
+    if (ef < 0) continue
+    const b = { ef, ter: own(H.ter), ger: own(H.ger), tir: own(H.tir), p: own(H.p), dqr: own(H.dqr) }
+    for (const k of Object.keys(b)) if (b[k] < 0) b[k] = null
+    const near = re => { let best = null; row.forEach((v, c) => { if (c !== ef && !Object.values(b).includes(c) && cellIs(sh, r, c, re) && (best == null || Math.abs(c - ef) < Math.abs(best - ef))) best = c }); return best }
+    b.db = near(H.db); b.src = near(H.src); b.uuid = near(H.uuid)
+    b.geo = near(/geograph(?!.*representativ)|^地理(?!代表)|^location$|^region$/i)
+    const dq = ['ter', 'ger', 'tir'].filter(k => b[k] != null).length
+    const hasName = row.some(v => H.name.test(txt(v))), hasQty = row.some(v => H.qty.test(txt(v)) || H.mass.test(txt(v)))
+    if (dq < 2 && !(hasName && hasQty)) continue
+    b.label = (/^(e[a-z_]+)/i.exec(txt(row[b.ef])) || [, 'EF'])[1]
+    const T = buildTable(sh, r, [b], true)
+    if (T.rows.length) { T.loose = true; return T }
+  }
+  return null
 }
 
 // ---------- ratings ----------
@@ -470,7 +530,10 @@ export function checkFile(sheets, fileName, opts = {}) {
   const base = vis.find(s => /基本数据|basic data|general data/i.test(s.name))
   const mat = vis.find(s => /原料|material/i.test(s.name) && s !== base)
   if (base && mat) lciChecks(vis, base, fileName, add, meta, label, cellLoc)
-  const std = opts.standard == null || opts.standard === 'auto' ? defaultStandard(!!gi) : opts.standard
+  // scdd.pro form for a standard: "auto" uses the standard the form was made for
+  const tpl = templateInfo(vis)
+  if (tpl) { meta.type = 'scdd.pro carbon footprint form'; if (tpl.product) meta.product = tpl.product }
+  const std = opts.standard == null || opts.standard === 'auto' ? (tpl && STANDARDS.some(x => x.id === tpl.standard) ? tpl.standard : defaultStandard(!!gi)) : opts.standard
   if (std && ratings.length) {
     applyStandard(std, { ratings, vis, add, label, txt })
     const S = STANDARDS.find(x => x.id === std)
@@ -478,6 +541,17 @@ export function checkFile(sheets, fileName, opts = {}) {
   }
   meta.fields.push(['Datasets rated', String(ratings.length)], ['Factors checked', String(factors.filter(f => f.lo != null).length)])
   return { file: fileName, meta, findings: out, ratings, factors, standard: std }
+}
+
+// The downloadable forms (site/make_carbon_templates.py) have a "Study information" sheet whose A1
+// starts with TEMPLATE_MARK and a row "Standard id" holding the STANDARDS id.
+export const TEMPLATE_MARK = 'scdd.pro carbon footprint form'
+export function isTemplateInfo(sh) { return sh && new RegExp('^' + TEMPLATE_MARK, 'i').test(txt((sh.rows[0] || [])[0])) }
+function templateInfo(vis) {
+  const sh = vis.find(isTemplateInfo)
+  if (!sh) return null
+  const val = re => { const row = sh.rows.find(r => re.test(txt(r[0]))); return row ? txt(row[1]) : '' }
+  return { standard: val(/^standard id/i), product: val(/^product name/i) }
 }
 
 function lciChecks(vis, base, fileName, add, meta, label, cellLoc) {

@@ -1,4 +1,5 @@
 ---
+aside: false
 title: amfori BSCI Audit Report QC
 description: Check amfori BSCI audit reports in your browser
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🌐 amfori BSCI Audit Report QC <Badge type="warning" text="preview" />
+# 🌐 amfori BSCI Audit Report QC
 
 Drop **amfori BSCI audit reports** (platform extract, monitoring result or monitoring summary report) to check that ratings, findings, worker numbers, wages, hours and dates agree. Reports of the same site are compared with each other.
 
@@ -63,4 +64,6 @@ The PDF is read inside your browser and is not uploaded to any server. The first
 Works with the 13-Performance-Area reports (2018 extract, 2021 monitoring result, 2023 monitoring summary). In the 2021 and 2023 layouts the overall rating is a coloured bar, not text, so it is worked out from the 13 area ratings and shown as "derived". The overall-rating rule (BSCI-05) follows a public summary of amfori's method; amfori keeps the calculation internal, so it is a warning, not an error. Reports under the newer 6-area methodology get the text-wide checks only.
 :::
 
-To tabulate many reports, use the [Report data extractor](/en/data-extract.html). · [All tools](/en/tools.html)
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

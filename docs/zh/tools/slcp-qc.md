@@ -1,4 +1,5 @@
 ---
+aside: false
 title: SLCP 核查工具在线质检
 description: 在浏览器中检查已填写的 SLCP 离线核查工具，文件不上传，直接在页面上查看问题清单并下载 Excel 报告
 head:
@@ -27,7 +28,7 @@ import SlcpQcChecker from '../../components/SlcpQcChecker.vue'
 
 - **Error（错误）** = 必须修改 · **Warning（警告）** = 需要复核 · **Info（提示）** = 仅供参考。
 - 点击上方的计数标签可按严重程度筛选，也可以按规则筛选或搜索 Key、题号和内容。
-- **行**是该问题在工具 `SLCP Data Collection Tool` 工作表中的行号。Excel 报告中的行号是链接：把报告与工具放在同一文件夹，点击即可跳到对应行。
+- **行**是该问题在工具 `SLCP Data Collection Tool` 工作表中的行号。
 - 题号取自您所用的工具版本，与工具中显示的一致。
 
 ## 检查内容
@@ -47,6 +48,10 @@ import SlcpQcChecker from '../../components/SlcpQcChecker.vue'
 
 只检查当前适用的题目：被显示/隐藏逻辑隐藏的题目即使保留了旧数值，也不会被报告。
 
-::: warning 使用前请注意
+::: warning 请注意
 本工具用于辅助核查员自查，**不替代** SLCP 核查规程或核查机构的质量审核，结果仅供参考。
 :::
+
+---
+
+🧰 [全部工具](/zh/tools/) · [报告数据提取](/zh/tools/data-extract.html)

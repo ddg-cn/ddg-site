@@ -1,4 +1,5 @@
 ---
+aside: false
 title: SMETA Audit Report QC
 description: Check SMETA audit reports and corrective action plan reports (CAPR) in your browser
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🧭 SMETA Audit Report QC <Badge type="warning" text="preview" />
+# 🧭 SMETA Audit Report QC
 
 Drop a **SMETA audit report** and/or its **corrective action plan report (CAPR)** from the Sedex platform to check that the summary, findings, worker numbers, wages and hours data and dates agree. Select the report and the CAPR of the same audit together and they are compared.
 
@@ -67,4 +68,6 @@ The PDF is read inside your browser and is not uploaded to any server. The first
 Built for SMETA 7 reports generated on the Sedex platform. Older SMETA 6.x Word reports get the text-wide checks only (SMETA-28). Closure evidence is held on Sedex, not in the PDF, so closed findings are checked through their status, dates and verification method. This tool helps a self-check; it does not replace the audit company's quality review.
 :::
 
-To tabulate many reports, use the [Report data extractor](/en/data-extract.html). · [All tools](/en/tools.html)
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

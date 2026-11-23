@@ -2,10 +2,15 @@
 // Turns each page into lines: items with nearly the same baseline are joined,
 // left to right, and keep their x position so table columns can be read.
 
+// opts.maxPages: stop after this many pages (the result says how many the file has: totalPages)
+// opts.onPage(n, total): progress callback
 export async function readPdf(pdfjs, data, opts = {}) {
-  const doc = await pdfjs.getDocument({ data, isEvalSupported: false, ...opts }).promise
+  const { maxPages, onPage, ...pdfOpts } = opts
+  const doc = await pdfjs.getDocument({ data, isEvalSupported: false, ...pdfOpts }).promise
   const pages = []
-  for (let n = 1; n <= doc.numPages; n++) {
+  const last = maxPages ? Math.min(doc.numPages, maxPages) : doc.numPages
+  for (let n = 1; n <= last; n++) {
+    if (onPage && (n === 1 || n % 10 === 0)) { onPage(n, last); await new Promise(r => setTimeout(r, 0)) }
     const page = await doc.getPage(n)
     const vp = page.getViewport({ scale: 1 })
     const tc = await page.getTextContent()
@@ -43,8 +48,9 @@ export async function readPdf(pdfjs, data, opts = {}) {
     pages.push({ n, width: vp.width, height: vp.height, lines: lines.filter(l => l.text) })
     page.cleanup()
   }
+  const totalPages = doc.numPages
   await doc.destroy()
-  return { numPages: pages.length, pages, text: pages.map(p => p.lines.map(l => l.text).join('\n')).join('\n\f\n') }
+  return { numPages: pages.length, totalPages, pages, text: pages.map(p => p.lines.map(l => l.text).join('\n')).join('\n\f\n') }
 }
 
 // Split one line into column cells: items further apart than `gap` points start a new cell.
@@ -59,4 +65,11 @@ export function cells(line, gap = 12) {
   }
   for (const c of out) c.text = c.text.replace(/\s+/g, ' ').trim()
   return out.filter(c => c.text)
+}
+
+// Report type of a document: the first pages decide (a questionnaire that mentions another
+// scheme later on must not be taken for that scheme); the whole text is the fallback.
+export function detectKind(doc, mods, order) {
+  const head = doc.pages.slice(0, 3).map(p => p.lines.map(l => l.text).join('\n')).join('\n')
+  return order.find(k => mods[k].detect(head)) || order.find(k => mods[k].detect(doc.text)) || null
 }

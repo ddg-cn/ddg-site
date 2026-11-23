@@ -1,5 +1,6 @@
 <script setup>
-import { ref, computed, onBeforeUnmount } from 'vue'
+import { ref, computed, watch, onBeforeUnmount } from 'vue'
+import { capText, sizeProblem } from './limits.js'
 import { toSheets, checkFile, crossCheck, RULES } from './carbon/cfqc.js'
 import { STANDARDS } from './carbon/standards.js'
 
@@ -9,7 +10,7 @@ const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs'
 const T = {
   en: {
     drop: 'Drop carbon footprint forms here', or: 'or', choose: 'Choose Excel files',
-    hint: 'Excel forms (.xlsx / .xlsm / .xls): EU battery carbon footprint report (CFR) templates, customer PCF templates with TeR / GeR / TiR columns, and life-cycle inventory data sheets. Several files are cross-checked.',
+    hint: 'Excel forms (.xlsx / .xlsm / .xls / .xlsb) or CSV: EU battery carbon footprint report (CFR) templates, customer PCF templates with TeR / GeR / TiR columns, and life-cycle inventory data sheets. Several files are cross-checked. No form yet? Blank forms per standard are under the tool.',
     privacy: 'Runs entirely in your browser. The files are read on your computer and are not uploaded anywhere.',
     loading: 'Loading the Excel reader…', reading: 'Reading {name} ({i}/{n})…',
     load: 'The Excel reader could not load. Check your internet connection and try again.',
@@ -26,7 +27,7 @@ const T = {
   },
   zh: {
     drop: '将碳足迹表格拖到这里', or: '或', choose: '选择 Excel 文件',
-    hint: 'Excel 表格（.xlsx / .xlsm / .xls）：欧盟电池碳足迹报告（CFR）模板、带 TeR / GeR / TiR 列的客户 PCF 模板，以及生命周期清单数据表。多个文件会做跨文件核对。',
+    hint: 'Excel 表格（.xlsx / .xlsm / .xls / .xlsb）或 CSV：欧盟电池碳足迹报告（CFR）模板、带 TeR / GeR / TiR 列的客户 PCF 模板，以及生命周期清单数据表。多个文件会做跨文件核对。没有表格？工具下方提供各标准的空白表格。',
     privacy: '检查完全在您的浏览器中进行，文件在本机读取，不会上传到任何地方。',
     loading: '正在加载 Excel 读取组件……', reading: '正在读取 {name}（{i}/{n}）……',
     load: 'Excel 读取组件加载失败，请检查网络连接后重试。',
@@ -55,13 +56,14 @@ let X = null
 const std = ref('auto')
 let lastFiles = null
 const stdInfo = computed(() => STANDARDS.find(x => x.id === std.value))
-const stdLabel = { en: { label: 'Check against', auto: 'Automatic (EU battery rules for the CFR template)', none: 'Form checks only (no standard)', rerun: 'Re-check with this standard' }, zh: { label: '对照标准', auto: '自动（CFR 模板按欧盟电池规则）', none: '仅表格检查（不对照标准）', rerun: '按此标准重新检查' } }
+const stdLabel = { en: { label: 'Check against', auto: 'Automatic (by form: EU battery CFR template, scdd.pro forms)', none: 'Form checks only (no standard)', rerun: 'Re-check with this standard' }, zh: { label: '对照标准', auto: '自动（按表格：欧盟电池 CFR 模板、本站表格）', none: '仅表格检查（不对照标准）', rerun: '按此标准重新检查' } }
 
 async function run(fileList) {
-  const files = [...(fileList || [])].filter(f => /\.(xlsx|xlsm|xls)$/i.test(f.name))
-  if (!files.length) return
+  const big = []
+  const files = [...(fileList || [])].filter(f => /\.(xlsx|xlsm|xls|xlsb|csv)$/i.test(f.name)).filter(f => { const p = sizeProblem(f, L.value); if (p) big.push(p); return !p })
+  if (!files.length) { notices.value = big; return }
   lastFiles = files
-  state.value = 'busy'; notices.value = []; results.value = []; crossF.value = []; tab.value = 'issues'
+  state.value = 'busy'; notices.value = big; results.value = []; crossF.value = []; tab.value = 'issues'
   ruleSel.value = ''; fileSel.value = ''; query.value = ''; limit.value = 200; sevOn.value = { error: true, warning: true, info: true }
   stage.value = t.value.loading
   try { if (!X) X = await import(/* @vite-ignore */ XLSX_URL) } catch (e) { notices.value.push(t.value.load); state.value = 'idle'; return }
@@ -75,7 +77,7 @@ async function run(fileList) {
       if (new TextDecoder().decode(buf.slice(0, 11)) === '%TSD-Header') { notices.value.push(fmt(t.value.drm, { name: f.name })); continue }
       const wb = X.read(buf, { type: 'array', cellFormula: false, cellHTML: false })
       const r = checkFile(toSheets(X, wb), f.name, { standard: std.value === 'none' ? '' : std.value })
-      if (!r.findings.length && !r.ratings.length && r.meta.type === 'Carbon footprint form') notices.value.push(fmt(t.value.nothing, { name: f.name }))
+      if (!r.ratings.length && !r.factors.length && /carbon footprint form/i.test(r.meta.type)) notices.value.push(fmt(t.value.nothing, { name: f.name }))
       out.push(r)
     } catch (e) { notices.value.push(fmt(t.value.failed, { name: f.name, err: e.message || e })) }
   }
@@ -86,6 +88,8 @@ async function run(fileList) {
   buildReport().catch(() => {})
 }
 function onPick(e) { run(e.target.files); e.target.value = '' }
+// a new standard re-checks the files already loaded (the same files, read again with the new rules)
+watch(std, () => { if (lastFiles && state.value === 'done') run(lastFiles) })
 function onDrop(e) { dragging.value = false; run(e.dataTransfer.files) }
 function reset() { state.value = 'idle'; results.value = []; notices.value = [] }
 
@@ -147,16 +151,17 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
           <option value="none">{{ stdLabel[L].none }}</option>
         </select>
       </label>
-      <button v-if="state === 'done' && lastFiles" class="btn sm" @click="run(lastFiles)">{{ stdLabel[L].rerun }}</button>
+      
       <p v-if="stdInfo" class="fine">{{ stdInfo.status[L] }} <a :href="stdInfo.url" target="_blank" rel="noopener">↗</a></p>
     </div>
     <div v-if="state === 'idle'" class="drop" :class="{ over: dragging }" @dragenter.prevent="dragging = true" @dragover.prevent @dragleave.prevent="dragging = false" @drop.prevent="onDrop">
       <p class="drop-main">{{ t.drop }}</p>
       <p class="drop-or">{{ t.or }}</p>
       <button class="btn primary" @click="input.click()">{{ t.choose }}</button>
-      <input ref="input" type="file" accept=".xlsx,.xlsm,.xls" multiple hidden @change="onPick">
+      <input ref="input" type="file" accept=".xlsx,.xlsm,.xls,.xlsb,.csv" multiple hidden @change="onPick">
       <p class="fine">{{ t.hint }}</p>
       <p class="fine">🔒 {{ t.privacy }}</p>
+      <p class="fine">📏 {{ capText(L) }}</p>
     </div>
     <div v-for="(m, i) in notices" :key="i" class="alert" role="status">{{ m }}</div>
     <div v-if="state === 'busy'" class="busy" aria-live="polite"><span class="spinner" aria-hidden="true"></span><span>{{ stage }}</span></div>

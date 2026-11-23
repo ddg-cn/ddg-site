@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
-import { readPdf } from './reportqc/extract.js'
+import { readPdf, detectKind } from './reportqc/extract.js'
+import { LIMITS, capText, sizeProblem, pagesNote, readProblem } from './limits.js'
 import * as clarity from './reportqc/clarity.js'
 import * as cdp from './reportqc/cdp.js'
 import * as rba from './reportqc/rba.js'
@@ -21,16 +22,17 @@ const XLSX_URL = 'https://cdn.jsdelivr.net/npm/xlsx@0.18.5/xlsx.mjs'
 const T = {
   en: {
     drop: 'Drop {what} PDF(s) here', or: 'or', choose: 'Choose PDF files',
-    privacy: 'Runs entirely in your browser — the PDF is read on your computer and not uploaded anywhere.',
+    privacy: 'Runs entirely in your browser — the file is read on your computer and not uploaded anywhere.',
     multi: 'You can select several files at once (for example all reports of one site); files are also cross-checked.',
     loading: 'Loading the PDF reader…', reading: 'Reading {name} ({i}/{n})…', checking: 'Checking…',
     error: 'The check could not finish.', load: 'The PDF reader could not load. Check your internet connection and try again.',
     scanned: '{name}: no text found — this looks like a scanned PDF. Please use the text PDF exported from the platform.',
     wrong: '{name} is a different report type ({other}). Use its own checker instead:',
     dropAuto: 'Drop audit report or questionnaire PDFs here',
+    word: '{name} is a Word file. The checks read the page layout of the report, which only a PDF keeps: in Word choose File → Save As → PDF, then drop the PDF.',
     types: 'Recognised: Clarity, RBA, SMETA, amfori BSCI, EcoVadis and CDP. The type of each file is detected automatically.',
     unknown: '{name}: report type not recognised. Supported: Clarity, RBA, SMETA, amfori BSCI, EcoVadis, CDP.',
-    excel: '{name}: Excel files are checked on their own pages:',
+    excel: '{name}: spreadsheets (Excel / CSV) are checked on their own pages:',
     excelLinks: [['Carbon Footprint Form Check', '/en/carbon-qc.html'], ['SLCP Verifier Tool QC', '/en/slcp-qc.html']],
     rulesOf: 'Rules and notes', reports: 'Reports',
     detail: 'Details',
@@ -43,16 +45,17 @@ const T = {
   },
   zh: {
     drop: '将{what} PDF 拖到这里', or: '或', choose: '选择 PDF 文件',
-    privacy: '检查完全在您的浏览器中进行，PDF 在本机读取，不会上传到任何地方。',
+    privacy: '检查完全在您的浏览器中进行，文件在本机读取，不会上传到任何地方。',
     multi: '可一次选择多个文件（例如同一工厂的全部报告），并会做跨文件核对。',
     loading: '正在加载 PDF 读取组件……', reading: '正在读取 {name}（{i}/{n}）……', checking: '正在检查……',
     error: '检查未能完成。', load: 'PDF 读取组件加载失败，请检查网络连接后重试。',
     scanned: '{name}：未读到文字，似乎是扫描件。请使用平台导出的文字版 PDF。',
     wrong: '{name} 看起来是{other}，不是{what}。请改用{other}质检：',
     dropAuto: '将审核报告或问卷 PDF 拖到这里',
+    word: '{name} 是 Word 文件。检查依据报告的版面位置，只有 PDF 能保留：请在 Word 中选择“文件 → 另存为 → PDF”，再拖入 PDF。',
     types: '可识别：Clarity、RBA、SMETA、amfori BSCI、EcoVadis 和 CDP，自动判断每个文件的类型。',
     unknown: '{name}：未能识别报告类型。支持：Clarity、RBA、SMETA、amfori BSCI、EcoVadis、CDP。',
-    excel: '{name}：Excel 文件请在专门页面检查：',
+    excel: '{name}：表格文件（Excel / CSV）请在专门页面检查：',
     excelLinks: [['碳足迹表格检查', '/zh/tools/carbon-qc.html'], ['SLCP 核查工具在线质检', '/zh/tools/slcp-qc.html']],
     rulesOf: '规则与说明', reports: '报告',
     detail: '详细信息',
@@ -104,10 +107,14 @@ function warm() { getPdfjs().catch(() => {}) }
 async function run(fileList) {
   const isPdf = f => /\.pdf$/i.test(f.name) || f.type === 'application/pdf'
   const picked = [...(fileList || [])]
-  const files = picked.filter(isPdf)
-  const xl = auto.value ? picked.filter(f => /\.xls[xm]?$/i.test(f.name)) : []
-  if (!files.length && !xl.length) return
+  const xl = auto.value ? picked.filter(f => /\.(xls[xmb]?|csv)$/i.test(f.name)) : []
+  const word = picked.filter(f => /\.docx?$/i.test(f.name))
+  const big = []
+  const files = picked.filter(isPdf).filter(f => { const p = sizeProblem(f, L.value); if (p) big.push(p); return !p })
+  if (!files.length && !xl.length && !word.length && !big.length) return
   state.value = 'busy'; notices.value = []; results.value = []; crossFindings.value = []
+  for (const m of big) notices.value.push({ msg: m })
+  for (const f of word) notices.value.push({ msg: fmt(t.value.word, { name: f.name }) })
   for (const f of xl) notices.value.push({ msg: fmt(t.value.excel, { name: f.name }), links: t.value.excelLinks })
   if (!files.length) { failMsg.value = ''; state.value = 'failed'; return }
   ruleSel.value = ''; fileSel.value = ''; query.value = ''; limit.value = 300
@@ -117,17 +124,22 @@ async function run(fileList) {
   const out = []
   for (let i = 0; i < files.length; i++) {
     const f = files[i]
-    stage.value = fmt(t.value.reading, { name: f.name, i: i + 1, n: files.length })
+    const label = fmt(t.value.reading, { name: f.name, i: i + 1, n: files.length })
+    stage.value = label
+    let doc
     try {
       const data = new Uint8Array(await f.arrayBuffer())
-      const doc = await readPdf(pdfjs, data, { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/' })
+      doc = await readPdf(pdfjs, data, { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/', maxPages: LIMITS.pdfPages, onPage: (n, tot) => { stage.value = `${label} ${n}/${tot}` } })
+    } catch (e) { notices.value.push({ msg: readProblem(f.name, e, L.value) }); continue }
+    try {
+      if (doc.totalPages > doc.numPages) notices.value.push({ msg: pagesNote(f.name, doc.totalPages, L.value) })
       if (doc.text.replace(/\s/g, '').length < 200) { notices.value.push({ msg: fmt(t.value.scanned, { name: f.name }) }); continue }
       let kind = props.kind
       if (auto.value) {
-        kind = AUTO_ORDER.find(k => MODS[k].detect(doc.text))
+        kind = detectKind(doc, MODS, AUTO_ORDER)
         if (!kind) { notices.value.push({ msg: fmt(t.value.unknown, { name: f.name }) }); continue }
       } else if (!mod.value.detect(doc.text)) {
-        const other = Object.keys(MODS).find(k => k !== props.kind && MODS[k].detect(doc.text))
+        const other = detectKind(doc, MODS, Object.keys(MODS).filter(k => k !== props.kind))
         if (other) { notices.value.push({ msg: fmt(t.value.wrong, { name: f.name, other: NAMES[L.value][other], what: what.value }), link: LINKS[L.value][other] }); continue }
       }
       const r = MODS[kind].check(doc, f.name)
@@ -212,9 +224,10 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
       <p class="drop-main">{{ auto ? t.dropAuto : fmt(t.drop, { what }) }}</p>
       <p class="drop-or">{{ t.or }}</p>
       <button class="btn primary" @click="input.click()">{{ t.choose }}</button>
-      <input ref="input" type="file" accept=".pdf,application/pdf" multiple hidden @change="onPick">
+      <input ref="input" type="file" accept=".pdf,application/pdf,.docx,.doc" multiple hidden @change="onPick">
       <p class="fine">🔒 {{ t.privacy }} {{ t.multi }}</p>
       <p v-if="auto" class="fine">{{ t.types }}</p>
+      <p class="fine">📏 {{ capText(L) }}</p>
     </div>
 
     <div v-if="state === 'failed' && failMsg" class="alert" role="alert"><strong>{{ failMsg }}</strong></div>

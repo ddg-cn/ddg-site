@@ -15,6 +15,8 @@ const T = zh ? {
   table: '查看表格', more: '另有 {n} 组（共 {c} 家企业）未显示。', showAll: '显示全部', showTop: '只显示前 15 组', chart: '查看图表', other: '其他（{n} 项）', yearNote: '“最近更新年份”是 SBTi 最后一次更新该企业记录的年份，不等于目标获批年份。',
   cdpH: 'CDP：A 名单增长，评分企业减少', cdpYear: 'A 名单企业数', cdpTheme: '2025 年各主题 A 评分数', cdpMarket: '进入 A 名单的评分企业比例（最高的市场）', tripleA: '三项 A：2024 年 {a} 家 → 2025 年 {b} 家',
   evH: 'EcoVadis：按比例颁发的奖牌', evMedal: '获得奖牌需进入的前百分比', evAvg: '平均分（满分 100）', evProc: '最弱的主题是可持续采购：全球平均约 {a} 分。',
+  g1: '气候与 ESG 评级', g1Sub: '企业层面的气候目标、信息披露和可持续发展管理评级。',
+  g2: '负责任矿产尽职调查', g2Sub: '矿山和冶炼/精炼厂层面的尽职调查，同时涵盖社会议题（人权、劳工、社区、冲突）和环境议题（水、尾矿、生物多样性）。',
   irmaH: 'IRMA：独立评估的矿山', irmaLevel: '达成等级', irmaRegion: '所在地区（约数）',
   rmiH: 'RMI：负责任矿产冶炼/精炼厂', metal: '金属', level: '供应链环节', rstatus: '尽职调查评估状态', facilities: '家工厂',
   pctOf: '{v}%（{n}/{d}）', countTip: '{n} 家，占 {p}%',
@@ -28,6 +30,8 @@ const T = zh ? {
   table: 'Show table', more: '{n} more groups ({c} companies) not shown.', showAll: 'Show all', showTop: 'Show top 15 only', chart: 'Show chart', other: 'Other ({n} groups)', yearNote: '"Year last updated" is when SBTi last updated the company record, not the year the target was approved.',
   cdpH: 'CDP: a bigger A List from a smaller pool', cdpYear: 'Companies on the A List', cdpTheme: 'A scores by theme, 2025', cdpMarket: 'Share of a market\'s scored companies on the A List (top markets)', tripleA: 'Triple A: {a} in 2024 → {b} in 2025',
   evH: 'EcoVadis: medals graded on a curve', evMedal: 'Medal = top percentile of rated companies', evAvg: 'Average score (out of 100)', evProc: 'The weakest theme is Sustainable Procurement: about {a} on average worldwide.',
+  g1: 'Climate & ESG ratings', g1Sub: 'Company-level climate targets, disclosure and sustainability management ratings.',
+  g2: 'Responsible minerals due diligence', g2Sub: 'Site-level due diligence at mines, smelters and refiners, covering social issues (human rights, labour, communities, conflict) and environmental issues (water, tailings, biodiversity) together.',
   irmaH: 'IRMA: independently assessed mines', irmaLevel: 'Achievement level', irmaRegion: 'Location (approximate)',
   rmiH: 'RMI: responsible minerals smelters and refiners', metal: 'Metal', level: 'Supply-chain level', rstatus: 'Due diligence assessment status', facilities: 'facilities',
   pctOf: '{v}% ({n} of {d})', countTip: '{n} companies, {p}% of the selection',
@@ -122,16 +126,16 @@ const L = (o) => (zh && o.zh) || o.k
     <template v-else>
       <p class="muted">{{ T.built }} {{ data.built }}</p>
 
+      <h2 id="climate" class="grp">{{ T.g1 }}</h2>
+      <p class="muted">{{ T.g1Sub }}</p>
       <div class="tiles">
         <div class="tile"><div class="tl">{{ T.tiles.sbti }}</div><div class="tv">{{ num(data.sbti.companies) }}</div><div class="ts">{{ f(T.tiles.sbtiSub, { a: num(data.sbti.cube.filter(c => c[4] === data.sbti.dims.status.indexOf('Targets set')).reduce((a, c) => a + c[8], 0)), b: num(data.sbti.cube.filter(c => c[6] === data.sbti.dims.netzero.indexOf('Targets set')).reduce((a, c) => a + c[8], 0)) }) }}</div></div>
         <div class="tile"><div class="tl">{{ T.tiles.cdp }}</div><div class="tv">{{ num(data.cdp.aList.at(-1).n) }}</div><div class="ts">{{ f(T.tiles.cdpSub, { a: num(data.cdp.scored.at(-1).n), b: pct(data.cdp.aList.at(-1).n, data.cdp.scored.at(-1).n) }) }}</div></div>
         <div class="tile"><div class="tl">{{ T.tiles.ev }}</div><div class="tv">{{ num(data.ecovadis.rated) }}+</div><div class="ts">{{ f(T.tiles.evSub, { a: data.ecovadis.avgScores.find(x => /Global/.test(x.k))?.v }) }}</div></div>
-        <div class="tile"><div class="tl">{{ T.tiles.irma }}</div><div class="tv">{{ data.irma.sites }}</div><div class="ts">{{ f(T.tiles.irmaSub, { a: data.irma.levels.find(x => x.k === 'IRMA 100')?.n ?? 0 }) }}</div></div>
-        <div class="tile"><div class="tl">{{ T.tiles.rmi }}</div><div class="tv">{{ num(data.rmi.facilities) }}</div><div class="ts">{{ f(T.tiles.rmiSub, { a: num(rmiConformant) }) }}</div></div>
       </div>
 
       <!-- SBTi -->
-      <h2 id="sbti">{{ T.sbtiH }}</h2>
+      <h3 id="sbti">{{ T.sbtiH }}</h3>
       <div class="ctrl">
         <label>{{ T.region }} <select v-model.number="filt.region"><option :value="-1">{{ T.all }}</option><option v-for="(v, i) in data.sbti.dims.region" :key="v" :value="i">{{ v }}</option></select></label>
         <label>{{ T.sector }} <select v-model.number="filt.sector"><option :value="-1">{{ T.all }}</option><option v-for="(v, i) in data.sbti.dims.sector" :key="v" :value="i">{{ v }}</option></select></label>
@@ -154,7 +158,7 @@ const L = (o) => (zh && o.zh) || o.k
       <p class="muted"><button class="link" @click="showTable = !showTable">{{ showTable ? T.chart : T.table }}</button> · <span v-if="angle === 'year'">{{ T.yearNote }} · </span>{{ T.source }}: <a :href="data.sbti.url" target="_blank" rel="noopener">{{ data.sbti.source }}</a>, {{ T.asOf }} {{ data.sbti.asOf }}</p>
 
       <!-- CDP -->
-      <h2 id="cdp">{{ T.cdpH }}</h2>
+      <h3 id="cdp">{{ T.cdpH }}</h3>
       <div class="grid2">
         <div><h4>{{ T.cdpYear }}</h4><GlanceBars :items="data.cdp.aList.map(x => ({ k: String(x.year), v: x.n, tip: (data.cdp.scored.find(s => s.year === x.year) ? pct(x.n, data.cdp.scored.find(s => s.year === x.year).n) + '%' : '') }))" :lang="lang" /></div>
         <div><h4>{{ T.cdpTheme }}</h4><GlanceBars :items="data.cdp.themes2025.map(x => ({ k: x.k, label: L(x), v: x.n }))" :lang="lang" /></div>
@@ -164,15 +168,22 @@ const L = (o) => (zh && o.zh) || o.k
       <p class="muted">{{ f(T.tripleA, { a: data.cdp.tripleA[0].n, b: data.cdp.tripleA.at(-1).n }) }} · {{ T.source }}: <a :href="data.cdp.url" target="_blank" rel="noopener">{{ data.cdp.source }}</a>, {{ data.cdp.asOf }}</p>
 
       <!-- EcoVadis -->
-      <h2 id="ecovadis">{{ T.evH }}</h2>
+      <h3 id="ecovadis">{{ T.evH }}</h3>
       <div class="grid2">
         <div><h4>{{ T.evMedal }}</h4><GlanceBars :items="data.ecovadis.medals.map(x => ({ k: x.k, label: L(x), v: x.top }))" unit="%" :max="100" :lang="lang" /></div>
         <div><h4>{{ T.evAvg }}</h4><GlanceBars :items="data.ecovadis.avgScores.map(x => ({ k: x.k, label: L(x), v: x.v }))" :max="100" :digits="1" :lang="lang" /></div>
       </div>
       <p class="muted">{{ f(T.evProc, { a: data.ecovadis.procurement }) }} {{ T.source }}: <a :href="data.ecovadis.url" target="_blank" rel="noopener">{{ data.ecovadis.source }}</a>, {{ data.ecovadis.asOf }}</p>
 
+      <h2 id="minerals" class="grp">{{ T.g2 }}</h2>
+      <p class="muted">{{ T.g2Sub }}</p>
+      <div class="tiles">
+        <div class="tile"><div class="tl">{{ T.tiles.irma }}</div><div class="tv">{{ data.irma.sites }}</div><div class="ts">{{ f(T.tiles.irmaSub, { a: data.irma.levels.find(x => x.k === 'IRMA 100')?.n ?? 0 }) }}</div></div>
+        <div class="tile"><div class="tl">{{ T.tiles.rmi }}</div><div class="tv">{{ num(data.rmi.facilities) }}</div><div class="ts">{{ f(T.tiles.rmiSub, { a: num(rmiConformant) }) }}</div></div>
+      </div>
+
       <!-- IRMA -->
-      <h2 id="irma">{{ T.irmaH }}</h2>
+      <h3 id="irma">{{ T.irmaH }}</h3>
       <div class="grid2">
         <div><h4>{{ T.irmaLevel }}</h4><GlanceBars :items="data.irma.levels.map(x => ({ k: x.k, label: L(x), v: x.n }))" :lang="lang" /></div>
         <div><h4>{{ T.irmaRegion }}</h4><GlanceBars :items="data.irma.regions.map(x => ({ k: x.k, label: L(x), v: x.n }))" :lang="lang" /></div>
@@ -180,7 +191,7 @@ const L = (o) => (zh && o.zh) || o.k
       <p class="muted">{{ T.source }}: <a :href="data.irma.url" target="_blank" rel="noopener">{{ data.irma.source }}</a>, {{ data.irma.asOf }}</p>
 
       <!-- RMI -->
-      <h2 id="rmi">{{ T.rmiH }}</h2>
+      <h3 id="rmi">{{ T.rmiH }}</h3>
       <div class="ctrl">
         <label>{{ T.metal }} <select v-model="rMetal"><option value="">{{ T.all }}</option><option v-for="m in metals" :key="m" :value="m">{{ m }}</option></select></label>
       </div>
@@ -197,6 +208,7 @@ const L = (o) => (zh && o.zh) || o.k
 <style scoped>
 .eg { margin-top: 16px; }
 .muted { color: var(--vp-c-text-2); font-size: 13px; }
+.grp { margin-top: 32px; border-top: none; padding-top: 0; }
 .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(170px, 1fr)); gap: 10px; margin: 12px 0 8px; }
 .tile { border: 1px solid var(--vp-c-divider); border-radius: 10px; padding: 10px 12px; background: var(--vp-c-bg-soft); }
 .tl { font-size: 12px; color: var(--vp-c-text-2); }

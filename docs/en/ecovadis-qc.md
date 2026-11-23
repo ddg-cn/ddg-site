@@ -1,4 +1,5 @@
 ---
+aside: false
 title: EcoVadis Questionnaire QC
 description: Check your EcoVadis questionnaire export (Survey Full PDF) in your browser before submitting
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🌱 EcoVadis Questionnaire QC <Badge type="warning" text="preview" />
+# 🌱 EcoVadis Questionnaire QC
 
 Download the **EcoVadis questionnaire** as PDF (*Survey Full*) and drop it here before you submit. The checker looks at question status, the documents you attached and the KPI values.
 
@@ -52,8 +53,10 @@ It reads each question (status, code, impact), each attached document (name, typ
 | EV-14 | Warning | Placeholder or unfinished text |
 | EV-15 | Info | Document comment explains a gap or partial evidence |
 
-[All tools](/en/tools.html)
-
 ::: warning Please note
 This is a self-check aid built from sample reports. Text rules (for example "Yes answer whose comment describes a gap") are heuristics and can flag a correct answer. It does **not** replace the scheme's own quality review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

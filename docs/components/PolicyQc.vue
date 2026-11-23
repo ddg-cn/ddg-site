@@ -3,6 +3,7 @@ import { ref, computed, onBeforeUnmount } from 'vue'
 import { readDocx, readText, fromPdf } from './policyqc/read.js'
 import { checkSet, RULES } from './policyqc/rules.js'
 import { readPdf } from './reportqc/extract.js'
+import { LIMITS, capText, sizeProblem, pagesNote, readProblem } from './limits.js'
 
 const props = defineProps({ lang: { type: String, default: 'en' } })
 const FFLATE = 'https://cdn.jsdelivr.net/npm/fflate@0.8.2/esm/browser.js'
@@ -81,9 +82,10 @@ async function getPdfjs() {
 function warm() { getFflate().catch(() => {}) }
 
 async function run(fileList) {
-  const files = [...(fileList || [])]
-  if (!files.length) return
-  state.value = 'busy'; notices.value = []; res.value = null; tab.value = 'issues'
+  const big = []
+  const files = [...(fileList || [])].filter(f => { const p = sizeProblem(f, L.value); if (p) big.push(p); return !p })
+  if (!files.length) { notices.value = big.map(msg => ({ msg })); return }
+  state.value = 'busy'; notices.value = big.map(msg => ({ msg })); res.value = null; tab.value = 'issues'
   ruleSel.value = ''; query.value = ''; limit.value = 200; sevOn.value = { error: true, warning: true, info: true }
   stage.value = t.value.loading
   try {
@@ -97,13 +99,14 @@ async function run(fileList) {
     try {
       if (/\.docx$/i.test(f.name)) docs.push(readDocx(fflate.unzipSync, new Uint8Array(await f.arrayBuffer()), f.name))
       else if (/\.pdf$/i.test(f.name)) {
-        const pdf = await readPdf(pdfjs, new Uint8Array(await f.arrayBuffer()), { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/' })
+        const pdf = await readPdf(pdfjs, new Uint8Array(await f.arrayBuffer()), { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/', maxPages: LIMITS.pdfPages })
+        if (pdf.totalPages > pdf.numPages) notices.value.push({ msg: pagesNote(f.name, pdf.totalPages, L.value) })
         if (pdf.text.replace(/\s/g, '').length < 50) { notices.value.push({ msg: fmt(t.value.scanned, { name: f.name }) }); continue }
         docs.push(fromPdf(pdf, f.name))
       } else if (/\.(txt|md|markdown)$/i.test(f.name)) docs.push(readText(await f.text(), f.name))
       else if (/\.doc$/i.test(f.name)) notices.value.push({ msg: fmt(t.value.doc, { name: f.name }) })
       else notices.value.push({ msg: fmt(t.value.skip, { name: f.name }) })
-    } catch (e) { notices.value.push({ msg: fmt(t.value.failed, { name: f.name, err: e.message || e }) }) }
+    } catch (e) { notices.value.push({ msg: readProblem(f.name, e, L.value) }) }
   }
   if (docs.length < 2) { notices.value.push({ msg: t.value.one }); state.value = 'idle'; return }
   stage.value = fmt(t.value.checking, { n: docs.length })
@@ -178,6 +181,7 @@ onBeforeUnmount(() => { if (reportUrl.value) URL.revokeObjectURL(reportUrl.value
       <input ref="input" type="file" accept=".docx,.pdf,.txt,.md,.doc" multiple hidden @change="onPick">
       <p class="fine">{{ t.hint }}</p>
       <p class="fine">🔒 {{ t.privacy }}</p>
+      <p class="fine">📏 {{ capText(L) }}</p>
     </div>
 
     <div v-for="(n, i) in notices" :key="i" class="alert warn" role="status">{{ n.msg }}</div>

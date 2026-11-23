@@ -1,4 +1,5 @@
 ---
+aside: false
 title: Clarity Audit Report QC
 description: Check Bureau Veritas CLARITY field audit and self-assessment reports in your browser before they go to the client
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🔎 Clarity Audit Report QC <Badge type="warning" text="preview" />
+# 🔎 Clarity Audit Report QC
 
 Drop one or more **CLARITY field audit reports** (Social, Environment, Health & Safety, Business Ethics and the Summary report, or the self-assessment versions) to check them before release. Select all reports of one site together and they are also cross-checked.
 
@@ -64,8 +65,10 @@ It reads the cover page, the section relevancy and score tables, the audit summa
 | CL-26 | Error | Summary report: number of employees or strengths/weaknesses missing |
 | CL-27 | Warning | Files of one site disagree (site name, auditor, or audit dates more than 60 days apart) |
 
-[All tools](/en/tools.html)
-
 ::: warning Please note
 This is a self-check aid built from sample reports. Text rules (for example "Yes answer whose comment describes a gap") are heuristics and can flag a correct answer. It does **not** replace the scheme's own quality review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

@@ -1,4 +1,5 @@
 ---
+aside: false
 title: SLCP Verifier Tool Online QC
 description: Check a filled offline SLCP Verifier Tool in your browser - nothing is uploaded - and see every finding on the page or download an Excel report
 head:
@@ -27,7 +28,7 @@ The checker (Python) runs inside your browser. The tool is read in memory on you
 
 - **Error** = must fix · **Warning** = review · **Info** = note.
 - Click a count above to filter by severity. You can also filter by rule or search for a key, question number or text.
-- **Row** is the row in the tool's `SLCP Data Collection Tool` sheet. In the Excel report the row is a link: keep the report in the same folder as the tool and it opens that row.
+- **Row** is the row in the tool's `SLCP Data Collection Tool` sheet.
 - Question numbers come from your tool, so they match what you see in it.
 
 ## What it checks
@@ -50,3 +51,7 @@ Only questions that currently apply are checked. A question hidden by show/hide 
 ::: warning Please note
 This is a self-check aid for verifiers. It does **not** replace the SLCP verification protocol or a verifier body's quality review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Report data extractor](/en/data-extract.html)

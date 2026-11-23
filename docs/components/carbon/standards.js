@@ -101,7 +101,11 @@ export function applyStandard(id, ctx) {
   }
   // CF-34: electricity modelling
   const elecRows = ratings.filter(r => ELEC.test(`${r.item} ${r.db}`))
-  const sheetText = vis.filter(s => !/^(guide|content|glossary|auxi|instruction)/i.test(s.name)).map(s => s.rows.map(row => row.map(txt).join(' ')).join('\n')).join('\n')
+  // on the scdd.pro forms, a study-information row counts only when its answer (column B) is filled in,
+  // so the printed labels ("Cut-off rule …") do not pass the checks by themselves
+  const isTpl = sh => /^scdd\.pro carbon footprint form/i.test(txt((sh.rows[0] || [])[0]))
+  const sheetText = vis.filter(s => !/^(guide|content|glossary|auxi|instruction)/i.test(s.name))
+    .map(s => (isTpl(s) ? s.rows.slice(1).filter(row => txt(row[1])) : s.rows).map(row => row.map(txt).join(' ')).join('\n')).join('\n')
   if (S.noInstruments) {
     const inst = elecRows.filter(r => INSTRUMENT.test(`${r.item} ${r.db} ${r.src}`)).map(loc)
     if (inst.length || INSTRUMENT.test(sheetText)) add('CF-34', { sev: inst.length ? 'error' : 'warning', msg: `${name}: electricity must be the national average consumption mix (or a direct line from the same installation); guarantees of origin, PPAs and other contractual instruments are not allowed.${inst.length ? ' Rows: ' + rowsShort(inst) : ' The form mentions green electricity or certificates.'}`, fix: 'Model grid electricity with the national consumption mix dataset; keep certificates out of the footprint.' })
@@ -118,8 +122,10 @@ export function applyStandard(id, ctx) {
   }
   // CF-36: cut-off
   if (S.cutoff) {
-    const m = /cut-?off[^\n%]{0,80}?(\d+(?:\.\d+)?)\s*%|截断[^\n%]{0,40}?(\d+(?:\.\d+)?)\s*%/i.exec(sheetText)
-    const v = m ? parseFloat(m[1] || m[2]) : null
+    // "cut-off … 1 %", or a bare number at the end of the line (the forms' "Cut-off rule" answer cell)
+    const m = /cut-?off[^\n%]{0,80}?(\d+(?:\.\d+)?)\s*(?:%|$)|截断[^\n%]{0,40}?(\d+(?:\.\d+)?)\s*(?:%|$)/im.exec(sheetText)
+    const v0 = m ? parseFloat(m[1] || m[2]) : null
+    const v = v0 != null && v0 <= 100 ? v0 : null
     if (v != null && v > S.cutoff) add('CF-36', { msg: `${name}: cut-off ${v}% stated; the limit is ${S.cutoff}%${id === 'battery' ? ' of the mass of each component' : ''}.`, fix: `Bring the excluded share to ${S.cutoff}% or less${id === 'battery' ? ', and add the missing mass to the input with the highest footprint' : ''}.` })
   }
   // CF-37: offsets

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
+import { LIMITS, capText, sizeProblem } from './limits.js'
 
 const props = defineProps({ lang: { type: String, default: 'en' } })
 
@@ -313,6 +314,8 @@ async function load(src) {
 }
 async function loadFresh(src) {
   const name = src.file ? src.file.name : nameFromUrl(src.url)
+  const tooBig = src.file && sizeProblem(src.file, props.lang)
+  if (tooBig) throw Object.assign(new Error(tooBig), { code: 'e_size', msg: tooBig })
   const buf = src.file ? await src.file.arrayBuffer() : await fetchPdf(src.url, name)
   if (!isPdf(buf)) throw Object.assign(new Error('not a pdf'), { code: 'e_notpdf' })
   return readPdf(buf, name)
@@ -345,7 +348,7 @@ async function run(src, prevS) {
     makeCsv()
     state.value = 'done'
   } catch (e) {
-    fail.value = { code: e.code || 'error', detail: String(e.message || e).slice(0, 400) }
+    fail.value = { code: e.code || 'error', msg: e.msg || '', detail: e.msg ? '' : String(e.message || e).slice(0, 400) }
     state.value = 'failed'
   } finally { stopTimer() }
 }
@@ -455,9 +458,10 @@ onBeforeUnmount(() => {
         <button class="btn primary big" :disabled="!curSrc" @click="startRun">▶ {{ prevReady ? t.runCompare : t.run }}</button>
       </div>
       <p class="fine">🔒 {{ t.privacy }}</p>
+      <p class="fine">📏 {{ capText(lang) }}</p>
 
       <div v-if="state === 'failed'" class="alert" role="alert">
-        <strong>{{ t[fail.code] || t.error }}</strong>
+        <strong>{{ fail.msg || t[fail.code] || t.error }}</strong>
         <details v-if="fail.detail"><summary>{{ t.detail }}</summary><code>{{ fail.detail }}</code></details>
       </div>
     </template>

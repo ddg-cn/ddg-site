@@ -1,4 +1,5 @@
 ---
+aside: false
 title: Report QC
 description: Drop any Clarity, RBA, SMETA, amfori BSCI, EcoVadis or CDP PDF and check it in your browser; the report type is detected automatically
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🧾 Report QC <Badge type="warning" text="preview" />
+# 🧾 Report QC
 
 One place for all PDF report checks. Drop any mix of **Clarity, RBA, SMETA, amfori BSCI, EcoVadis and CDP** PDFs: each file's type is detected and it gets the same checks as on its own page. Reports of the same type are also compared with each other.
 
@@ -41,6 +42,7 @@ The PDF is read inside your browser and is not uploaded to any server. The first
 | EcoVadis questionnaire (Survey Full) | [EcoVadis Questionnaire QC](/en/ecovadis-qc.html) |
 | CDP questionnaire response | [CDP Response QC](/en/cdp-qc.html) |
 
-Excel files have their own pages: [Carbon Footprint Form Check](/en/carbon-qc.html) (with the standard selector) and [SLCP Verifier Tool QC](/en/slcp-qc.html). To pull figures out of many reports into one table, use the [Report Data Extractor](/en/data-extract.html).
 
-[All tools](/en/tools.html)
+---
+
+🧰 [All tools](/en/tools.html) · [Report data extractor](/en/data-extract.html)

@@ -1,5 +1,6 @@
 <script setup>
 import { ref, computed, onBeforeUnmount } from 'vue'
+import { capText, sizeProblem } from './limits.js'
 
 const props = defineProps({ lang: { type: String, default: 'en' } })
 
@@ -107,6 +108,8 @@ function stopTimer() { if (timer) clearInterval(timer); timer = null }
 
 async function run(file) {
   if (!file) return
+  const tooBig = sizeProblem(file, props.lang)
+  if (tooBig) { fail.value = { code: 'size', msg: tooBig }; state.value = 'failed'; return }
   fileName.value = file.name
   fail.value = null; result.value = null
   ruleSel.value = ''; query.value = ''; limit.value = 300
@@ -154,10 +157,11 @@ onBeforeUnmount(() => { stopTimer(); if (worker) worker.terminate(); if (reportU
       <button class="btn primary" @click="input.click()">{{ t.choose }}</button>
       <input ref="input" type="file" accept=".xlsm,.xlsx" hidden @change="onPick">
       <p class="fine">🔒 {{ t.privacy }} {{ t.supports }}</p>
+      <p class="fine">📏 {{ capText(lang) }}</p>
     </div>
 
     <div v-if="state === 'failed'" class="alert" role="alert">
-      <strong>{{ t[fail.code] || t.error }}</strong>
+      <strong>{{ fail.msg || t[fail.code] || t.error }}</strong>
       <details v-if="fail.detail && fail.code !== 'unsupported'"><summary>{{ t.detail }}</summary><code>{{ fail.detail }}</code></details>
     </div>
 
@@ -178,7 +182,6 @@ onBeforeUnmount(() => { stopTimer(); if (worker) worker.terminate(); if (reportU
           <button class="btn" @click="reset">{{ t.again }}</button>
         </div>
       </div>
-      <p class="fine">{{ t.reportTip }}</p>
 
       <div class="chips">
         <button v-for="(lbl, sv) in { Error: t.errors, Warning: t.warnings, Info: t.info }" :key="sv"

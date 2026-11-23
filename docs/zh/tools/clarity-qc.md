@@ -1,4 +1,5 @@
 ---
+aside: false
 title: Clarity 审核报告质检
 description: 在浏览器中检查必维 CLARITY 现场审核及自评报告，交付客户前发现问题
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🔎 Clarity 审核报告质检 <Badge type="warning" text="预览" />
+# 🔎 Clarity 审核报告质检
 
 把一份或多份 **CLARITY 现场审核报告**（社会责任、环境、健康安全、商业道德及汇总报告，或自评版本）拖到下方，在发布前进行检查。同时选择同一工厂的全部报告，还会做跨报告核对。
 
@@ -64,8 +65,10 @@ PDF 在您的浏览器中读取，不会上传到任何服务器。首次检查�
 | CL-26 | 错误 | 汇总报告：缺少员工人数或优势/不足 |
 | CL-27 | 警告 | 同一工厂的多份报告不一致（工厂名称、审核员，或审核日期相差超过 60 天） |
 
-[全部工具](/en/tools.html)
-
 ::: warning 请注意
 本工具是根据样本报告编写的自查辅助工具。文字类规则（如“答案为 Yes 但评论描述了缺陷”）属于经验判断，可能误报正确的答案。它 **不能** 替代各体系自身的质量审核。
 :::
+
+---
+
+🧰 [全部工具](/zh/tools/) · [报告质检](/zh/tools/report-qc.html) · [报告数据提取](/zh/tools/data-extract.html)

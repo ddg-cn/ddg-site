@@ -1,4 +1,5 @@
 ---
+aside: false
 title: SMETA 审核报告质检
 description: 在浏览器中检查 SMETA 审核报告和纠正措施计划报告（CAPR）
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🧭 SMETA 审核报告质检 <Badge type="warning" text="预览" />
+# 🧭 SMETA 审核报告质检
 
 把 Sedex 平台上的 **SMETA 审核报告**和/或**纠正措施计划报告（CAPR）**拖到下方，检查发现汇总、发现明细、工人数据、工资工时数据和日期是否前后一致。同时选择同一审核的报告和 CAPR，会对两者进行比对。
 
@@ -67,4 +68,6 @@ PDF 在您的浏览器中读取，不会上传到任何服务器。首次检查�
 适用于 Sedex 平台生成的 SMETA 7 报告。较早的 SMETA 6.x Word 报告只做全文检查（SMETA-28）。关闭证据保存在 Sedex 平台而非 PDF 中，因此已关闭的发现按状态、日期和验证方式检查。本工具为自查辅助，不能替代审核机构的质量审查。
 :::
 
-[报告数据提取](/zh/tools/data-extract.html)可把多份报告的字段整理成一张 Excel 表。 · [全部工具](/en/tools.html)
+---
+
+🧰 [全部工具](/zh/tools/) · [报告质检](/zh/tools/report-qc.html) · [报告数据提取](/zh/tools/data-extract.html)

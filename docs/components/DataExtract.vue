@@ -1,6 +1,7 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
-import { readPdf } from './reportqc/extract.js'
+import { readPdf, detectKind } from './reportqc/extract.js'
+import { LIMITS, capText, sizeProblem, pagesNote, readProblem } from './limits.js'
 import * as clarity from './reportqc/clarity.js'
 import * as cdp from './reportqc/cdp.js'
 import * as rba from './reportqc/rba.js'
@@ -24,7 +25,7 @@ const NAMES = {
 const T = {
   en: {
     drop: 'Drop reports here', or: 'or', choose: 'Choose files',
-    accepts: 'PDF: Clarity, RBA, SMETA, amfori BSCI, EcoVadis, CDP · Excel: SLCP Verifier / Facility Tool, carbon footprint forms. Mix types freely; each type gets its own table.',
+    accepts: 'PDF: Clarity, RBA, SMETA, amfori BSCI, EcoVadis, CDP · Excel (.xlsx / .xlsm / .xls / .xlsb) or CSV: SLCP Verifier / Facility Tool, carbon footprint forms. Mix types freely; each type gets its own table.',
     privacy: 'Runs entirely in your browser: files are read on your computer, nothing is uploaded or saved on the website.',
     loading: 'Loading the readers…', reading: 'Reading {name} ({i}/{n})…', load: 'The PDF or Excel reader could not load. Check your internet connection and try again.',
     scanned: '{name}: no text found; this looks like a scanned PDF.', unknown: '{name}: not recognised as one of the supported report types.',
@@ -37,7 +38,7 @@ const T = {
   },
   zh: {
     drop: '将报告拖到这里', or: '或', choose: '选择文件',
-    accepts: 'PDF：Clarity、RBA、SMETA、amfori BSCI、EcoVadis、CDP · Excel：SLCP 核查/工厂工具、碳足迹表格。可混合上传，每类报告单独成表。',
+    accepts: 'PDF：Clarity、RBA、SMETA、amfori BSCI、EcoVadis、CDP · Excel（.xlsx / .xlsm / .xls / .xlsb）或 CSV：SLCP 核查/工厂工具、碳足迹表格。可混合上传，每类报告单独成表。',
     privacy: '完全在您的浏览器中运行：文件在本机读取，不会上传，也不会保存在网站上。',
     loading: '正在加载读取组件……', reading: '正在读取 {name}（{i}/{n}）……', load: 'PDF 或 Excel 读取组件加载失败，请检查网络连接后重试。',
     scanned: '{name}：未读到文字，似乎是扫描件。', unknown: '{name}：不是支持的报告类型。',
@@ -108,9 +109,10 @@ async function getPdfjs() {
 async function getX() { if (!X) X = await import(/* @vite-ignore */ XLSX_URL); return X }
 
 async function run(fileList) {
-  const files = [...(fileList || [])].filter(f => /\.(pdf|xlsx|xlsm|xls)$/i.test(f.name))
-  if (!files.length) return
-  busy.value = true; notices.value = []
+  const big = []
+  const files = [...(fileList || [])].filter(f => /\.(pdf|xlsx|xlsm|xls|xlsb|csv)$/i.test(f.name)).filter(f => { const p = sizeProblem(f, L.value); if (p) big.push(p); return !p })
+  if (!files.length) { notices.value = big; return }
+  busy.value = true; notices.value = big
   stage.value = t.value.loading
   try {
     if (files.some(f => /\.pdf$/i.test(f.name))) await getPdfjs()
@@ -124,9 +126,13 @@ async function run(fileList) {
       const buf = new Uint8Array(await f.arrayBuffer())
       let kind = null, out = null
       if (/\.pdf$/i.test(f.name)) {
-        const doc = await readPdf(pdfjs, buf, { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/' })
+        let doc
+        try {
+          doc = await readPdf(pdfjs, buf, { cMapUrl: PDFJS + 'cmaps/', cMapPacked: true, standardFontDataUrl: PDFJS + 'standard_fonts/', maxPages: LIMITS.pdfPages })
+        } catch (e) { notices.value.push(readProblem(f.name, e, L.value)); continue }
+        if (doc.totalPages > doc.numPages) notices.value.push(pagesNote(f.name, doc.totalPages, L.value))
         if (doc.text.replace(/\s/g, '').length < 200) { notices.value.push(fmt(t.value.scanned, { name: f.name })); continue }
-        kind = Object.keys(PDF_MODS).find(k => PDF_MODS[k].detect(doc.text))
+        kind = detectKind(doc, PDF_MODS, Object.keys(PDF_MODS))
         if (kind) { const r = PDF_MODS[kind].check(doc, f.name); out = PDF_MODS[kind].extract(r.R, f.name) }
       } else {
         if (new TextDecoder().decode(buf.slice(0, 11)) === '%TSD-Header') { notices.value.push(fmt(t.value.drm, { name: f.name })); continue }
@@ -216,9 +222,10 @@ const cell = v => (v == null ? '' : String(v).length > 140 ? String(v).slice(0, 
       <p class="drop-main">📄 {{ t.drop }}</p>
       <p class="drop-or">{{ t.or }}</p>
       <button class="btn primary" @click="input.click()">{{ kinds.length ? t.add : t.choose }}</button>
-      <input ref="input" type="file" accept=".pdf,.xlsx,.xlsm,.xls" multiple hidden @change="onPick">
+      <input ref="input" type="file" accept=".pdf,.xlsx,.xlsm,.xls,.xlsb,.csv" multiple hidden @change="onPick">
       <p class="fine">{{ t.accepts }}</p>
       <p class="fine">🔒 {{ t.privacy }}</p>
+      <p class="fine">📏 {{ capText(L) }}</p>
     </div>
 
     <div v-for="(n, i) in notices" :key="i" class="alert warn" role="status">{{ n }}</div>

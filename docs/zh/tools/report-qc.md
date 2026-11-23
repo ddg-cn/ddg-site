@@ -1,4 +1,5 @@
 ---
+aside: false
 title: 报告质检
 description: 拖入任意 Clarity、RBA、SMETA、amfori BSCI、EcoVadis 或 CDP PDF，在浏览器中检查，自动识别报告类型
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🧾 报告质检 <Badge type="warning" text="预览" />
+# 🧾 报告质检
 
 所有 PDF 报告检查集中在一处。可同时拖入 **Clarity、RBA、SMETA、amfori BSCI、EcoVadis 和 CDP** 的 PDF：自动识别每个文件的类型，检查内容与各自专门页面相同；同类报告之间还会互相核对。
 
@@ -41,6 +42,7 @@ PDF 在浏览器中读取，不会上传到任何服务器。首次检查会下�
 | EcoVadis 问卷（Survey Full） | [EcoVadis 问卷质检](/zh/tools/ecovadis-qc.html) |
 | CDP 问卷回答 | [CDP 问卷回答质检](/zh/tools/cdp-qc.html) |
 
-Excel 文件请使用专门页面：[碳足迹表格检查](/zh/tools/carbon-qc.html)（可选择对照标准）和 [SLCP 核查工具在线质检](/zh/tools/slcp-qc.html)。如需把多份报告的数据汇总成一张表，请使用 [报告数据提取](/zh/tools/data-extract.html)。
 
-[全部工具](/zh/tools/)
+---
+
+🧰 [全部工具](/zh/tools/) · [报告数据提取](/zh/tools/data-extract.html)

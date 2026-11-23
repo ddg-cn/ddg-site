@@ -1,4 +1,5 @@
 ---
+aside: false
 title: CDP Response QC
 description: Check your CDP questionnaire response export in your browser before submitting it
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🌍 CDP Response QC <Badge type="warning" text="preview" />
+# 🌍 CDP Response QC
 
 Export your **CDP corporate questionnaire response** from the CDP portal and save it as PDF, then drop it here before you submit. The export leaves out unanswered questions, so the checker also lists core questions that are missing. CDP score reports are recognised and summarised, but there is nothing in them to check.
 
@@ -56,8 +57,10 @@ It reads every question and data point in the export (selected options, numbers,
 | CDP-18 | Info | CDP score report (not a questionnaire response) |
 | CDP-19 | Warning | Placeholder or unfinished text |
 
-[All tools](/en/tools.html)
-
 ::: warning Please note
 This is a self-check aid built from sample reports. Text rules (for example "Yes answer whose comment describes a gap") are heuristics and can flag a correct answer. It does **not** replace the scheme's own quality review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

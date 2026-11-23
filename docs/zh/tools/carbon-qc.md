@@ -12,7 +12,7 @@ head:
 import CarbonQc from '../../components/CarbonQc.vue'
 </script>
 
-# 🌡️ 碳足迹表格检查 <Badge type="warning" text="预览" />
+# 🌡️ 碳足迹表格检查
 
 把**碳足迹表格**（欧盟电池碳足迹报告模板、客户 PCF 模板、生命周期清单数据表）拖到下方，检查：
 - 各组件是否选用了对应材料的数据集
@@ -37,7 +37,7 @@ import CarbonQc from '../../components/CarbonQc.vue'
 
 ## 对照标准检查
 
-在上传区上方选择标准。下表之外的表格检查始终运行；所选标准会增加其专门规则（CF-30 至 CF-38）。**自动**：欧盟电池碳足迹报告模板按欧盟电池规则检查，其他表格不对照标准。
+在上传区上方选择标准。下表之外的表格检查始终运行；所选标准会增加其专门规则（CF-30 至 CF-38）。**自动**：欧盟电池碳足迹报告模板按欧盟电池规则检查，下方提供的表格按其对应标准检查，其他表格不对照标准。检查后更换标准，会立即按新标准重新检查同一批文件。
 
 | 标准 | 数据质量评分 | 主要检查 |
 |---|---|---|
@@ -48,6 +48,14 @@ import CarbonQc from '../../components/CarbonQc.vue'
 | PACT v3.0 · Catena-X v4 · TfS v3.0 | TeR、GeR、TiR，1–5 | TeR 1–2 仅限一手数据（数据库数据集最多评 3）；截断 ≤ 3%；IPCC AR6；电力：供应商特定 → 剩余组合；记录一手数据占比 |
 
 来源：[(EU) 2023/1542](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R1542) 及 [2024 年 4 月方法草案](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=PI_COM:Ares(2024)3131389)（尚未通过）；[(EU) 2021/2279](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32021H2279)；[GHG Protocol 产品标准](https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf)；[PACT 方法 v3.0](https://www.carbon-transparency.org/resources/pact-methodology-v3-methodology-for-calculating-and-exchanging-cradle-to-gate-product-carbon-footprints-pcfs)；[Catena-X PCF 规则手册 v4](https://catena-x.net/wp-content/uploads/2025/10/Catena-X-Product-Carbon-Footprint-Rulebook_v4-with-line-numbers.pdf)；[TfS PCF 指南 v3.0](https://tfs-initiative.com/app/uploads/2024/12/TfS-PCF-Guidelines-2024.pdf)。ISO 14067 为付费标准，只检查相关内容是否有记录，请对照标准原文确认。表格无法判断哪些是“最相关过程”，因此仅适用于最相关过程的规则以警告提示，供复核。
+
+## 各标准的空白表格
+
+还没有表格，或客户表格未被识别？请下载对应标准的表格，填写后拖到上方检查。表格为中英双语，含填写说明（附该标准的要求）、研究信息和清单三个工作表，清单会自动计算排放量和 DQR。填好的表格在**自动**模式下按其对应的标准检查。
+
+[欧盟电池](/tools/carbon-templates/pcf-form-battery.xlsx) · [PEF](/tools/carbon-templates/pcf-form-pef.xlsx) · [ISO 14067](/tools/carbon-templates/pcf-form-iso14067.xlsx) · [GHG Protocol](/tools/carbon-templates/pcf-form-ghg.xlsx) · [PACT](/tools/carbon-templates/pcf-form-pact.xlsx) · [Catena-X](/tools/carbon-templates/pcf-form-catenax.xlsx) · [TfS](/tools/carbon-templates/pcf-form-tfs.xlsx)
+
+其他表格按列名识别，列的顺序不限：材料或组件名称、用量、排放因子，以及（如有）数据来源、数据集、地理、TeR / GeR / TiR / P 和 DQR（可用简写、英文全称如 "Technological representativeness" 或中文名称如"技术代表性"）。支持 Excel（.xlsx、.xlsm、.xls、.xlsb）和 CSV。
 
 ## 建议评分规则
 
@@ -97,8 +105,10 @@ import CarbonQc from '../../components/CarbonQc.vue'
 
 因子范围取自公开资料（铝：IAI；钢：worldsteel；塑料：PlasticsEurope 生态档案；铜：国际铜业协会；燃料：IPCC 2006；运输：DESNZ / GLEC；中国电力：生态环境部；电池 LCA 文献）。它们是**合理性范围**，用于发现选错数据集和单位错误，而非细微差异。本工具不包含也不需要任何商业数据库（ecoinvent、Sphera）内容。
 
-[全部工具](/en/tools.html) · [农产品碳足迹计算器](/zh/tools/farm-carbon.html)
-
 ::: warning 请注意
 本工具为自查辅助，依据表头名称和文字规律识别。特殊的模板格式可能无法识别；数据集选择若有表格未写明的理由，也可能被标出。本工具不能替代关键性评审或第三方核查。问题说明目前为英文。
 :::
+
+---
+
+🧰 [全部工具](/zh/tools/) · [农产品碳足迹计算器](/zh/tools/farm-carbon.html) · [报告数据提取](/zh/tools/data-extract.html)

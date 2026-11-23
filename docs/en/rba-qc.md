@@ -1,4 +1,5 @@
 ---
+aside: false
 title: RBA Audit Report QC
 description: Check RBA VAP Validated Audit Reports (full and executive summary) in your browser
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../components/ReportQc.vue'
 </script>
 
-# 🏭 RBA Audit Report QC <Badge type="warning" text="preview" />
+# 🏭 RBA Audit Report QC
 
 Drop an **RBA Validated Audit Report** (VAP full report and/or executive summary report) to check that the counts, dates, findings and data points agree with each other. Select the full report and the summary report together and they are compared.
 
@@ -32,7 +33,7 @@ The PDF is read inside your browser and is not uploaded to any server. The first
 
 ## Estimated score
 
-The summary card shows an **estimated score** worked out from the finding counts: 200 minus 20 per Priority, about 6.3 (6–7) per Major and about 2 (1–3) per Minor non-conformance. RBA does not publish its formula, so this is a rule of thumb. It matched the one real report used for testing (8 Major and 1 Minor: 147.6/200), but treat it as a guide. It helps you see how far a facility is from 160 (Silver), 180 (Gold) or 200 (Platinum), and RBA-24 flags a stated score that falls outside the range.
+The summary card shows an **estimated score** worked out from the finding counts: 200 minus 20 per Priority, about 6.3 (6–7) per Major and about 2 (1–3) per Minor non-conformance. It helps you see how far a facility is from 160 (Silver), 180 (Gold) or 200 (Platinum), and RBA-24 flags a stated score that falls outside the range.
 
 ## What it checks
 
@@ -65,8 +66,10 @@ It reads the audit and facility information, the conformance results, the findin
 | RBA-23 | Info | Data point or conclusion mostly not in English |
 | RBA-24 | Warning | Overall score outside the range estimated from the finding counts |
 
-[All tools](/en/tools.html)
-
 ::: warning Please note
 This is a self-check aid built from sample reports. Text rules (for example "Yes answer whose comment describes a gap") are heuristics and can flag a correct answer. It does **not** replace the scheme's own quality review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html) · [Report data extractor](/en/data-extract.html)

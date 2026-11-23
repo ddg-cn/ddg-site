@@ -12,7 +12,7 @@ head:
 import FarmCarbon from '../components/FarmCarbon.vue'
 </script>
 
-# 🥬 Farm Produce Carbon Calculator <Badge type="warning" text="preview" />
+# 🥬 Farm Produce Carbon Calculator
 
 A quick **farm-gate** carbon footprint for vegetables, fruit, tea and grain. Pick a crop, enter what you actually used per mu or hectare (fertiliser bags, diesel, electricity, film), and get kg CO2e per kg of produce, which inputs matter most, and an Excel sheet with the inputs, result and factors.
 
@@ -47,4 +47,6 @@ Every input factor can be changed under **Edit factors**, for example to a suppl
 - **Rice is different**: paddy methane is usually the largest part, and drainage (烤田, alternate wetting and drying) cuts it sharply.
 - The result is a **screening estimate** (IPCC Tier 1). For a claim on a label or to a buyer, a study under ISO 14067 with measured farm records and a review is needed.
 
-[All tools](/en/tools.html) · [Carbon footprint form check](/en/carbon-qc.html)
+---
+
+🧰 [All tools](/en/tools.html) · [Carbon footprint form check](/en/carbon-qc.html)

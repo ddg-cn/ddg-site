@@ -12,7 +12,7 @@ head:
 import PolicyQc from '../components/PolicyQc.vue'
 </script>
 
-# 📚 Policy Consistency Check <Badge type="warning" text="preview" />
+# 📚 Policy Consistency Check
 
 Drop a **set of company documents** (policies, manuals, procedures, forms, records) to find where they contradict each other: different numbers for the same rule, wrong document names or codes in references, terms defined two ways, retention periods that don't match. Each finding says which documents and sections to change.
 
@@ -52,8 +52,10 @@ The documents are read inside your browser and are not uploaded to any server. T
 
 **Topics compared:** child labour age, juvenile worker age, standard daily and weekly hours, maximum weekly hours, overtime caps (day / month), rest days, overtime pay (working day / rest day / holiday), maternity leave, probation, grievance acknowledgement and closing times, gift thresholds, management review, internal audit and drill frequency, wage payment date.
 
-[All tools](/en/tools.html)
-
 ::: warning Please note
-This is a self-check aid. It reads text patterns (mainly Chinese, with some English) and can miss a rule worded in an unusual way or flag two values that are both correct in their own context. Decide each finding yourself. Statutory figures are PRC national figures; local rules can differ. It does not replace legal review.
+This is a self-check aid. It reads text patterns and can miss a rule worded in an unusual way or flag two values that are both correct in their own context. Decide each finding yourself. Statutory figures are PRC national figures; local rules can differ. It does not replace legal review.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html)

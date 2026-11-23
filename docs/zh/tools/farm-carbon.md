@@ -12,7 +12,7 @@ head:
 import FarmCarbon from '../../components/FarmCarbon.vue'
 </script>
 
-# 🥬 农产品碳足迹计算器 <Badge type="warning" text="预览" />
+# 🥬 农产品碳足迹计算器
 
 快速估算蔬菜、水果、茶叶和粮食的**农场大门**碳足迹。选择作物，按亩或公顷填入实际用量（化肥、柴油、电、农膜），即可得到每公斤产品的 kg CO2e、主要排放来源，并可下载包含投入、结果和因子的 Excel 表。
 
@@ -47,4 +47,6 @@ import FarmCarbon from '../../components/FarmCarbon.vue'
 - **水稻不同**：稻田甲烷通常占大头，烤田、干湿交替可以大幅降低。
 - 结果为**筛查性估算**（IPCC 一级方法）。用于标签或对客户声明时，需按 ISO 14067 依据实测农事记录开展研究并经评审。
 
-[全部工具](/en/tools.html) · [碳足迹表格检查](/zh/tools/carbon-qc.html)
+---
+
+🧰 [全部工具](/zh/tools/) · [碳足迹表格检查](/zh/tools/carbon-qc.html)

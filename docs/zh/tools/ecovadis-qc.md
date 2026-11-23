@@ -1,4 +1,5 @@
 ---
+aside: false
 title: EcoVadis 问卷质检
 description: 提交前在浏览器中检查 EcoVadis 问卷导出文件（Survey Full PDF）
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🌱 EcoVadis 问卷质检 <Badge type="warning" text="预览" />
+# 🌱 EcoVadis 问卷质检
 
 把 **EcoVadis 问卷** 下载为 PDF（*Survey Full*），提交前拖到下方检查。程序检查问题状态、所附文件和 KPI 数值。
 
@@ -52,8 +53,10 @@ PDF 在您的浏览器中读取，不会上传到任何服务器。首次检查�
 | EV-14 | 警告 | 占位符或未完成的文字 |
 | EV-15 | 提示 | 文件评论说明了缺口或证据不完整 |
 
-[全部工具](/en/tools.html)
-
 ::: warning 请注意
 本工具是根据样本报告编写的自查辅助工具。文字类规则（如“答案为 Yes 但评论描述了缺陷”）属于经验判断，可能误报正确的答案。它 **不能** 替代各体系自身的质量审核。
 :::
+
+---
+
+🧰 [全部工具](/zh/tools/) · [报告质检](/zh/tools/report-qc.html) · [报告数据提取](/zh/tools/data-extract.html)

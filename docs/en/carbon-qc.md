@@ -12,7 +12,7 @@ head:
 import CarbonQc from '../components/CarbonQc.vue'
 </script>
 
-# 🌡️ Carbon Footprint Form Check <Badge type="warning" text="preview" />
+# 🌡️ Carbon Footprint Form Check
 
 Drop **carbon footprint forms** (EU battery carbon footprint report templates, customer PCF templates, life-cycle inventory data sheets) to check:
 - whether each component is modelled with a dataset for the right material
@@ -37,7 +37,7 @@ The workbook is read inside your browser and is not uploaded to any server. The 
 
 ## Check against a standard
 
-Choose a standard above the drop area. The form checks below always run; the standard adds its own rules (CF-30 to CF-38). **Automatic** applies the EU battery rules to the EU battery CFR template and no standard to other forms.
+Choose a standard above the drop area. The form checks below always run; the standard adds its own rules (CF-30 to CF-38). **Automatic** applies the EU battery rules to the EU battery CFR template, the form's own standard to the forms below, and no standard to other forms. Changing the standard after a check re-checks the same files at once.
 
 | Standard | Data quality rating | Main rules checked |
 |---|---|---|
@@ -48,6 +48,14 @@ Choose a standard above the drop area. The form checks below always run; the sta
 | PACT v3.0 · Catena-X v4 · TfS v3.0 | TeR, GeR, TiR, 1–5 | TeR 1–2 only for primary data (database datasets 3 or worse); cut-off ≤ 3%; IPCC AR6; electricity supplier-specific → residual mix; primary data share documented |
 
 Sources: [Regulation (EU) 2023/1542](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32023R1542) and the [April 2024 draft method](https://eur-lex.europa.eu/legal-content/EN/TXT/HTML/?uri=PI_COM:Ares(2024)3131389) (not yet adopted); [Recommendation (EU) 2021/2279](https://eur-lex.europa.eu/legal-content/EN/TXT/PDF/?uri=CELEX:32021H2279); [GHG Protocol Product Standard](https://ghgprotocol.org/sites/default/files/standards/Product-Life-Cycle-Accounting-Reporting-Standard_041613.pdf); [PACT Methodology v3.0](https://www.carbon-transparency.org/resources/pact-methodology-v3-methodology-for-calculating-and-exchanging-cradle-to-gate-product-carbon-footprints-pcfs); [Catena-X PCF Rulebook v4](https://catena-x.net/wp-content/uploads/2025/10/Catena-X-Product-Carbon-Footprint-Rulebook_v4-with-line-numbers.pdf); [TfS PCF Guideline v3.0](https://tfs-initiative.com/app/uploads/2024/12/TfS-PCF-Guidelines-2024.pdf). ISO 14067 is a paid standard, so its checks only test that the items are documented; confirm against your copy. "Most relevant process" cannot be read from a form, so rules that apply only to most relevant processes are warnings to review.
+
+## Blank forms per standard
+
+No form yet, or a customer form the checker does not read? Download the form for your standard, fill it in and drop it above. The forms are bilingual (English / Chinese). Each has an instructions sheet with the standard's rules, a study information sheet and an inventory sheet that works out the emissions and the DQR. A filled form is checked against its own standard under **Automatic**.
+
+[EU battery](/tools/carbon-templates/pcf-form-battery.xlsx) · [PEF](/tools/carbon-templates/pcf-form-pef.xlsx) · [ISO 14067](/tools/carbon-templates/pcf-form-iso14067.xlsx) · [GHG Protocol](/tools/carbon-templates/pcf-form-ghg.xlsx) · [PACT](/tools/carbon-templates/pcf-form-pact.xlsx) · [Catena-X](/tools/carbon-templates/pcf-form-catenax.xlsx) · [TfS](/tools/carbon-templates/pcf-form-tfs.xlsx)
+
+Other forms are read by their column headers, in any order: a material or component name, a quantity, an emission factor, and data source, dataset, geography, TeR / GeR / TiR / P and DQR where present (short codes, full names such as "Technological representativeness" or Chinese names such as 技术代表性). Excel (.xlsx, .xlsm, .xls, .xlsb) and CSV are accepted.
 
 ## How the suggested ratings work
 
@@ -97,8 +105,10 @@ The rules read only what the form says. A stated rating can be right for reasons
 
 The factor ranges are public reference figures (IAI for aluminium, worldsteel, PlasticsEurope eco-profiles, International Copper Association, IPCC 2006 for fuels, DESNZ / GLEC for freight, MEE for Chinese electricity, battery LCA literature). They are **plausibility ranges**: they catch wrong datasets and unit slips, not small differences. No licensed database content (ecoinvent, Sphera) is included or needed.
 
-[All tools](/en/tools.html) · [Farm produce carbon calculator](/en/farm-carbon.html)
-
 ::: warning Please note
 This is a self-check aid. It reads header names and text patterns. An unusual template layout may not be recognised, and a dataset choice that is right for reasons not written in the form can be flagged. It does not replace a critical review or third-party verification.
 :::
+
+---
+
+🧰 [All tools](/en/tools.html) · [Farm produce carbon calculator](/en/farm-carbon.html) · [Report data extractor](/en/data-extract.html)

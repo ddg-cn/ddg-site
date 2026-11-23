@@ -12,7 +12,7 @@ head:
 import DataExtract from '../components/DataExtract.vue'
 </script>
 
-# 🗂️ Report Data Extractor <Badge type="warning" text="preview" />
+# 🗂️ Report Data Extractor
 
 Drop a stack of reports and get **one table per report type** in Excel: one row per report with the fields you pick, plus one row per finding, target or dataset. Use it to compare suppliers, build a tracker, or load audit results into your own system without retyping.
 
@@ -47,4 +47,6 @@ Files are read in your browser. The website does not receive or keep them; the E
 Fields are read from the text layout of each report, so an unusual template or a scanned page can leave a field blank. Check important values against the report. Use the matching [checker](/en/tools.html) to find errors in a report before you rely on its data.
 :::
 
-[All tools](/en/tools.html)
+---
+
+🧰 [All tools](/en/tools.html) · [Report QC](/en/report-qc.html)

@@ -1,4 +1,5 @@
 ---
+aside: false
 title: CDP 问卷回答质检
 description: 提交前在浏览器中检查 CDP 问卷回答导出文件
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🌍 CDP 问卷回答质检 <Badge type="warning" text="预览" />
+# 🌍 CDP 问卷回答质检
 
 在 CDP 平台导出 **企业问卷回答** 并保存为 PDF，提交前拖到下方检查。导出文件不含未作答的问题，所以程序也会列出缺失的核心问题。CDP 评分报告可以识别并汇总，但其中没有可检查的内容。
 
@@ -56,8 +57,10 @@ PDF 在您的浏览器中读取，不会上传到任何服务器。首次检查�
 | CDP-18 | 提示 | CDP 评分报告（不是问卷回答） |
 | CDP-19 | 警告 | 占位符或未完成的文字 |
 
-[全部工具](/en/tools.html)
-
 ::: warning 请注意
 本工具是根据样本报告编写的自查辅助工具。文字类规则（如“答案为 Yes 但评论描述了缺陷”）属于经验判断，可能误报正确的答案。它 **不能** 替代各体系自身的质量审核。
 :::
+
+---
+
+🧰 [全部工具](/zh/tools/) · [报告质检](/zh/tools/report-qc.html) · [报告数据提取](/zh/tools/data-extract.html)

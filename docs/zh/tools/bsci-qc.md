@@ -1,4 +1,5 @@
 ---
+aside: false
 title: amfori BSCI 审核报告质检
 description: 在浏览器中检查 amfori BSCI 审核报告
 head:
@@ -11,7 +12,7 @@ head:
 import ReportQc from '../../components/ReportQc.vue'
 </script>
 
-# 🌐 amfori BSCI 审核报告质检 <Badge type="warning" text="预览" />
+# 🌐 amfori BSCI 审核报告质检
 
 把 **amfori BSCI 审核报告**（平台导出、Monitoring result 或 Monitoring summary report）拖到下方，检查评级、发现、工人数据、工资工时和日期是否前后一致。同一工厂的多份报告会相互比对。
 
@@ -63,4 +64,6 @@ PDF 在您的浏览器中读取，不会上传到任何服务器。首次检查�
 适用于 13 个绩效领域的报告（2018 平台导出、2021 Monitoring result、2023 Monitoring summary）。2021 和 2023 版的总体评级是彩色色块而非文字，因此按 13 个领域评级推导并标为“推导”。总体评级规则（BSCI-05）依据公开的方法概述；amfori 未公开计算方法，故设为警告而非错误。新版 6 个绩效领域方法的报告只做全文检查。
 :::
 
-[报告数据提取](/zh/tools/data-extract.html)可把多份报告的字段整理成一张 Excel 表。 · [全部工具](/en/tools.html)
+---
+
+🧰 [全部工具](/zh/tools/) · [报告质检](/zh/tools/report-qc.html) · [报告数据提取](/zh/tools/data-extract.html)
