@@ -125,9 +125,10 @@ const ZREF = [
   [/Ecological Environment Code Arts\. /g, '《生态环境法典》第'], [/Permit Measures Art\. /g, '《排污许可管理办法》第'],
   [/Tax Rules Arts\. /g, '《税收征收管理法实施细则》第'], [/Wage Payment Rules Art\. /g, '《工资支付暂行规定》第'],
   [/SPC Interp\. \(II\)/g, '最高法劳动争议解释（二）'], [/Social Insurance Law/g, '《社会保险法》'],
+  [/Order 802 Arts?\. /g, '《保障中小企业款项支付条例》第'], [/AFSL Art\. /g, '《反外国制裁法》第'], [/Order 835/g, '国务院令第835号'],
   [/Guide ch\. (\d+)/g, '本指南第$1章'], [/Guide (\d+\.\d+)/g, '本指南$1节'], [/Template (\d+\.\d+)/g, '模板$1'],
 ]
-function zref(r) {
+export function zref(r) {
   if (!r) return r
   let out = r
   for (const [re, to] of ZREF) out = out.replace(re, to)

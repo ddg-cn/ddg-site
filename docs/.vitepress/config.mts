@@ -139,5 +139,10 @@ export default withMermaid(defineConfig({
 
   mermaid: {
     theme: 'neutral',
+    // System fonts are available at once, so mermaid measures labels with the same font it renders
+    fontFamily: 'Arial, "Microsoft YaHei", "PingFang SC", sans-serif',
+    themeVariables: { fontFamily: 'Arial, "Microsoft YaHei", "PingFang SC", sans-serif' },
+    htmlLabels: false,
+    flowchart: { padding: 12, wrappingWidth: 220, htmlLabels: false },
   },
 }))

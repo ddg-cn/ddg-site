@@ -109,3 +109,30 @@ This guide is part of a larger toolkit. For deep dives, refer to the following s
 3.  **Security & Data Guide:** Physical C-TPAT and digital GDPR/ISO 27001.
 4.  **IP & Ethics Guides:** Anti-counterfeiting and anti-corruption protocols.
 5.  **Mineral Traceability Guide:** OECD 5-step methodology.
+
+
+---
+
+## 0.8 Where each guide fits: the life of a business relationship
+
+The six pillars describe *what* due diligence looks at. The life of a business relationship describes *when*. Every buyer–supplier relationship passes through the same five stages, and each guide in this series serves one of them. A responsible exit begins with a responsible entry: the contract signed at the start decides how the end can be handled.
+
+```mermaid
+flowchart TD
+    A["1 Before business<br/>BCM plan and onboarding checks"] --> B["2 Beginning<br/>Responsible Contracting"]
+    B --> C["3 In business<br/>five pillar guides, ongoing due diligence"]
+    C --> D["4 Ending<br/>Responsible Exit"]
+    D --> E["5 After<br/>Grievance channels"]
+    C -.->|risk found| A
+    E -.->|lessons| A
+```
+
+| Stage | Question | Guide | Size |
+|---|---|---|---|
+| **1 Before business** | Should we work with this supplier, and can we survive if it fails? | [Due Diligence Handbook](/en/dd-guide) (risk assessment, onboarding); section 0.3–0.4 above (BCM triggers, risk scoring); [Country Reference](/en/country-ref). A full value-chain BCM guide is in preparation. | Full guide |
+| **2 Beginning** | What do we promise each other, and what happens if things change? | [Responsible Contracting](/en/contract-guide): two-way clauses, payment and order terms, a contract checklist | Short guide + checklist |
+| **3 In business** | Is the supplier meeting the standards, and are we buying responsibly? | [CSR](/en/csr-guide), [Environmental](/en/env-guide), [Security](/en/security-guide), [IP](/en/ip-guide), [Ethics & Financial Resilience](/en/ethics-guide); continuous audits in the [Due Diligence Handbook](/en/dd-guide) | Full guides |
+| **4 Ending** | How do we end the relationship, close or relocate without leaving the workers to pay? | [Responsible Exit](/en/exit-guide), with a [role-based checklist](/en/exit-checklist) and [sample policies](/en/exit-policies) | Full guide + tools |
+| **5 After** | Can people still raise problems, and does anyone answer? | [Grievance Channels](/en/grievance-guide): how a channel should work, a policy outline, and a checklist to verify a partner's channel | Short guide + checklist |
+
+The arrows back to stage 1 matter. A risk found during the relationship, or a grievance after it, should change how the next supplier is chosen and the next contract is written.
