@@ -119,6 +119,8 @@ Less than people think. No law reviewed prescribes specific clauses.
 | **Germany, LkSG** §6(4) | Human-rights and environmental expectations in supplier selection; contractual assurances, cascaded along the chain; training; contractual control mechanisms such as audits |
 | **China** | Civil Code rules on standard terms and damages; Order 802 on payment to SMEs |
 
+**Standards go further than the law.** SA8000:2026 requires a certified organisation to write a policy of "mutual expectations" for its business partners, including clear expectations for ending a relationship (M4.2). In dealing with partners, its business terms and practices must not undermine their ability to meet those expectations; it must support partners in proportion to its own contribution to a problem and keep the paperwork burden down; and it may end a relationship over a risk only after repeated failure despite support, and only if ending it is not riskier (M7.4).
+
 The legal minimum is a code-of-conduct clause. The responsible version is the two-way contract described above.
 
 ---
@@ -143,6 +145,7 @@ Pick your side. Tick what your contract already covers; the unticked lines are y
 - Penn State CGWR and WRC, *Abandoned?* (2020); University of Aberdeen and Transform Trade, *Impact of global clothing retailers' unfair practices on Bangladeshi suppliers* (2023)
 - ICC, *Force Majeure and Hardship Clauses* (2020) — [iccwbo.org](https://iccwbo.org/wp-content/uploads/sites/3/2020/03/icc-forcemajeure-hardship-clauses-march2020.pdf); The Chancery Lane Project — [chancerylaneproject.org](https://chancerylaneproject.org/)
 - Directive (EU) 2024/1760 (CSDDD) as amended by Directive (EU) 2026/470 — [eur-lex.europa.eu](https://eur-lex.europa.eu/eli/dir/2026/470); LkSG §6 — [gesetze-im-internet.de](https://www.gesetze-im-internet.de/lksg/__6.html)
+- SA8000:2026, *Standard for Decent Work* (published 1 January 2026), clauses M4.2, M7.4 — [sa-intl.org](https://sa-intl.org)
 - 民法典 Arts. 496–498, 533, 585, 590; 保障中小企业款项支付条例 (Order 802); 反外国制裁法; 反外国不当域外管辖条例 (Order 835); 个人信息保护法; 仲裁法 (2025 revision)
 - Morrison Foerster, *Enforcement of China's Anti-Foreign Sanctions Law* (2025), on the Nanjing Maritime Court case
 

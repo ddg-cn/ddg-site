@@ -77,7 +77,7 @@ import { G_ROLES, G_PHASES, grievanceItems } from '../components/exit/grievance.
 
 中国没有统一的举报人保护法。相关保护分散在上述各项规定中，因此工厂或买方的申诉渠道必须自行建立禁止报复的保障措施。
 
-**行为准则和项目。** SA8000要求设立保密、公正、禁止报复的投诉程序（2014版第9.6条）。RBA（责任商业联盟）提供RBA Voices；Fair Wear（公平服装基金会）开设了包括中国在内的多条热线，2023年收到新申诉139件；FLA（公平劳工协会）受理第三方投诉，2025年通过调查追回经济补偿30万美元；amfori的Speak for Change目前暂停，等待修订；孟加拉国协议（Bangladesh Accord）已处理4,000多件安全投诉。SLCP（社会与劳工融合计划）的评估在职工参与部分询问申诉制度的情况。
+**行为准则和项目。** SA8000:2026要求设立两套申诉机制，一套面向员工，一套面向外部利益相关方，都可以受理针对本组织**或其业务伙伴**的投诉。两套机制都须符合联合国指导原则的八项有效性标准，为使用者保密，保护使用者免受任何一方的报复，并且员工不因参与申诉而损失收入（M9.3–M9.4）。工人和工会须参与渠道的设计（M2.1(e)）；组织须善意参与外部申诉程序（M9.5）；申诉发现的问题须带来补救（M9.6）。2014版的规定较简短（第9.6条）。RBA（责任商业联盟）提供RBA Voices；Fair Wear（公平服装基金会）开设了包括中国在内的多条热线，2023年收到新申诉139件；FLA（公平劳工协会）受理第三方投诉，2025年通过调查追回经济补偿30万美元；amfori的Speak for Change目前暂停，等待修订；孟加拉国协议（Bangladesh Accord）已处理4,000多件安全投诉。SLCP（社会与劳工融合计划）的评估在职工参与部分询问申诉制度的情况。
 
 ---
 
@@ -127,7 +127,7 @@ import { G_ROLES, G_PHASES, grievanceItems } from '../components/exit/grievance.
 - Better Work and Better Factories Cambodia with GIZ, *Promoting and strengthening effective grievance mechanisms in the garment sector* (2025) — [betterwork.org](https://betterwork.org/wp-content/uploads/Guidance-note-Promoting-and-strengthening-effective-grievance-mechanisms-in-the-garment-sector.pdf)
 - ETI, *Grievance mechanisms in agriculture: lessons and practical insights* — [ethicaltrade.org](https://www.ethicaltrade.org/sites/default/files/shared_resources/GMA%20-%20Lessons%20%26%20practical%20insights.pdf)
 - Fair Wear, *Annual Report 2023* — [fairwear.org](https://api.fairwear.org/wp-content/uploads/2024/07/Fair-Wear-Annual-Report-2023.pdf)；FLA, *Annual Report 2025* — [fairlabor.org](https://www.fairlabor.org/wp-content/uploads/2026/08/FLAs-2025-Annual-Report.pdf)；International Accord, complaints mechanism — [internationalaccord.org](https://internationalaccord.org/workers/complaints-mechanism/)
-- SA8000:2014 clause 9.6 — [sa-intl.org](https://sa-intl.org/wp-content/uploads/2020/02/SA8000Standard2014.pdf)
+- SA8000:2026, *Standard for Decent Work*（2026年1月1日发布），M2.1、M9.3–M9.6条 — [sa-intl.org](https://sa-intl.org)；SA8000:2014 clause 9.6 — [sa-intl.org](https://sa-intl.org/wp-content/uploads/2020/02/SA8000Standard2014.pdf)
 - SOMO and GoodElectronics, *Using Grievance Mechanisms* (2014)；FashionUnited关于Amader Kotha热线的报道（2026年2月）
 - Hofman, Wu and Liu, *Journal of Current Chinese Affairs* 43(4), 2014, pp. 128–130 — [jcu.edu.au](https://researchonline.jcu.edu.au/75988/1/Hofman%20et%20al%202014.pdf)
 

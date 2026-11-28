@@ -58,7 +58,7 @@ const RAW = [
   ['p0h', 'p0', ['bs', 'fo'], ALL, 'Screen sites and suppliers for climate and flood risk as part of business continuity.', '将选址和供应商的气候与洪涝风险纳入业务连续性评估。', 'Guide ch. 15'],
 
   // Decide
-  ['p1a', 'p1', ['bs', 'ag'], ['s1', 's5'], 'Write down the reason for leaving and the evidence. If it is a human-rights problem, check whether staying and pressing for change would do more good.', '书面记录退出原因和依据。如属人权问题，先评估留下并推动改进是否更有利。', 'OECD; UNGP 19'],
+  ['p1a', 'p1', ['bs', 'ag'], ['s1', 's5'], 'Write down the reason for leaving and the evidence. If it is a human-rights problem, check whether staying and pressing for change would do more good.', '书面记录退出原因和依据。如属人权问题，先评估留下并推动改进是否更有利。', 'OECD; UNGP 19; SA8000:2026 M7.4(e)'],
   ['p1b', 'p1', ['bs', 'fo', 'ag'], ALL, 'Run the impact check: dependence, workers affected, money owed, legal arrears, timing, alternatives.', '开展影响评估：依赖度、受影响工人、欠款、法定欠缴、时机、替代方案。', 'Guide ch. 4'],
   ['p1c', 'p1', ['bs'], ['s1', 's5'], 'Set the notice from the order share: under 10% about 3 months; 10–30% 6 months; over 30% 6–12 months.', '按订单占比确定通知期：10%以下约3个月；10–30%为6个月；30%以上6–12个月。', 'Guide 4.2'],
   ['p1d', 'p1', ['bs'], ['s1', 's5'], 'Check whether other buyers are leaving the same factory or region at the same time.', '核实是否有其他采购方同时退出同一工厂或地区。', 'ETI 2026'],

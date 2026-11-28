@@ -273,7 +273,7 @@ Dozens of norms, laws and codes touch on exit. Four of them carry most of the we
 
 | Code or programme | Closure, retrenchment or exit text |
 |---|---|
-| **SA8000:2026** D3.3, D3.12, D4.11 | The clearest: advance communication of changes; fair termination with timely severance; mass retrenchment only as a last resort; if business continuity is disrupted, severance and wages come first. |
+| **SA8000:2026** M4.2(d), M7.4(e), D3.3, D3.12, D4.11 | The clearest, and it speaks to buyers as well as factories. For buyers: set clear expectations for ending relationships and consider the risks to workers first (M4.2(d)); do not end a relationship because of a risk unless the partner repeatedly fails to fix it after engagement and support, **and** ending it is not riskier than the original problem (M7.4(e)). For factories: advance communication of changes; fair termination with timely severance; large-scale retrenchment only as a last resort; if business continuity is disrupted, severance and wages come first. |
 | **FLA** Workplace Code benchmarks ER.15–16, FOA.8–9; *Ensuring responsible factory retrenchment, exit and closure* (2023) | Severance procedures; no waivers as a condition of severance; early consultation; a mitigation plan; a 16-question supplier checklist and a brand checklist. |
 | **ACT** Responsible Exit Policy and Checklist (2022) | Exit timeline proportional to the brand's share of the factory's volume; proof that workers were paid; mediation with IndustriALL. |
 | **ETI** Technical Guidance on Responsible Disengagement (with Shift, Feb 2026) | Ten principles, four stages, a leverage decision tree, written confirmation that workers were notified, about six months of follow-up. |
@@ -320,7 +320,7 @@ Dozens of norms, laws and codes touch on exit. Four of them carry most of the we
 | OHCHR *Remaining and Exiting* | 2023 | ○ | | | | ● |
 | ETI Responsible Disengagement; ACT; Fair Wear | 2026 / 2022 / 2018 | ● | | ○ | ○ | ○ |
 | FLA retrenchment guidance; Better Work manual | 2023 | ○ | ○ | ● | ● | |
-| SA8000:2026 D3.12, D4.11 | 2026 | ○ | ○ | ● | ● | |
+| SA8000:2026 M4.2(d), M7.4(e), D3.12, D4.11 | 2026 | ● | ○ | ● | ● | ○ |
 | RCP Supplier Model Clauses cl. 9 (either party) | 2023 | ● | ● | | | ○ |
 | EU CSDDD as amended (suspension) | 2024 / 2026 | ● | | | | ○ |
 | UFLPA, WROs, EU Forced Labour Regulation | 2021 / 2027 | ○ | | | | ● |

@@ -119,6 +119,8 @@ import { C_ROLES, C_PHASES, contractItems } from '../components/exit/contract.js
 | **德国《供应链尽职调查法》（LkSG）**第6条第4款 | 在选择供应商时考虑人权和环境要求；取得合同保证，并沿供应链逐级传递；开展培训；约定审核等合同监督机制 |
 | **中国** | 《民法典》关于格式条款和违约金的规定；国务院令第802号关于向中小企业付款的规定 |
 
+**标准比法律要求更高。** SA8000:2026要求获证组织为业务伙伴制定"相互期望"政策，其中包括对终止业务关系的明确预期（M4.2）。在与业务伙伴往来时，其商业条款和做法不得削弱对方达到这些期望的能力；须按自身对问题的影响程度向对方提供支持，并尽量减轻对方的行政负担；只有在对方获得支持后仍反复未能解决、且终止关系的风险不大于原有风险时，才可因风险终止业务关系（M7.4）。
+
 法律的最低要求只是一条行为准则条款。负责任的做法，是上文所说的双向合同。
 
 ---
@@ -143,6 +145,7 @@ import { C_ROLES, C_PHASES, contractItems } from '../components/exit/contract.js
 - Penn State CGWR and WRC, *Abandoned?* (2020); University of Aberdeen and Transform Trade, *Impact of global clothing retailers' unfair practices on Bangladeshi suppliers* (2023)
 - ICC, *Force Majeure and Hardship Clauses* (2020) — [iccwbo.org](https://iccwbo.org/wp-content/uploads/sites/3/2020/03/icc-forcemajeure-hardship-clauses-march2020.pdf)；The Chancery Lane Project — [chancerylaneproject.org](https://chancerylaneproject.org/)
 - Directive (EU) 2024/1760 (CSDDD) as amended by Directive (EU) 2026/470 — [eur-lex.europa.eu](https://eur-lex.europa.eu/eli/dir/2026/470)；LkSG §6 — [gesetze-im-internet.de](https://www.gesetze-im-internet.de/lksg/__6.html)
+- SA8000:2026, *Standard for Decent Work*（2026年1月1日发布），M4.2、M7.4条 — [sa-intl.org](https://sa-intl.org)
 - 《民法典》第496–498条、第533条、第585条、第590条；《保障中小企业款项支付条例》（国务院令第802号）；《反外国制裁法》；《反外国不当域外管辖条例》（国务院令第835号）；《个人信息保护法》；《仲裁法》（2025年修订）
 - Morrison Foerster, *Enforcement of China's Anti-Foreign Sanctions Law* (2025)，涉及南京海事法院案
 
