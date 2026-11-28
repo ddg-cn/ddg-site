@@ -66,8 +66,8 @@ What makes workers actually use a channel, across the sources: they know it exis
 
 | Law | Year | What it requires |
 |---|---|---|
-| **EU CSDDD** Art. 14, as amended by Omnibus I | 2024 / 2026 (applies from July 2029) | A complaints procedure open to affected people and workers' representatives across the chain of activities, plus a notification mechanism for anyone. Complainants can ask for follow-up and to meet the company, and are told the outcome. Omnibus I made the article fully harmonised and narrowed the definition of stakeholders; the review of effectiveness is now at least every five years. *(Check the Official Journal text before relying on details.)* |
-| **Germany, LkSG** §8 | 2023 | A complaints procedure reaching the company's own operations and its suppliers' workers; impartial, confidential handlers; a published procedure; annual review. Not having one is one of the offences that can be fined (up to EUR 800,000). The 2026 amendment bill does not change §8. |
+| **EU CSDDD** Art. 14, as amended by Omnibus I | 2024 / 2026 (applies from July 2029) | A complaints procedure open to affected people and workers' representatives across the chain of activities, plus a notification mechanism for anyone. Complainants can ask for follow-up and to meet the company, and are told the outcome. *The 2026 amendments to this article are still being reviewed for this guide.* |
+| **Germany, LkSG** §8 | 2023 | A complaints procedure reaching the company's own operations and its suppliers' workers; impartial, confidential handlers; a published procedure; annual review. *An amendment bill is still before the Bundestag.* |
 | **EU Whistleblower Directive** 2019/1937 | 2019 | Internal reporting channels for organisations with 50+ workers; acknowledgement within 7 days; feedback within 3 months; no retaliation |
 | **China, Labour Dispute Mediation and Arbitration Law** | 2008 | Negotiate, then mediate, then arbitrate, then sue (Art. 5). Arbitration must be claimed within one year (Art. 27; no limit for unpaid wages while employment continues) and is free (Art. 53). |
 | **China, Provisions on Enterprise Labour Dispute Consultation and Mediation** (MOHRSS Order 17) | 2012 | Large and medium enterprises shall set up a mediation committee (Art. 13) with equal worker and management members (Art. 15); cases accepted within 3 working days (Art. 22) and mediated within 15 days (Art. 29); records kept (Art. 32) |
@@ -77,7 +77,7 @@ What makes workers actually use a channel, across the sources: they know it exis
 
 China has no general whistleblower-protection law. Protection is scattered across the rules above, so a factory's or buyer's channel has to build its own non-retaliation guarantees.
 
-**Codes and programmes.** SA8000 requires a confidential, unbiased, non-retaliatory complaints procedure (clause 9.6 in the 2014 edition; M9 in SA8000:2026). The RBA offers RBA Voices; Fair Wear runs helplines, including in China, and received 139 new grievances in 2023; the FLA takes third-party complaints and in 2025 its investigations recovered USD 300,000 in severance; amfori's Speak for Change is paused pending revision; the Bangladesh Accord has handled over 4,000 safety complaints. SLCP's assessment asks about grievance systems among its worker-involvement questions.
+**Codes and programmes.** SA8000 requires a confidential, unbiased, non-retaliatory complaints procedure (clause 9.6 in the 2014 edition). The RBA offers RBA Voices; Fair Wear runs helplines, including in China, and received 139 new grievances in 2023; the FLA takes third-party complaints and in 2025 its investigations recovered USD 300,000 in severance; amfori's Speak for Change is paused pending revision; the Bangladesh Accord has handled over 4,000 safety complaints. SLCP's assessment asks about grievance systems among its worker-involvement questions.
 
 ---
 
