@@ -8,6 +8,16 @@ head:
       content: noindex
 ---
 
+<script setup>
+import ExitChart from '../components/ExitChart.vue'
+import ExitHeatmap from '../components/ExitHeatmap.vue'
+import SeveranceSheet from '../components/SeveranceSheet.vue'
+import ExitChecklist from '../components/ExitChecklist.vue'
+import { closureItems } from '../components/exit/checklists.js'
+import GlanceBars from '../components/GlanceBars.vue'
+import D, { series, TERMS, termValues } from '../components/exit/data.js'
+</script>
+
 # Responsible Exit Guide
 
 **Ending a business relationship, closing or relocating a factory, without leaving the workers to pay**
@@ -21,6 +31,7 @@ head:
 - **Factory closing or moving?** Chapters 7, 8, 11 and the closure checklist in 14.5.
 - **Forced to stop by sanctions or an import ban?** Chapter 9.
 - **Auditor or verifier?** Chapters 11 and 13.
+- **Want only your steps?** The [role-based checklist](./exit-checklist) picks them out for you. [Sample exit policies](./exit-policies) for buyers, factories and agents are ready to adapt.
 :::
 
 ---
@@ -81,9 +92,25 @@ flowchart TD
 | 有序退出、妥善安置职工 | Chinese government policy since 2016 | Orderly exit with proper resettlement of workers |
 | Cut and run (一走了之) | Critics | What this guide is about avoiding |
 
-We use **responsible exit** throughout. It covers all five situations: a buyer leaving, a factory leaving a customer, a closure, a relocation and a forced exit.
+**Which name is most common?** We counted the terms in 56 public documents: brand policies, industry initiatives, international norms, laws, development-finance standards, and NGO and union reports. "Responsible exit" is the phrase brands, initiatives and NGOs use most. Norms and laws prefer "disengagement", "suspension" and "termination"; no law in the sample says "responsible exit". Development banks speak of "retrenchment", meaning layoffs. "Factory closure" is mostly an NGO and union term.
+
+<ClientOnly><ExitHeatmap lang="en" :rows="termValues('en').rows" :cols="TERMS.cols.en" :values="termValues('en').values" note="Share of documents in each group that use the term at least once (n = number of documents). Hand-picked sample, November 2026; ten documents use none of these terms. The UN Guiding Principles say 'ending the relationship'." /></ClientOnly>
+
+We use **responsible exit** throughout because it is the term the people who act on it, buyers and factories, already use. It covers all five situations: a buyer leaving, a factory leaving a customer, a closure, a relocation and a forced exit. Readers searching for "responsible disengagement" or "suspension" will find the same thing here.
 
 ### 1.2 What "responsible" means, in six points
+
+```mermaid
+flowchart TD
+    A[1 Decide on evidence<br/>why are we leaving?] --> Q{Could staying and<br/>using leverage fix it?}
+    Q -->|Yes| ST[Stay: improvement plan,<br/>suspend new orders if needed]
+    ST -->|Fails or impossible| B
+    Q -->|No, or the law forces exit| B[2 Give notice in<br/>proportion to dependence]
+    B --> C[3 Pay what is owed first]
+    C --> D2[4 Tell and consult<br/>the people affected]
+    D2 --> E[5 Keep a channel open<br/>about six months]
+    E --> F[6 Keep proof]
+```
 
 1. **Decide on evidence.** Know why you are leaving and whether staying would do more good.
 2. **Give notice in proportion to dependence.** A buyer taking 40% of a factory's output owes more notice than one taking 2%.
@@ -99,10 +126,22 @@ We use **responsible exit** throughout. It covers all five situations: a buyer l
 ### 2.1 When buyers leave
 
 - **COVID-19, Bangladesh, March 2020.** A survey of 316 suppliers found that when orders were cancelled, 72.1% of buyers refused to pay for raw materials already bought and 91.3% refused to pay production costs. 97.3% gave no help with severance. The authors noted this happened despite many brands having "responsible exit" policies. Worldwide, about USD 40 billion in orders was cancelled or not paid in the first weeks; at least USD 15 billion was later paid after public campaigns. *(Penn State CGWR and WRC, Abandoned?, March 2020; Unpaid Billions, October 2020.)*
+
+  **How big was it?** By the end of April 2020, Bangladeshi exporters reported USD 3.18 billion of orders cancelled or put on hold, at 1,150 factories employing 2.28 million workers: **about a tenth of a whole year's garment exports**, and far more than a tenth of the orders due that spring. April's exports fell 85% on the year before. *(BGMEA tracker as reported in April 2020; Export Promotion Bureau. Some held orders were later reinstated.)*
+
+  <ClientOnly><GlanceBars :items="D.bdScale.en" unit=" bn USD" :digits="2" /></ClientOnly>
+
+  What suppliers said buyers did (share of buyers, except the first bar):
+
+  <ClientOnly><GlanceBars :items="D.bdSurvey.en" unit="%" :digits="1" :max="100" /></ClientOnly>
 - **The "cut and run" example.** In 2013, after the Tazreen fire, Disney told licensees to stop production in Bangladesh and four other countries. Critics pointed out that leaving did nothing for the workers who stayed in those factories.
 - **Sole buyers and social insurance.** When KOA Modas in Guatemala closed in February 2025, its only buyer was Target. About USD 6 million in severance and back wages was paid after the Worker Rights Consortium intervened. Another USD 6 million in social-security deductions, apparently withheld for years, had never been deposited. *(Advocacy report, August 2026.)* Being the only buyer raises your share of responsibility, and wages are not the only thing to check.
 - **The subcontractor defence.** When Violet Apparel in Cambodia closed in 2020 owing 1,280 workers about USD 1.4 million, the brand said the factory had not been authorised to make its goods. The workers had no other route to payment. *(Human Rights Watch, July 2023.)*
 - **No electronics brand publishes an exit policy.** SOMO and China Labour Bulletin found in November 2024 that 8 of 20 major brands sourcing from China disclosed an exit policy, all of them apparel. None of the electronics brands did.
+
+  **Exit policies are spreading, slowly, and in one industry.** The chart counts companies and initiatives for which we found public evidence of a responsible exit policy or procedure, by the earliest year found. It is not a census: most policies carry no date, and more exist. All are apparel, footwear or retail. Electronics, toys, furniture and general manufacturing have none on record.
+
+  <ClientOnly><ExitChart mode="line" lang="en" :data="series(D.policies, 'en')" label="Companies with public evidence of an exit policy, cumulative" note="Cumulative count, earliest public evidence found. Sources: Fair Wear, adidas, Nike, Kmart, ACT, JD Sports, Primark, Lidl, Inditex, VF, C&A; SOMO (2024)." /></ClientOnly>
 
 ### 2.2 When factories close or move
 
@@ -110,6 +149,14 @@ We use **responsible exit** throughout. It covers all five situations: a buyer l
 - **Moving orders abroad without severance.** In 2024 a Dongguan furniture maker moved production to Southeast Asia, leaving a 54-year-old worker owed more than RMB 80,000 in redundancy pay. A Shenzhen factory announced a six-month production halt instead of layoffs; workers said its orders had gone to Vietnam. A halt paying only a living allowance avoids statutory severance, and workers protested. *(BBC via BHRRC; press reports, April 2024.)*
 - **Owners who disappear.** Courts regularly convict owners who abscond owing wages. In a Shandong case published in April 2026, a textile company's operator who owed RMB 389,700 and absconded was sentenced to six months and fined; the company was fined too. Nationally, prosecutors approved 612 arrests and prosecuted 1,495 cases for refusing to pay wages in 2024, recovering more than RMB 244 million. *(Shandong typical cases, April 2026; Supreme People's Procuratorate, January 2025.)*
 - **The scale.** In the 2025 winter campaign against wage arrears, authorities handled 280,000 cases and recovered RMB 14.83 billion for 1.48 million workers. No breakdown by closure is published.
+- **Is it rising?** Worker protests are one of the few long series. China Labour Bulletin's Strike Map recorded collective actions each year until it closed in 2025; most were about unpaid wages, and in 2023 a wave of electronics factories closing or relocating doubled the count. The map caught only an estimated 5–10% of incidents, so read the shape, not the level.
+
+  <ClientOnly><ExitChart lang="en" :data="series(D.clb, 'en')" label="Collective actions recorded by China Labour Bulletin per year" note="Incidents per year, China Labour Bulletin Strike Map (archived). 2016 has no verified total; 2025 covers January to early May." /></ClientOnly>
+
+- **"Cut and run" still happens, but it is punished more.** Prosecutions for refusing to pay wages (Criminal Law Art. 276-1) have risen since 2022. The figures mix full-year and January–November periods; partial years are hatched.
+
+  <ClientOnly><ExitChart lang="en" :data="series(D.spp, 'en')" label="Persons prosecuted for refusing to pay wages, China" note="Persons prosecuted, Supreme People's Procuratorate. 2023 is back-calculated from the 2024 growth rate." /></ClientOnly>
+
 - **Wage funds don't cover severance.** Shenzhen's wage guarantee fund advanced RMB 72.42 million to 3,965 workers in 2025 and recovered only RMB 4.02 million from employers. It covers wages, not severance.
 
 ### 2.3 When it goes right
@@ -125,17 +172,80 @@ We use **responsible exit** throughout. It covers all five situations: a buyer l
 
 | Lesson | Cases |
 |---|---|
-| Brands that pay after closure usually do so after pressure, and late | Nike (Honduras 2010), adidas (Indonesia 2013), Industrial Hana |
-| Check social insurance, not just wages | Yue Yuen, KOA Modas |
+| Some brands pay after a closure, but late and only after pressure | PT Kizone, Brilliant Alliance, Vald'or, Industrial Hana (below) |
+| Other brands never pay, even under years of pressure | Jaba Garmindo, Hulu Garment, Violet Apparel, Body Fashion (below) |
+| Check social insurance, not just wages | Yue Yuen, KOA Modas, Vald'or (pension and health contributions stolen) |
 | Sole and main buyers carry more responsibility | KOA Modas |
-| Subcontractors fall through the gaps | Violet Apparel |
+| Subcontractors fall through the gaps | Violet Apparel, Industrial Hana |
 | Halting production can be a way to avoid severance | Shenzhen 2024 |
 | Planned, staged closures work | Samsung Huizhou, Myanmar framework |
 | Remedy can mean jobs, not only money | Jerzees |
 
+**Who paid, and when.** In every case below where a brand paid, the money came **10 months to more than 2 years after the closure**, and only after a campaign or an investigation. Payments were often framed as a loan, a "humanitarian contribution" or a confidential settlement, not as an admission of liability.
+
+| Factory, country, closure | Owed to workers | Who paid | When | Source |
+|---|---|---|---|---|
+| PT Kizone, Indonesia, 2011 | USD 3.3 million, about 2,700 workers | Nike and others about USD 1.5 million; adidas, after first refusing, under a confidential settlement | About 2 years later, after universities cancelled or threatened licensing contracts | WRC; CCC (2013) |
+| PT Kahoindah (Hojeon), Indonesia, 2018 | USD 4.5 million, 2,001 workers | The supplier's parent, after buyers (Fanatics, Gap, Under Armour) pressed it | 10–13 months later | WRC; NPR (2019) |
+| Brilliant Alliance Thai, Thailand, 2021 | USD 8.3 million, about 1,300 workers | Victoria's Secret, as a loan to the factory's owner | 13–14 months later | Solidarity Center; Victoria's Secret statement (2022) |
+| Vald'or, Haiti, 2021–22 | Severance plus pension and health contributions, 1,100+ workers | PVH, USD 968,000 as a "humanitarian contribution", stating no direct responsibility | About 12 months later | WRC; FashionUnited (2023) |
+| Industrial Hana, Guatemala, 2023 | USD 1.5 million, about 240 workers | American Eagle, Puma and Lucky Brand, USD 500,000 each. Two said the orders had been subcontracted without their knowledge. Shein, another reported buyer, did not pay. | Up to 2 years later | WRC (2023–2025) |
+
+**Who did not pay.** As at the latest public reports, workers in these cases had not been paid by the brands named. The brands' positions are given as they stated them.
+
+| Factory, country, closure | Owed to workers | Brands named | Brand position | Source |
+|---|---|---|---|---|
+| Jaba Garmindo, Indonesia, 2015 | USD 5.5 million, about 2,000 workers | Uniqlo (Fast Retailing); s.Oliver later paid about USD 110,000 | Fast Retailing said it had no legal obligation and offered help with re-employment | CCC (2023); BHRRC |
+| Hulu Garment, Cambodia, 2020 | USD 1.1 million (WRC) to 3.6 million (unions), 456+ workers | adidas | Said it made about 5% of output, ended the contract and owes no severance | WRC (2023); Fashion Dive (2024) |
+| Violet Apparel, Cambodia, 2020 | USD 1.4 million, 1,284 workers | Nike, Matalan | Nike: the factory was not authorised and an arbitration settled the matter. Matalan: most workers were paid. | WRC (2023); HRW (2023) |
+| Body Fashion, Thailand, 2020 | USD 7.6 million, 900+ workers | Huber Holding | Acknowledged its goods were made there; denies responsibility | BHRRC |
+| Dongguan Gogo Garment, China, 2023 | About 1,700 workers ordered out with less than 30 days' notice and small compensation | Reported buyers: Victoria's Secret, Under Armour, Lululemon | No brand payment reported | BHRRC; China Labour Bulletin |
+
+Across 31 closed factories, the WRC counted USD 39.8 million in severance owed in a single report (*Fired, then Robbed*, 2021). Whether a brand pays has depended less on its policy than on how loud and how long the campaign was. For a factory's workers, that is not a system; it is luck.
+
+### 2.5 Doing better than the good cases
+
+The "good" cases in 2.3 and 2.4 are mostly rescues: money found years later, after campaigns. Brands and factories can do better by moving the work to **before** the closure, where it is cheaper.
+
+| Instead of | Do this | What it would have changed |
+|---|---|---|
+| Paying after a campaign | Put the supplier's financial health into supplier risk and business continuity reviews: once a year, check social insurance arrears, tax-credit rating, court enforcement and judgment-defaulter lists, rent disputes (chapter 11) | At **Industrial Hana**, debts were building before the closure. One third-party check and a few site visits, a few thousand dollars, could have shown the arrears in time to bring payments forward. The brands later paid USD 1.5 million. |
+| Discovering the subcontractor at closure | Require disclosure of subcontractors, and treat unauthorised subcontracting as a reason to engage, not as a defence | Violet Apparel and Industrial Hana: brands said orders were placed without their knowledge. The workers were still owed. |
+| Severance found only when the factory fails | Ask high-risk suppliers to hold a **severance reserve**, an escrow or a bank guarantee sized to their statutory severance, and allow for it in the price | China already uses this model for construction wages: a wage guarantee deposit that can be replaced by a bank guarantee or insurance (人社部发〔2021〕65号). Cambodia pre-funds part of severance through seniority payments twice a year (since 2019). |
+| Each brand acting alone | Join a shared fund: the **Pay Your Workers** agreement proposes a severance guarantee fund financed by a small premium per order (estimated at "no more than ten cents per t-shirt"). No brand has signed yet. | A fund pays when the factory fails, without a two-year campaign. |
+| A last order, then silence | Taper orders, **bring the last payments forward**, and condition the final payment on proof that wages and severance were paid (ACT's "solution before final payment") | The point of greatest leverage is before the last payment, not after it. |
+| Ignoring the site | Include environmental close-out (section 7.4) in the factory's exit plan and in the buyer's checks | A closure that leaves hazardous waste leaves a cost for neighbours and the next owner, and penalties for managers. |
+
+### 2.6 How big, how often: the five situations in numbers
+
+No one publishes a yearly figure for what exits cost workers or companies, for any of the five situations. What exists are snapshots and enforcement counts. They are in US dollars, but from different years and with different definitions, so **compare their size, never add them up**.
+
+<ClientOnly><GlanceBars :items="D.scale.en" unit=" bn USD" :digits="2" /></ClientOnly>
+
+*S2 (a factory leaving a customer) and S4 (relocation) have no money figure at all; no dataset separates them. Hover over a bar for its source.*
+
+**How often?** Only the forced exits (S5) have a clean yearly count. Sanctions listings jumped after 2022, and US Customs now stops more than 10,000 shipments a year under the UFLPA. Every listing and every stopped shipment can force a buyer to leave a supplier at short notice.
+
+<ClientOnly><ExitChart lang="en" :data="series(D.sdn, 'en')" label="Persons added to the US SDN sanctions list per year" note="Persons added to OFAC's SDN list per year (CNAS Sanctions by the Numbers; 2018 approximate)." /></ClientOnly>
+
+<ClientOnly><ExitChart lang="en" :data="series(D.uflpa, 'en')" label="Shipments stopped under the UFLPA per US fiscal year" note="Shipments stopped under the UFLPA, by US fiscal year (CBP dashboard via a secondary compilation, Oct 2026; CBP changed its counting method in 2026)." /></ClientOnly>
+
+For buyer exits (S1) the best-documented event remains the spring of 2020, above. For closures and relocations (S3, S4), the protest and prosecution series in 2.2 are the nearest thing to a trend line. **An educated guess**, labelled as such: China's labour inspectors recover around RMB 8–10 billion of unpaid wages a year (2020–2022), and most closures that go wrong start with unpaid wages, so the money at stake in badly handled closures in China alone is likely in the billions of renminbi every year, before any severance is counted.
+
 ---
 
 ## 3. The rules that apply
+
+### 3.0 Start here: four texts to know
+
+Dozens of norms, laws and codes touch on exit. Four of them carry most of the weight. Read these first; the tables below give the rest.
+
+| Text | Year | The line to remember | What it means in practice |
+|---|---|---|---|
+| **UN Guiding Principles**, Principle 19 and commentary | 2011 | Consider ending the relationship, "taking into account credible assessments" of the harm of doing so | Leaving is allowed, but the harm of leaving counts as much as the harm of staying. Every international text since builds on this. |
+| **OECD Guidelines for Multinational Enterprises**, Ch. II commentary | 2023 | "When deciding to disengage, enterprises should do so responsibly" | Exit is the last resort, and *how* you exit is itself part of due diligence: notice, consultation, mitigation. |
+| **Labour Contract Law**, Arts. 41, 44, 46–47 | 2008 | Explain 30 days ahead, hear views, report; pay one month per year of service | For a factory in China these are not principles but obligations, enforced by labour bureaus, courts and, at worst, criminal law (Art. 276-1). |
+| **OHCHR, *Remaining and Exiting*** | 2023 | A company "may be legally obliged to swiftly sever the relationship" | When sanctions or bans decide *whether* you leave, the norms still govern *how*. The bridge to chapter 9. |
 
 ### 3.1 International norms
 
@@ -200,7 +310,46 @@ We use **responsible exit** throughout. It covers all five situations: a buyer l
 | Paying suppliers | Large enterprises must pay SMEs within 60 days of delivery; no "pay when paid" clauses (from 1 Jun 2025) | Regulation on Ensuring Payment to SMEs (State Council Order 802) |
 | Ending a commercial contract | Termination by agreement or for fundamental breach; change of circumstances | Civil Code Arts. 533, 562–566 |
 
-### 3.6 What may come next
+### 3.6 Which rules apply to which situation
+
+● = the main reference for that situation; ○ = relevant. Use it to pick what to read, not as a legal opinion.
+
+| Rule | Year | S1 Buyer leaves | S2 Factory leaves customer | S3 Closure | S4 Relocation | S5 Forced exit |
+|---|---|:-:|:-:|:-:|:-:|:-:|
+| UNGP 19 / OECD Guidelines | 2011 / 2023 | ● | ○ | ○ | ○ | ● |
+| OHCHR *Remaining and Exiting* | 2023 | ○ | | | | ● |
+| ETI Responsible Disengagement; ACT; Fair Wear | 2026 / 2022 / 2018 | ● | | ○ | ○ | ○ |
+| FLA retrenchment guidance; Better Work manual | 2023 | ○ | ○ | ● | ● | |
+| SA8000:2026 D3.12, D4.11 | 2026 | ○ | ○ | ● | ● | |
+| RCP Supplier Model Clauses cl. 9 (either party) | 2023 | ● | ● | | | ○ |
+| EU CSDDD as amended (suspension) | 2024 / 2026 | ● | | | | ○ |
+| UFLPA, WROs, EU Forced Labour Regulation | 2021 / 2027 | ○ | | | | ● |
+| Sanctions (OFAC, EU, UK) and licences | ongoing | | | | | ● |
+| China AFSL, Order 835, Unreliable Entity List | 2020–2026 | ○ | | | | ● |
+| Civil Code (contract termination) | 2021 | ● | ● | ○ | ○ | ○ |
+| Labour Contract Law Arts. 40–47, 50 | 2008 | ○ | ● | ● | ● | ○ |
+| Company Law, Bankruptcy Law, Decree 724 | 2023 / 2006 / 2020 | | | ● | ○ | |
+| Ecological Environment Code (waste, soil, dismantling) | 2026 | | | ● | ● | |
+| Criminal Law Art. 276-1 | 2011 | | | ● | ● | |
+
+### 3.7 What each step costs
+
+Norms have no price; the actions they require do. Ranked from cheapest to most expensive, for a buyer leaving a factory of about 500 workers. Bands are rough orders of magnitude, not quotes.
+
+| Action | Rough cost | Required or expected by | Note |
+|---|---|---|---|
+| Written notice, reasons and a volume forecast | Staff time only | ACT, ETI, Fair Wear, ABA MCC 2.0 | The cheapest step, and the one most often skipped |
+| Keeping a grievance channel open for six months | Low (an existing channel) | ETI 2026 | |
+| Verifying that workers were paid (in-country review of payroll and bank records) | About USD 1,000–5,000 per factory *(estimate)* | ACT, FLA, ETI | Far cheaper than a campaign afterwards |
+| Paying for goods made and materials bought | Already owed | ABA MCC 2.0, RCP cl. 9, contracts | Not a cost of responsibility; a debt |
+| A longer ramp-down (6 instead of 1–2 months) | Opportunity cost of slower switching | ACT, FLA, C&A | |
+| Bringing final payments forward | Financing cost of a few weeks | ETI 2026 | Can be what makes severance payable |
+| Contributing to unpaid severance after a failure | For 500 workers averaging 4 years at RMB 6,000 a month, statutory severance is about RMB 12 million (USD 1.7 million) *(estimate)*; buyers have paid USD 0.5–6 million per case | Brand policies; campaigns | Industrial Hana: three brands paid USD 1.5 million between them |
+| Remediation instead of exit (repaying recruitment fees) | USD 20–30 million in the largest cases | UFLPA practice | Top Glove, Sime Darby |
+
+The pattern: the steps that prevent a bad exit cost thousands; the payments that follow a bad exit cost millions.
+
+### 3.8 What may come next
 
 - **CSDDD transposition (2026–2028).** National laws may add detail on how suspension is done. The Commission's guidance on model contract clauses is expected in early 2027.
 - **EU Forced Labour Regulation (from December 2027).** Expect product bans to trigger sudden collective exits from flagged regions and suppliers. The risk database is still being built.
@@ -230,6 +379,14 @@ Do this check before the decision is final, whichever side is leaving. It takes 
 ### 4.2 From answers to a notice period
 
 There is no single legal number for a buyer exit. Use the reference points below, and lengthen the notice as dependence rises.
+
+```mermaid
+flowchart LR
+    Q{Our share of the<br/>factory's output,<br/>last 12 months} -->|under 10%| A[About 3 months<br/>one season or order cycle]
+    Q -->|10 to 30%| B[6 months<br/>written monthly forecast]
+    Q -->|over 30%, sole or<br/>main buyer| C[6 to 12 months<br/>phased, committed final orders,<br/>check severance can be paid]
+    Q -->|severe abuse or<br/>the law forces exit| D[As short as needed<br/>every other step still applies]
+```
 
 | Buyer's share of the factory's output | Reference notice and ramp-down | Basis |
 |---|---|---|
@@ -265,6 +422,9 @@ For the factory side, the floor is the law: 30 days' written notice for an indiv
 
 - Keep your grievance channel open to the factory's workers for about **six months** (ETI 2026).
 - If you learn later that workers were not paid, act. ACT's route is mediation with the union before final payment; after final payment your leverage is reputational only.
+- **Update your supplier list.** If you publish one (Apple, Nike, H&M, C&A and many others do, often also through Open Supply Hub), remove the factory when the last order ships and show the date, so that auditors, unions and other buyers are not misled about who still sources there.
+
+**If you don't publish a supplier list, do you have to announce an exit?** No law requires a public announcement of a single exit. But you still owe it to the people it affects: the factory in writing, its workers through their representatives, and any programme or initiative you both belong to. Where you report under due-diligence law (Germany's LkSG, the CSRD's ESRS S2, Norway's Transparency Act, and the CSDDD from 2029), report how many relationships you suspended or ended and why, in aggregate. Saying nothing publicly is acceptable; leaving the factory and its workers to find out from an empty order book is not.
 
 ### 5.4 Common mistakes
 
@@ -286,7 +446,7 @@ This situation has almost no published guidance. Factories end customers more of
 - **End-use concerns.** You learn that your part is used in a product that is illegal or harmful where it is sold.
 - Capacity is needed for better customers.
 
-> **Case (anonymised, from the author's own work):** A plastics factory made empty containers for a customer. It later learned the customer shipped them to Canada to be filled with nicotine liquid with additives. Canada regulates even empty containers as vaping parts, and bans additives such as caffeine, vitamins and taurine. China's e-cigarette rules (电子烟管理办法 Art. 33) require export-only products to meet the destination country's law. The factory had done no checks on the customer's end use. Its exposure was legal, commercial (seized goods, unpaid invoices) and reputational.
+> **Case study:** A plastics factory made empty containers for a customer. It later learned the customer shipped them to Canada to be filled with nicotine liquid with additives. Canada regulates even empty containers as vaping parts, and bans additives such as caffeine, vitamins and taurine. China's e-cigarette rules (电子烟管理办法 Art. 33) require export-only products to meet the destination country's law. The factory had done no checks on the customer's end use. Its exposure was legal, commercial (seized goods, unpaid invoices) and reputational.
 
 ### 6.1 Decide
 
@@ -341,6 +501,37 @@ Under Criminal Law Art. 276-1 and its 2013 judicial interpretation, it is a crim
 - Ask your buyers. Some will advance payments or pay for finished goods early to fund severance. The worst time to ask is after workers have started a protest.
 - Bankruptcy is a legal route, not a failure. It puts employee claims first.
 
+### 7.4 The environmental close-out
+
+The rest of this guide is about people and money. A closure or a move also leaves a **site**: waste in the warehouse, chemicals in the tanks, sometimes contaminated soil, and permits and taxes still open. The law treats these as the closing company's duties, and since **15 August 2026** they are in one place: China's **Ecological Environment Code** (生态环境法典), which replaced the Environmental Protection Law, the Soil Pollution Law, the Solid Waste Law and seven other laws (Code Art. 1242).
+
+| Step | Rule | What can go wrong |
+|---|---|---|
+| **Dispose of industrial solid waste before the company ends** | A company that terminates must, before it terminates, arrange the storage and disposal of its industrial solid waste and dispose of untreated waste properly (Code Art. 495) | Abandoning solid waste: fines of RMB 100,000–1 million; for **hazardous waste** RMB 200,000–2 million, and up to RMB 5 million if serious (Art. 1169) |
+| **Hazardous waste through licensed handlers only**, with plan, ledger and transfer manifests | Code Art. 532 | Handing waste to an unlicensed party: RMB 200,000–2 million (Art. 1175). If the company refuses to dispose of it, the authority does it at the company's cost plus a fine (Art. 1177). Serious cases: **10–15 days' police detention** for the legal representative and managers (Art. 1179) |
+| **Dismantling plant and buildings** | Take soil-pollution prevention measures; key soil-supervision units (土壤污染重点监管单位) must file and follow a work plan (Code Art. 415) | Dismantling without a plan or measures: RMB 20,000–200,000; up to RMB 2 million if serious (Art. 1159). Dismantling pollution-control equipment without permission: RMB 100,000–1 million (Arts. 162, 1104) |
+| **Soil investigation** before the land is handed back, transferred or changes use | Required for key units (Art. 462) and before any change to residential or public use (Art. 454) | Fines up to RMB 1 million plus the cost of having the investigation done (Art. 1165) |
+| **Who pays for contamination** | The polluter; if unknown, the land-use right holder (Art. 439). A successor company inherits the duty (Art. 441) | A buyer of the land or the business can inherit the bill |
+| **Cancel the discharge permit** | The authority cancels the permit when the unit terminates (排污许可管理办法 Art. 29; registration-only units cancel their own registration, Art. 39) | Permits left open invite questions at deregistration |
+| **Settle environmental protection tax** | Tax deregistration comes before business deregistration, and all taxes, late fees and fines must be settled first (Tax Collection Rules Arts. 15–16) | Unpaid environmental tax blocks a clean deregistration |
+
+**What happens when it is skipped.** In Changzhou (2016), pupils at a school built next to the former sites of three chemical plants fell ill; in a public-interest suit the courts ordered the companies to apologise publicly and pay part of the NGOs' costs (2018). In Ningxia, a paper company abandoned its plant in 2015, leaving more than 120,000 tonnes of waste in the desert; executives and officials were disciplined. Neither case led to the prosecution of owners for what they left behind, but under the new Code the detention powers in Art. 1179 now reach the people in charge.
+
+**For buyers.** Add two lines to your closure checks: *Has hazardous waste been removed by a licensed handler, with manifests?* and *Has the discharge permit been cancelled?* For relocations, ask the same about the old site before you approve the new one.
+
+**For relocation abroad.** The same checklist applies at home, and the new site will one day need its own. Mining companies plan closure before they open; manufacturers can at least budget for it.
+
+### 7.5 Subsidies, incentives and unfinished programmes
+
+A closing or moving company often has commitments that are neither wages nor debts:
+
+- **Investment-attraction agreements** (招商引资协议). Local governments grant subsidies, rent-free periods, tax rebates or cheap land in return for investment, output or tax targets, often with clawback clauses. In July 2025 Ningdu County (Jiangxi) moved to terminate such an agreement and recover RMB 12 million of fit-out subsidies after the project stopped. Read the agreement before announcing a closure or move: the clawback is a debt and belongs in the exit budget.
+- **Industrial land with performance conditions** (标准地, 履约监管). Land sold with investment, tax-per-mu or energy targets can carry penalties or take-back if the targets are missed, under terms set locally in the supervision agreement.
+- **Job-retention refunds** (稳岗返还) and similar subsidies. No national rule was found that requires repayment just because a company later closes; recovery is aimed at fraud or wrongful payment. A deregistered company is no longer eligible. Confirm with the local human resources and social security bureau.
+- **Programmes funded by buyers or donors** (worker training, dialogue, health or childcare projects). Tell the funder early, agree what can be finished, and hand records and any equipment back. The Dutch textile agreement's complaints committee found in 2022 that C&A should have shared its exit plan with the workers' organisation in a Myanmar factory where a dialogue programme was cut short.
+
+The rules also protect the company. Local governments may not block a lawful move: the State Taxation Administration (August 2024) told tax offices not to obstruct relocations, and 2025 guidance from market regulators bars registries from restricting cross-region moves. Selective local tax rebates without a legal basis are themselves prohibited (Fair Competition Review Regulation Art. 10, 2024), which makes some incentives fragile and some clawback claims contestable. Take advice in both directions.
+
 ---
 
 ## 8. Situation 4: the factory relocates
@@ -353,6 +544,8 @@ Under Criminal Law Art. 276-1 and its 2013 judicial interpretation, it is a crim
 | **Another city or province** | A "major change in objective circumstances" (LCL Art. 40(3)) for most workers. If no new agreement is reached, termination with severance. | Offer transfer with written terms; severance for those who decline; Art. 41 process if 20+ people or 10%+. |
 | **Abroad** (Vietnam, Cambodia, Indonesia and others) | Not a relocation in labour-law terms: it is a closure or mass layoff of the Chinese employer (Arts. 41, 44(5), 46–47). | Follow the closure sequence in section 7 in full. |
 | **Transfer of staff to an affiliate** | Service years carry over when the move is not the worker's choice (Implementing Regulations Art. 10). | Put the carry-over in the new contract; don't pay out and restart the clock without the worker's informed agreement. |
+
+**Before deciding to move, count what you may have to give back.** Some relocations are stopped, or made more expensive, by commitments made when the factory arrived: subsidies and tax rebates with clawback clauses, land with performance conditions, and local officials who threaten to reclaim incentives (section 7.5). Add these to the impact check next to severance and the environmental close-out. A move that looked cheap on labour costs can be expensive once the old site's commitments are counted.
 
 ### 8.2 Don't repeat the pattern abroad
 
@@ -450,6 +643,22 @@ Chinese law treats some foreign-driven exits as unlawful:
 - Are other buyers leaving at the same time? Are we coordinating only the "how"?
 - What records will we need, and can they lawfully leave China?
 - Who tells the workers, and how, if consultation is restricted?
+
+### 9.6 What happens when you stay too long, or leave too abruptly
+
+"Responsible disengagement as a last resort" does not mean there is no risk in staying. The cases run both ways:
+
+| Risk | Case | What happened |
+|---|---|---|
+| **Staying: goods stopped at the border** | Uniqlo, 2021 | Men's cotton shirts detained in Los Angeles under the Xinjiang cotton Withhold Release Order; US Customs rejected the company's protest because it could not prove the cotton's origin |
+| | Volkswagen Group, 2024 | Thousands of Audi, Porsche and Bentley cars held at US ports because a small part from a sub-supplier was linked to Xinjiang; the part was replaced |
+| **Leaving: retaliation in China** | PVH, 2024–2025 | Investigated under the Unreliable Entity List for allegedly ending normal transactions with Chinese firms over Xinjiang cotton "without factual basis"; listed in February 2025 |
+| | H&M, 2021 | Consumer boycott after a statement on Xinjiang cotton; China sales fell 23% in the second quarter |
+| **Leaving workers unpaid: campaigns and contracts** | adidas, PT Kizone, 2011–2013 | Universities cancelled or threatened licensing contracts until the company settled |
+| **Leaving without a plan: complaint findings** | C&A, Myanmar, 2022 | The Dutch textile agreement's complaints committee found that an exit plan should in principle be shared with the stakeholders concerned |
+| | Telenor, Myanmar, 2025 | Norway's OECD contact point found the company "had no exit strategy" |
+
+No published OFAC penalty concerns a company that merely missed a wind-down deadline. But penalties for dealing after a licence expired exist, and the general lesson holds: **the law sets the deadline; responsibility is what you do inside it.**
 
 ---
 
@@ -601,22 +810,21 @@ Short bilingual templates to adapt. Replace the bracketed text; check local law.
 
 ### 14.4 Severance calculation sheet
 
-Columns: name · start date · end date · years of service (rounded per Art. 47) · average monthly wage over last 12 months · local cap (3× average wage) · capped base · months payable (max 12 if capped) · severance · notice pay in lieu (Art. 40) · unused annual leave pay · wages to last day · social insurance arrears corrected · total · paid on (date) · payment reference.
+Enter the local averages once, then one row per worker. The sheet applies LCL Arts. 46–47, 40 and 87; open "How it is calculated" for the rules. Download the result as CSV and keep it with the payment records, adding the payment date and bank reference for each worker.
+
+<ClientOnly>
+  <SeveranceSheet lang="en" />
+</ClientOnly>
 
 ### 14.5 One-page closure checklist
 
-1. Resolution to close; union and workers heard.
-2. Social insurance and housing fund base checked and corrected.
-3. Severance reserve funded.
-4. Art. 41 explanation (30 days) and labour bureau report, if applicable.
-5. Protected workers identified.
-6. Customers and suppliers notified.
-7. Wages to last day and shutdown pay.
-8. Severance paid, no waivers.
-9. Certificates and transfers within 15 days; unemployed list within 7 days.
-10. Liquidation in the legal order.
-11. Deregistration only after wages are cleared.
-12. Records kept; contact named for after closure.
+Tick as you go; your ticks stay in this browser. **Print** gives a paper copy.
+
+<ClientOnly>
+  <ExitChecklist lang="en" store-key="scdd-exit-closure-en" :items="closureItems('en')" />
+</ClientOnly>
+
+For the steps that apply to buyers, agents, HR, worker representatives and auditors, use the [role-based checklist](./exit-checklist). Sample policies for buyers, factories and agents are in [Sample Responsible Exit Policies](./exit-policies).
 
 ---
 
@@ -624,13 +832,13 @@ Columns: name · start date · end date · years of service (rounded per Art. 47
 
 Business continuity and responsible exit look at the same events from opposite seats. BCM asks how the business keeps running. Responsible exit asks who pays when it doesn't. The two should be linked in both directions.
 
-**For buyers.** Your BCM plan probably contains triggers such as "switch supplier" or "dual source". Each of those decisions cuts a supplier's volume. Add a rule: any BCM decision that cuts a supplier's volume by more than [20%] goes through the impact check in section 4 first. Climate risk belongs here too: buyers should screen their supply base for physical climate risk (floods, heat, water stress) as well as the usual supplier risks, because an exit after a disaster is the hardest exit to make responsibly. See the [Due Diligence overview, §0.3](/zh/ddg) for the BCM trigger table.
+**For buyers.** Your BCM plan probably contains triggers such as "switch supplier" or "dual source". Each of those decisions cuts a supplier's volume. Add a rule: any BCM decision that cuts a supplier's volume by more than [20%] goes through the impact check in section 4 first. Climate risk belongs here too: buyers should screen their supply base for physical climate risk (floods, heat, water stress) as well as the usual supplier risks, because an exit after a disaster is the hardest exit to make responsibly. See the [Due Diligence overview, §0.3](/en/ddg) for the BCM trigger table.
 
 **For factories.** A factory's own BCM should include its exit plan: a severance reserve, clean social insurance records, and a list of what it owes and is owed. SA8000:2026 already says that when continuity is disrupted, wages and severance come first. A factory that is ready to exit responsibly is also more likely to survive a shock.
 
-> **Case (anonymised, from the author's own work):** In 2014 a plastics factory on low-lying land was flooded to 1.4 metres. Injection moulding machines, plastics and semi-finished goods on the ground floor were under water. Cleaning, sanitising and recovery took over a month, and the factory's only customer, a food company, stopped its own production line for nearly two months. The flood risk was visible on any elevation map before the site was chosen. A factory with a single customer and no flood plan has no continuity and no exit options.
+> **Case study:** In 2014 a plastics factory on low-lying land was flooded to 1.4 metres. Injection moulding machines, plastics and semi-finished goods on the ground floor were under water. Cleaning, sanitising and recovery took over a month, and the factory's only customer, a food company, stopped its own production line for nearly two months. The flood risk was visible on any elevation map before the site was chosen. A factory with a single customer and no flood plan has no continuity and no exit options.
 
-> **Case (anonymised):** At another site, the factory learned that its landlord was caught in a chain of unpaid debts (三角债). If the landlord's creditors seized the building, the factory could not have delivered on its contract with its main customer. Whether a lease survives depends on whether it was made before the mortgage (Civil Code Art. 405) and on whether the building has the approvals that make the lease valid. Few factories check either before signing.
+> **Case study:** At another site, the factory learned that its landlord was caught in a chain of unpaid debts (三角债). If the landlord's creditors seized the building, the factory could not have delivered on its contract with its main customer. Whether a lease survives depends on whether it was made before the mortgage (Civil Code Art. 405) and on whether the building has the approvals that make the lease valid. Few factories check either before signing.
 
 Business continuity for factories across their whole value chain (site and climate, landlord, customers and payment chains, downstream end use) is the subject of a separate guide in preparation. It will build on existing guidance rather than repeat it: ISO 22301 and ISO/TS 22318, the UN Women and China SME Development Promotion Center toolkit 为风险做好准备 (2022), and climate-risk tools such as WRI Aqueduct and ThinkHazard!.
 
@@ -665,6 +873,19 @@ Business continuity for factories across their whole value chain (site and clima
 - Norwegian National Contact Point, Final Statement, SOMO v. Telenor ASA (December 2025)
 - Supreme People's Procuratorate, typical cases on refusing to pay wages (January 2025) — [news.cn](https://www.news.cn/legal/20250121/34f4c7938b614f81a95a20f65d95dfd9/c.html)
 
+- Worker Rights Consortium factory reports: PT Kizone, PT Kahoindah, Vald'or, Industrial Hana, Hulu Garment, Violet Apparel; *Fired, then Robbed* (2021) — [workersrights.org](https://www.workersrights.org)
+- Clean Clothes Campaign, Jaba Garmindo campaign — [cleanclothes.org](https://cleanclothes.org/campaigns/jaba-garmindo)
+- Solidarity Center, Brilliant Alliance Thai settlement (2022) — [solidaritycenter.org](https://www.solidaritycenter.org/thai-workers-win-historic-8-3-million-in-back-pay-financed-by-victorias-secret/)
+- Dutch Agreement on Sustainable Garments and Textile, Complaints and Disputes Committee, final ruling SOMO et al. v. C&A (31 May 2022) — [ser.nl](https://ser.nl/-/media/ser/downloads/thema/imvo/cdc_finalruling_somo_skc_r_ca_nl.pdf)
+- Clean Clothes Campaign, Pay Your Workers – Respect Labour Rights agreement — [cleanclothes.org](https://cleanclothes.org/wage-assurance)
+
+**Data for the charts**
+- BGMEA order tracker (as reported April 2020); Bangladesh Export Promotion Bureau
+- Clean Clothes Campaign, *Still Un(der)paid* (2021); WRC, *Fired, then Robbed* (2021)
+- China Labour Bulletin Strike Map (archived; CLB closed in June 2025)
+- Supreme People's Procuratorate press releases (2022–2026); Ministry of Human Resources and Social Security statistical bulletins
+- CNAS, *Sanctions by the Numbers* (2019–2025); US CBP UFLPA statistics dashboard
+
 **Sanctions and import bans**
 - US DHS, *Strategy to Prevent the Importation of Goods Mined, Produced, or Manufactured with Forced Labor* (2022), pp. 44–45 — [dhs.gov](https://www.dhs.gov/sites/default/files/2022-06/22_0617_fletf_uflpa-strategy.pdf)
 - US CBP, Top Glove modification (2021) — [cbp.gov](https://www.cbp.gov/newsroom/national-media-release/cbp-modifies-forced-labor-finding-top-glove-corporation-bhd)
@@ -679,7 +900,9 @@ Business continuity for factories across their whole value chain (site and clima
 - 广东省工资支付条例; 深圳市员工工资支付条例; 深圳经济特区欠薪保障条例
 - 反外国制裁法; 实施《反外国制裁法》的规定 (Order 803); 反外国不当域外管辖条例 (Order 835); 不可靠实体清单规定; 阻断外国法律与措施不当域外适用办法
 - 个人信息保护法; 数据安全法
+- 生态环境法典 (2026; in force 15 Aug 2026) — [mee.gov.cn](https://www.mee.gov.cn/ywgz/fgbz/fl/202603/t20260313_1146496.shtml); 排污许可管理办法 (2024, amended 2026); 税收征收管理法实施细则
+- 公平竞争审查条例 (Decree 783, 2024); 国家税务总局 notice on not obstructing relocation (Aug 2024)
 
 ---
 
-*This guide is general information, not legal advice. Laws and figures are as of November 2026; check current texts before acting. Cases are drawn from published sources; figures from advocacy organisations and the press are reported as such. Three examples are drawn, anonymised, from the author's own experience as a factory manager.*
+*This guide is general information, not legal advice. Laws and figures are as of November 2026; check current texts before acting. Cases are drawn from published sources; figures from advocacy organisations and the press are reported as such.*
